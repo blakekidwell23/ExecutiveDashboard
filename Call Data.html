@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>COL Sales Hub &mdash; Call Data</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a2e4a;--navy2:#2e5090;--cyan:#00AEEF;--green:#1a7a38;--amber:#b56800;--red:#b91c1c;--purple:#6d28d9;--pink:#be185d;--border:#dde3ea;--bg:#f0f3f8;--muted:#6b7280;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:var(--navy);font-size:13px}
+
+.header{background:#1a2e4a;border-bottom:4px solid #00AEEF;padding:0 40px;display:flex;align-items:center;justify-content:space-between;min-height:80px;gap:20px;flex-wrap:wrap;box-shadow:0 2px 16px rgba(0,0,0,.25)}
+.header-left{display:flex;align-items:center;gap:20px}
+.header-logo{height:44px;width:auto;display:block;filter:brightness(0) invert(1)}
+.header-divider{width:1px;height:36px;background:rgba(255,255,255,.2);flex-shrink:0}
+.header-brand{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;letter-spacing:.08em;color:#00AEEF;line-height:1}
+.header-brand em{color:#fff;font-style:normal}
+.header-right{text-align:right}
+.header-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:.04em;text-transform:uppercase}
+.header-sub{font-family:'DM Mono',monospace;font-size:11px;color:#00AEEF;margin-top:3px;opacity:.85}
+
+.wrap{max-width:1200px;margin:0 auto;padding:24px 24px 60px}
+.page-hdr{margin-bottom:14px}
+.page-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--navy)}
+.page-meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px}
+
+.sec-lbl{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:26px 0 4px;padding:10px 0 6px;border-bottom:3px solid var(--cyan)}
+.sub-lbl{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--navy2);margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.note{font-size:11px;color:var(--muted);margin-bottom:14px;font-family:'DM Mono',monospace;line-height:1.6}
+
+.mc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:8px}
+.mc{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.mc-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-family:'DM Mono',monospace;margin-bottom:4px}
+.mc-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--navy)}
+.mc-sub{font-size:10.5px;color:var(--muted);margin-top:2px}
+.mc.green .mc-val{color:var(--green)} .mc.red .mc-val{color:var(--red)} .mc.amber .mc-val{color:var(--amber)}
+
+.chart-box{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.05);margin-bottom:18px;height:230px}
+
+.tw{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05);margin-bottom:18px}
+.tw table{width:100%;border-collapse:collapse;font-size:13px}
+.tw thead tr{background:var(--navy);color:#fff}
+.tw th{padding:8px 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;text-align:left}
+.tw th.r{text-align:right}.tw th.c{text-align:center}
+.tw td{padding:7px 10px;border-bottom:1px solid #eef2f7;color:var(--navy)}
+.tw td.r{text-align:right}.tw td.c{text-align:center}.tw td.name{font-weight:600}
+.tw tr:nth-child(even) td{background:#f7f9fc}.tw tr:hover td{background:#eef4fb}
+.tw tr.nonphone td{color:var(--muted);font-style:italic}
+.tw tr.global-row td{background:#f3f0ff!important}
+
+.chip{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace}
+.chi{background:#d1fae5;color:#065f46}.chl{background:#fee2e2;color:#991b1b}.chm{background:#fef3c7;color:#92400e}
+
+.flagbox{background:#fef7ec;border:1px solid #fbbf24;border-radius:8px;padding:12px 16px;font-size:12px;color:#92400e;margin-bottom:18px;line-height:1.6}
+.infobox{background:#eef4fb;border:1px solid #bcd7f0;border-radius:8px;padding:12px 16px;font-size:12px;color:var(--navy2);margin-bottom:18px;line-height:1.6}
+
+.hm-wrap{overflow-x:auto}
+.hm-table{border-collapse:collapse;font-size:10px;width:auto}
+.hm-table th{background:var(--navy);color:#fff;padding:4px 3px;font-size:9px;text-align:center;white-space:nowrap;font-family:'DM Mono',monospace}
+.hm-table td{padding:4px 3px;text-align:center;font-family:'DM Mono',monospace;font-size:10px;border:1px solid #fff;min-width:30px}
+.hm-name,.hm-namehdr{text-align:left!important;font-weight:600;font-size:10.5px;padding:4px 8px!important;white-space:nowrap;background:#fff;position:sticky;left:0;font-family:'Barlow',sans-serif}
+.hm-namehdr{background:var(--navy)}
+.hm-g{background:#8fd4a8;color:#0d3d1f}
+.hm-y{background:#fde68a;color:#78450a}
+.hm-r{background:#f5a3a3;color:#7a1010}
+.hm-off{background:#e5e7eb;color:#9ca3af}
+.hm-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:8px 0 18px}
+.hm-lg-item{display:flex;align-items:center;gap:6px}
+.hm-swatch{width:12px;height:12px;border-radius:2px;display:inline-block}
+
+.footer{background:#1a2e4a;border-top:3px solid #00AEEF;padding:16px 40px;font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:30px}
+@media (max-width:700px){.header{padding:14px 20px;min-height:auto}.header-logo{height:34px}.header-brand{font-size:20px}.wrap{padding:18px 16px 40px}.footer{padding:14px 20px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <img class="header-logo" src="https://colauto.com/wp-content/uploads/2026/03/Collision-Auto-Parts_Web_Logo_Header-TM-White.png" alt="Collision Auto Parts" onerror="this.style.display='none'">
+    <div class="header-divider"></div>
+    <div class="header-brand">COL <em>AUTO PARTS</em></div>
+  </div>
+  <div class="header-right">
+    <div class="header-title">Sales Hub &middot; Call Data</div>
+    <div class="header-sub">Generated August 3, 2026</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="page-hdr">
+    <div class="page-title">Call Data</div>
+    <div class="page-meta">WK31 (Jul 27&ndash;31, Complete) &middot; Rolling 5-Week Window: WK27&ndash;31</div>
+  </div>
+
+  <!-- ============ SECTION 1: QUEUE SERVICE LEVELS ============ -->
+  <div class="sec-lbl">Are We Servicing the Calls Coming In?</div>
+  <p class="note">"True" figures correct for the Global Queue overflow (calls that ring to Global after going unanswered in a primary region &mdash; counting them again would double-count). Global's Received is NOT added to the true total; its Answered calls ARE added, since those are real saves.</p>
+
+  <div class="mc-grid">
+    <div class="mc"><div class="mc-lbl">True Received (WK31)</div><div class="mc-val">5,090</div><div class="mc-sub">MoWest + NorCal + SoCal only</div></div>
+    <div class="mc green"><div class="mc-lbl">True Answered (WK31)</div><div class="mc-val">4,944</div><div class="mc-sub">All 4 queues' answered calls</div></div>
+    <div class="mc green"><div class="mc-lbl">True Abandon Rate (WK31)</div><div class="mc-val">2.9%</div><div class="mc-sub">146 calls &middot; naive 4-queue sum would misread as 21.6%</div></div>
+    <div class="mc"><div class="mc-lbl">12-Week Range</div><div class="mc-val">1.5&ndash;3.1%</div><div class="mc-sub">True abandon rate has stayed healthy all year</div></div>
+  </div>
+
+  <div class="sub-lbl">Answer Rate by Region &mdash; WK31 (Jul 27&ndash;31)</div>
+  <div class="tw"><table>
+    <thead><tr><th>Queue / Region</th><th class="r">Received</th><th class="r">Answered</th><th class="r">Abandoned</th><th class="r">Answer Rate</th><th class="c">Status</th></tr></thead>
+    <tbody>
+    <tr><td class="name">MoWest</td><td class="r">766</td><td class="r">456</td><td class="r">310</td><td class="r" style="color:var(--red);font-weight:700">59.5%</td><td class="c"><span class="chip chl">AT RISK</span></td></tr>
+    <tr><td class="name">NorCal</td><td class="r">2,071</td><td class="r">1,938</td><td class="r">133</td><td class="r" style="color:var(--green);font-weight:700">93.6%</td><td class="c"><span class="chip chi">ON TARGET</span></td></tr>
+    <tr><td class="name">SoCal</td><td class="r">2,253</td><td class="r">1,381</td><td class="r">872</td><td class="r" style="color:var(--red);font-weight:700">61.3%</td><td class="c"><span class="chip chl">AT RISK</span></td></tr>
+    <tr class="global-row"><td class="name">Global Overflow <span style="font-weight:400;color:var(--muted);font-size:11px">(safety net, not a 4th region)</span></td><td class="r">1,218</td><td class="r">1,169</td><td class="r">49</td><td class="r" style="color:var(--green);font-weight:700">96.0%</td><td class="c"><span class="chip chi">ON TARGET</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Status bands: ON TARGET &ge;90% &middot; WATCH 75&ndash;89.9% &middot; AT RISK &lt;75%. <strong>MoWest and SoCal are both AT RISK this week</strong> &mdash; each answers roughly 6 in 10 calls on the first try; Global Overflow is quietly catching most of what they miss, which is why the company-wide "true" rate above looks healthy even though two of the three regions are struggling. Worth watching regional staffing/coverage on MoWest and SoCal specifically, not just the blended total.</p>
+
+  <div class="sub-lbl">True Abandon Rate &mdash; Last 12 Weeks</div>
+  <div class="chart-box"><canvas id="abandon-trend-chart"></canvas></div>
+
+  <!-- ============ SECTION 2: REP CALL VOLUME ============ -->
+  <div class="sec-lbl">Is Every Rep Averaging 80 Calls a Day?</div>
+
+  <div class="mc-grid">
+    <div class="mc"><div class="mc-lbl">WK31 Company Calls</div><div class="mc-val">5,514</div><div class="mc-sub">21 phone reps &middot; avg 52.5/day</div></div>
+    <div class="mc"><div class="mc-lbl">Last 5 Wks Company Calls</div><div class="mc-val">26,772</div><div class="mc-sub">21 phone reps &middot; WK27&ndash;31 &middot; avg 51.0/day</div></div>
+    <div class="mc green"><div class="mc-lbl">Averaging &ge;80/day This Week</div><div class="mc-val">7 of 21</div><div class="mc-sub">phone reps, WK31</div></div>
+    <div class="mc green"><div class="mc-lbl">Averaging &ge;80/day, Last 5 Wks</div><div class="mc-val">6 of 21</div><div class="mc-sub">phone reps, WK27&ndash;31</div></div>
+  </div>
+
+  <div class="sub-lbl">Company-Wide Weekly Call Volume &mdash; Last 12 Weeks</div>
+  <div class="chart-box"><canvas id="calls-trend-chart"></canvas></div>
+
+  <div class="sub-lbl">Ranked by Calls/Day Average &mdash; Last 5 Weeks (WK27&ndash;31), WK31 Shown for Reference</div>
+  <p class="note">Standard: 80 calls/rep/day. Using a rolling 5-week window (not calendar month) so the trend keeps building smoothly into August instead of resetting to zero on the 1st. WK31 avg/day = WK31 total &divide; 5 days (threshold 400 calls). Last-5-wks avg/day = 5-week total &divide; 25 days (threshold 2,000 calls). Source: Call Metrics Report "Stats by week."</p>
+
+  <div class="tw"><table>
+    <thead><tr>
+      <th style="width:30px">#</th><th>Rep</th>
+      <th class="r">WK31 Calls</th><th class="r">WK31 Avg/Day</th><th class="c">&ge;80?</th>
+      <th class="r">Last 5 Wks Calls</th><th class="r">Last 5 Wks Avg/Day</th><th class="c">&ge;80?</th>
+    </tr></thead>
+    <tbody>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">1</td><td class="name">OLeal, MatthewO</td><td class="r">561</td><td class="r" style="color:var(--green);font-weight:700">112.2</td><td class="c"><span class="chip chi">YES</span></td><td class="r">2,665</td><td class="r" style="color:var(--green);font-weight:700">106.6</td><td class="c"><span class="chip chi">YES</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">2</td><td class="name">Reyes, OmarR</td><td class="r">499</td><td class="r" style="color:var(--green);font-weight:700">99.8</td><td class="c"><span class="chip chi">YES</span></td><td class="r">2,218</td><td class="r" style="color:var(--green);font-weight:700">88.7</td><td class="c"><span class="chip chi">YES</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">3</td><td class="name">Sanchez, JacquelineS</td><td class="r">374</td><td class="r" style="color:var(--red);font-weight:700">74.8</td><td class="c"><span class="chip chl">NO</span></td><td class="r">2,167</td><td class="r" style="color:var(--green);font-weight:700">86.7</td><td class="c"><span class="chip chi">YES</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">4</td><td class="name">Romero, EliasR</td><td class="r">502</td><td class="r" style="color:var(--green);font-weight:700">100.4</td><td class="c"><span class="chip chi">YES</span></td><td class="r">2,129</td><td class="r" style="color:var(--green);font-weight:700">85.2</td><td class="c"><span class="chip chi">YES</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">5</td><td class="name">Serrano, ArturoS</td><td class="r">532</td><td class="r" style="color:var(--green);font-weight:700">106.4</td><td class="c"><span class="chip chi">YES</span></td><td class="r">2,053</td><td class="r" style="color:var(--green);font-weight:700">82.1</td><td class="c"><span class="chip chi">YES</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">6</td><td class="name">Becerra, IvanB</td><td class="r" style="color:var(--red);font-weight:700">0</td><td class="r" style="color:var(--red);font-weight:700">0.0</td><td class="c"><span class="chip chl">NO</span></td><td class="r">2,039</td><td class="r" style="color:var(--green);font-weight:700">81.6</td><td class="c"><span class="chip chi">YES</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">7</td><td class="name">Pedraza, LuisP</td><td class="r">473</td><td class="r" style="color:var(--green);font-weight:700">94.6</td><td class="c"><span class="chip chi">YES</span></td><td class="r">1,934</td><td class="r" style="color:var(--red);font-weight:700">77.4</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">8</td><td class="name">Anaya, ZulemaA</td><td class="r">479</td><td class="r" style="color:var(--green);font-weight:700">95.8</td><td class="c"><span class="chip chi">YES</span></td><td class="r">1,918</td><td class="r" style="color:var(--red);font-weight:700">76.7</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">9</td><td class="name">Zoreque, JoannaZ</td><td class="r">413</td><td class="r" style="color:var(--red);font-weight:700">82.6</td><td class="c"><span class="chip chi">YES</span></td><td class="r">1,825</td><td class="r" style="color:var(--red);font-weight:700">73.0</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">10</td><td class="name">Navarro, PaulinaN</td><td class="r">395</td><td class="r" style="color:var(--red);font-weight:700">79.0</td><td class="c"><span class="chip chl">NO</span></td><td class="r">1,763</td><td class="r" style="color:var(--red);font-weight:700">70.5</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">11</td><td class="name">Serrano, ManuelSe</td><td class="r">299</td><td class="r" style="color:var(--red);font-weight:700">59.8</td><td class="c"><span class="chip chl">NO</span></td><td class="r">1,605</td><td class="r" style="color:var(--red);font-weight:700">64.2</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">12</td><td class="name">Gonzales, MarioGO</td><td class="r">429</td><td class="r" style="color:var(--green);font-weight:700">85.8</td><td class="c"><span class="chip chi">YES</span></td><td class="r">1,598</td><td class="r" style="color:var(--red);font-weight:700">63.9</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">13</td><td class="name">Johnson, KeinaJ</td><td class="r">265</td><td class="r" style="color:var(--red);font-weight:700">53.0</td><td class="c"><span class="chip chl">NO</span></td><td class="r">1,153</td><td class="r" style="color:var(--red);font-weight:700">46.1</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">14</td><td class="name">Rulon, TerenceR</td><td class="r">106</td><td class="r" style="color:var(--red);font-weight:700">21.2</td><td class="c"><span class="chip chl">NO</span></td><td class="r">504</td><td class="r" style="color:var(--red);font-weight:700">20.2</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">15</td><td class="name">Gonzales, IsaacG</td><td class="r">0</td><td class="r" style="color:var(--red);font-weight:700">0.0</td><td class="c"><span class="chip chl">NO</span></td><td class="r">352</td><td class="r" style="color:var(--red);font-weight:700">14.1</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">16</td><td class="name">Dylan, DylanB</td><td class="r">174</td><td class="r" style="color:var(--red);font-weight:700">34.8</td><td class="c"><span class="chip chl">NO</span></td><td class="r">328</td><td class="r" style="color:var(--red);font-weight:700">13.1</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">17</td><td class="name">Lucero, FrankieL</td><td class="r">0</td><td class="r" style="color:var(--red);font-weight:700">0.0</td><td class="c"><span class="chip chl">NO</span></td><td class="r">294</td><td class="r" style="color:var(--red);font-weight:700">11.8</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">18</td><td class="name">Sales, DavidO</td><td class="r">0</td><td class="r" style="color:var(--red);font-weight:700">0.0</td><td class="c"><span class="chip chl">NO</span></td><td class="r">163</td><td class="r" style="color:var(--red);font-weight:700">6.5</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">19</td><td class="name">Puffelis, CynthiaP</td><td class="r">13</td><td class="r" style="color:var(--red);font-weight:700">2.6</td><td class="c"><span class="chip chl">NO</span></td><td class="r">64</td><td class="r" style="color:var(--red);font-weight:700">2.6</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">20</td><td class="name">Henington, ChristianH</td><td class="r">0</td><td class="r" style="color:var(--red);font-weight:700">0.0</td><td class="c"><span class="chip chl">NO</span></td><td class="r">0</td><td class="r" style="color:var(--red);font-weight:700">0.0</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">21</td><td class="name">Araya, JoseA <span style="color:var(--amber)">&#9888;</span></td><td class="r">0</td><td class="r" style="color:var(--red);font-weight:700">0.0</td><td class="c"><span class="chip chl">NO</span></td><td class="r">0</td><td class="r" style="color:var(--red);font-weight:700">0.0</td><td class="c"><span class="chip chl">NO</span></td></tr>
+    <tr class="nonphone"><td class="c" style="font-size:11px">&mdash;</td><td class="name">Apolonio, ApolonioA</td><td class="r">&mdash;</td><td class="r">&mdash;</td><td class="c">Non-phone</td><td class="r">&mdash;</td><td class="r">&mdash;</td><td class="c">Non-phone</td></tr>
+    <tr class="nonphone"><td class="c" style="font-size:11px">&mdash;</td><td class="name">Amber, AmberM</td><td class="r">&mdash;</td><td class="r">&mdash;</td><td class="c">Non-phone</td><td class="r">&mdash;</td><td class="r">&mdash;</td><td class="c">Non-phone</td></tr>
+    <tr class="nonphone"><td class="c" style="font-size:11px">&mdash;</td><td class="name">Tuttle, AshleyT</td><td class="r">&mdash;</td><td class="r">&mdash;</td><td class="c">New / no activity</td><td class="r">&mdash;</td><td class="r">&mdash;</td><td class="c">New / no activity</td></tr>
+    </tbody>
+  </table></div>
+
+
+  <div class="sub-lbl">Calls Heatmap &mdash; Daily, Last 23 Trading Days (Jul 1&ndash;31)</div>
+  <p class="note">Green &ge;80 calls (daily standard) &middot; Yellow 40&ndash;79 &middot; Red &lt;40 (including a real logged 0) &middot; Gray dot = not logged in / didn't work that day. Only the 21 phone reps are shown &mdash; non-phone roles aren't tracked here.</p>
+  <div class="tw hm-wrap"><table class="hm-table">
+    <thead><tr><th class="hm-namehdr">Rep</th><th>7/1</th><th>7/2</th><th>7/3</th><th>7/6</th><th>7/7</th><th>7/8</th><th>7/9</th><th>7/10</th><th>7/13</th><th>7/14</th><th>7/15</th><th>7/16</th><th>7/17</th><th>7/20</th><th>7/21</th><th>7/22</th><th>7/23</th><th>7/24</th><th>7/27</th><th>7/28</th><th>7/29</th><th>7/30</th><th>7/31</th></tr></thead>
+    <tbody>
+    <tr><td class="hm-name">OLeal, MatthewO</td><td class="hm-g">84</td><td class="hm-g">96</td><td class="hm-r">15</td><td class="hm-g">159</td><td class="hm-g">105</td><td class="hm-g">101</td><td class="hm-g">112</td><td class="hm-g">87</td><td class="hm-g">141</td><td class="hm-g">176</td><td class="hm-g">105</td><td class="hm-g">113</td><td class="hm-r">30</td><td class="hm-g">90</td><td class="hm-g">119</td><td class="hm-g">105</td><td class="hm-g">109</td><td class="hm-g">91</td><td class="hm-g">129</td><td class="hm-g">114</td><td class="hm-g">124</td><td class="hm-g">111</td><td class="hm-g">83</td></tr><tr><td class="hm-name">Romero, EliasR</td><td class="hm-off">&middot;</td><td class="hm-g">94</td><td class="hm-r">28</td><td class="hm-y">56</td><td class="hm-g">102</td><td class="hm-g">108</td><td class="hm-g">101</td><td class="hm-g">87</td><td class="hm-g">111</td><td class="hm-g">125</td><td class="hm-g">113</td><td class="hm-g">89</td><td class="hm-g">84</td><td class="hm-g">85</td><td class="hm-g">106</td><td class="hm-g">107</td><td class="hm-g">109</td><td class="hm-g">82</td><td class="hm-g">110</td><td class="hm-g">96</td><td class="hm-g">107</td><td class="hm-g">89</td><td class="hm-g">100</td></tr><tr><td class="hm-name">Reyes, OmarR</td><td class="hm-y">77</td><td class="hm-y">68</td><td class="hm-r">14</td><td class="hm-g">137</td><td class="hm-y">78</td><td class="hm-g">90</td><td class="hm-g">102</td><td class="hm-y">73</td><td class="hm-g">122</td><td class="hm-g">113</td><td class="hm-r">0</td><td class="hm-g">111</td><td class="hm-y">75</td><td class="hm-g">104</td><td class="hm-g">98</td><td class="hm-g">96</td><td class="hm-g">97</td><td class="hm-g">80</td><td class="hm-g">108</td><td class="hm-y">57</td><td class="hm-g">142</td><td class="hm-g">114</td><td class="hm-y">78</td></tr><tr><td class="hm-name">Sanchez, JacquelineS</td><td class="hm-g">89</td><td class="hm-g">89</td><td class="hm-r">0</td><td class="hm-g">87</td><td class="hm-g">99</td><td class="hm-g">86</td><td class="hm-g">101</td><td class="hm-g">83</td><td class="hm-g">104</td><td class="hm-g">101</td><td class="hm-g">102</td><td class="hm-g">99</td><td class="hm-y">76</td><td class="hm-g">112</td><td class="hm-g">107</td><td class="hm-g">87</td><td class="hm-g">99</td><td class="hm-y">62</td><td class="hm-r">0</td><td class="hm-g">109</td><td class="hm-g">113</td><td class="hm-g">86</td><td class="hm-y">66</td></tr><tr><td class="hm-name">Serrano, ArturoS</td><td class="hm-r">0</td><td class="hm-y">73</td><td class="hm-r">29</td><td class="hm-r">0</td><td class="hm-g">87</td><td class="hm-g">89</td><td class="hm-g">94</td><td class="hm-y">71</td><td class="hm-r">30</td><td class="hm-g">107</td><td class="hm-g">103</td><td class="hm-g">109</td><td class="hm-g">93</td><td class="hm-g">90</td><td class="hm-g">101</td><td class="hm-g">111</td><td class="hm-g">119</td><td class="hm-g">93</td><td class="hm-g">118</td><td class="hm-g">114</td><td class="hm-g">99</td><td class="hm-g">94</td><td class="hm-g">107</td></tr><tr><td class="hm-name">Becerra, IvanB</td><td class="hm-g">89</td><td class="hm-g">99</td><td class="hm-r">36</td><td class="hm-y">61</td><td class="hm-g">98</td><td class="hm-g">107</td><td class="hm-g">84</td><td class="hm-y">72</td><td class="hm-g">143</td><td class="hm-g">117</td><td class="hm-g">149</td><td class="hm-g">106</td><td class="hm-g">86</td><td class="hm-g">120</td><td class="hm-g">133</td><td class="hm-g">146</td><td class="hm-g">128</td><td class="hm-y">59</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td></tr><tr><td class="hm-name">Pedraza, LuisP</td><td class="hm-g">109</td><td class="hm-y">56</td><td class="hm-r">15</td><td class="hm-g">179</td><td class="hm-g">80</td><td class="hm-g">83</td><td class="hm-y">69</td><td class="hm-y">54</td><td class="hm-g">112</td><td class="hm-r">0</td><td class="hm-g">94</td><td class="hm-y">76</td><td class="hm-g">82</td><td class="hm-y">62</td><td class="hm-y">58</td><td class="hm-g">91</td><td class="hm-r">0</td><td class="hm-y">63</td><td class="hm-g">95</td><td class="hm-y">79</td><td class="hm-g">93</td><td class="hm-g">113</td><td class="hm-g">93</td></tr><tr><td class="hm-name">Anaya, ZulemaA</td><td class="hm-y">48</td><td class="hm-y">73</td><td class="hm-r">17</td><td class="hm-r">0</td><td class="hm-g">91</td><td class="hm-y">42</td><td class="hm-y">79</td><td class="hm-y">53</td><td class="hm-g">98</td><td class="hm-y">51</td><td class="hm-y">69</td><td class="hm-g">92</td><td class="hm-g">95</td><td class="hm-g">98</td><td class="hm-g">95</td><td class="hm-y">61</td><td class="hm-g">115</td><td class="hm-y">64</td><td class="hm-g">121</td><td class="hm-g">87</td><td class="hm-y">66</td><td class="hm-g">106</td><td class="hm-g">99</td></tr><tr><td class="hm-name">Zoreque, JoannaZ</td><td class="hm-y">79</td><td class="hm-g">84</td><td class="hm-r">27</td><td class="hm-g">102</td><td class="hm-y">77</td><td class="hm-y">70</td><td class="hm-y">54</td><td class="hm-y">68</td><td class="hm-g">96</td><td class="hm-g">90</td><td class="hm-g">91</td><td class="hm-y">62</td><td class="hm-y">58</td><td class="hm-y">75</td><td class="hm-y">70</td><td class="hm-y">76</td><td class="hm-y">64</td><td class="hm-r">39</td><td class="hm-g">95</td><td class="hm-y">66</td><td class="hm-g">93</td><td class="hm-y">77</td><td class="hm-g">82</td></tr><tr><td class="hm-name">Navarro, PaulinaN</td><td class="hm-g">83</td><td class="hm-y">61</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-y">67</td><td class="hm-y">79</td><td class="hm-y">68</td><td class="hm-y">46</td><td class="hm-g">81</td><td class="hm-g">85</td><td class="hm-g">94</td><td class="hm-y">68</td><td class="hm-y">75</td><td class="hm-y">58</td><td class="hm-y">66</td><td class="hm-y">78</td><td class="hm-y">78</td><td class="hm-y">66</td><td class="hm-g">93</td><td class="hm-g">85</td><td class="hm-y">78</td><td class="hm-g">80</td><td class="hm-y">59</td></tr><tr><td class="hm-name">Serrano, ManuelSe</td><td class="hm-y">46</td><td class="hm-y">53</td><td class="hm-r">14</td><td class="hm-y">69</td><td class="hm-y">73</td><td class="hm-y">78</td><td class="hm-g">83</td><td class="hm-y">55</td><td class="hm-g">94</td><td class="hm-g">82</td><td class="hm-y">61</td><td class="hm-y">66</td><td class="hm-y">55</td><td class="hm-y">73</td><td class="hm-g">84</td><td class="hm-y">62</td><td class="hm-g">80</td><td class="hm-y">56</td><td class="hm-y">77</td><td class="hm-y">70</td><td class="hm-y">68</td><td class="hm-g">84</td><td class="hm-r">0</td></tr><tr><td class="hm-name">Gonzales, MarioGO</td><td class="hm-y">76</td><td class="hm-y">75</td><td class="hm-r">14</td><td class="hm-g">92</td><td class="hm-g">84</td><td class="hm-y">68</td><td class="hm-y">53</td><td class="hm-g">87</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-y">78</td><td class="hm-g">94</td><td class="hm-g">105</td><td class="hm-g">92</td><td class="hm-y">73</td><td class="hm-g">98</td><td class="hm-g">91</td><td class="hm-g">95</td><td class="hm-g">92</td><td class="hm-y">53</td></tr><tr><td class="hm-name">Johnson, KeinaJ</td><td class="hm-y">44</td><td class="hm-r">28</td><td class="hm-r">3</td><td class="hm-y">62</td><td class="hm-y">43</td><td class="hm-y">54</td><td class="hm-r">33</td><td class="hm-r">38</td><td class="hm-y">41</td><td class="hm-y">65</td><td class="hm-y">63</td><td class="hm-y">53</td><td class="hm-y">56</td><td class="hm-r">38</td><td class="hm-y">42</td><td class="hm-y">46</td><td class="hm-y">53</td><td class="hm-r">30</td><td class="hm-y">68</td><td class="hm-y">50</td><td class="hm-y">47</td><td class="hm-y">63</td><td class="hm-r">36</td></tr><tr><td class="hm-name">Rulon, TerenceR</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">6</td><td class="hm-y">71</td><td class="hm-y">78</td><td class="hm-y">79</td><td class="hm-y">67</td><td class="hm-y">52</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">15</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">30</td><td class="hm-y">49</td><td class="hm-y">57</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td></tr><tr><td class="hm-name">Gonzales, IsaacG</td><td class="hm-y">69</td><td class="hm-y">57</td><td class="hm-r">14</td><td class="hm-y">79</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td></tr><tr><td class="hm-name">Dylan, DylanB</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-y">58</td><td class="hm-r">23</td><td class="hm-r">37</td><td class="hm-r">20</td><td class="hm-r">31</td><td class="hm-y">43</td><td class="hm-r">18</td><td class="hm-r">36</td><td class="hm-r">22</td><td class="hm-y">55</td></tr><tr><td class="hm-name">Lucero, FrankieL</td><td class="hm-y">62</td><td class="hm-y">50</td><td class="hm-r">0</td><td class="hm-y">52</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td></tr><tr><td class="hm-name">Sales, DavidO</td><td class="hm-y">66</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td><td class="hm-off">&middot;</td></tr><tr><td class="hm-name">Puffelis, CynthiaP</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">1</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">8</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-y">43</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">12</td><td class="hm-r">1</td><td class="hm-r">0</td></tr><tr><td class="hm-name">Henington, ChristianH</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td></tr><tr><td class="hm-name">Araya, JoseA</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td></tr>
+    </tbody>
+  </table></div>
+  <div class="hm-legend">
+    <span class="hm-lg-item"><span class="hm-swatch hm-g"></span>&ge;80 (on standard)</span>
+    <span class="hm-lg-item"><span class="hm-swatch hm-y"></span>40&ndash;79</span>
+    <span class="hm-lg-item"><span class="hm-swatch hm-r"></span>&lt;40</span>
+    <span class="hm-lg-item"><span class="hm-swatch hm-off"></span>not logged in</span>
+  </div>
+
+  <div class="flagbox">
+    <strong>&#9888; Data flag &mdash; not resolved, needs your input:</strong> the call-tracking workbook lists this seat as <strong>"Jose Nando"</strong> (0 calls all of WK27&ndash;31), while the sales roster carries the matching seat as <strong>"Araya, JoseA."</strong> Same position, same chronic zero-activity pattern &mdash; but the names don't match. Worth confirming whether it's a name-mapping issue on the phone system's side or two different people.
+  </div>
+
+</div>
+
+<div class="footer">
+  <span>COL Auto Parts &middot; Sales Hub &middot; Internal Use Only</span>
+  <span>Questions? See Blake.</span>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+try{
+  const labels = ['WK20','WK21','WK22','WK23','WK24','WK25','WK26','WK27','WK28','WK29','WK30','WK31'];
+
+  new Chart(document.getElementById('abandon-trend-chart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'True Abandon Rate',
+        data: [1.99,1.54,2.50,1.92,2.60,2.34,2.66,2.66,1.97,3.08,1.89,2.87],
+        borderColor: '#b91c1c', backgroundColor: 'rgba(185,28,28,.1)',
+        borderWidth: 2, pointRadius: 3, tension: 0.25, fill: true
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { min: 0, max: 5, ticks: { font: { size: 10 }, callback: v => v+'%' } }, x: { ticks: { font: { size: 10 } } } }
+    }
+  });
+
+  new Chart(document.getElementById('calls-trend-chart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Company Calls',
+        data: [5625,5553,4610,5390,5401,5427,5419,4814,5536,5296,5612,5514],
+        backgroundColor: '#00AEEF', borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: false, ticks: { font: { size: 10 } } }, x: { ticks: { font: { size: 10 } } } }
+    }
+  });
+}catch(e){console.error('chart error:', e);}
+</script>
+
+</body>
+</html>

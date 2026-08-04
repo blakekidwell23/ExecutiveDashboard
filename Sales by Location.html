@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>COL Sales Hub &mdash; Location Sales Performance</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a2e4a;--navy2:#2e5090;--cyan:#00AEEF;--green:#1a7a38;--amber:#b56800;--red:#b91c1c;--purple:#6d28d9;--pink:#be185d;--border:#dde3ea;--bg:#f0f3f8;--muted:#6b7280;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:var(--navy);font-size:13px}
+
+.header{background:#1a2e4a;border-bottom:4px solid #00AEEF;padding:0 40px;display:flex;align-items:center;justify-content:space-between;min-height:80px;gap:20px;flex-wrap:wrap;box-shadow:0 2px 16px rgba(0,0,0,.25)}
+.header-left{display:flex;align-items:center;gap:20px}
+.header-logo{height:44px;width:auto;display:block;filter:brightness(0) invert(1)}
+.header-divider{width:1px;height:36px;background:rgba(255,255,255,.2);flex-shrink:0}
+.header-brand{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;letter-spacing:.08em;color:#00AEEF;line-height:1}
+.header-brand em{color:#fff;font-style:normal}
+.header-right{text-align:right}
+.header-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:.04em;text-transform:uppercase}
+.header-sub{font-family:'DM Mono',monospace;font-size:11px;color:#00AEEF;margin-top:3px;opacity:.85}
+
+.wrap{max-width:1200px;margin:0 auto;padding:24px 24px 60px}
+.page-hdr{margin-bottom:14px}
+.page-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--navy)}
+.page-meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px}
+
+.sec-lbl{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:26px 0 4px;padding:10px 0 6px;border-bottom:3px solid var(--cyan)}
+.sub-lbl{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--navy2);margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.note{font-size:11px;color:var(--muted);margin-bottom:14px;font-family:'DM Mono',monospace;line-height:1.6}
+
+.mc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:8px}
+.mc{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.mc-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-family:'DM Mono',monospace;margin-bottom:4px}
+.mc-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--navy)}
+.mc-sub{font-size:10.5px;color:var(--muted);margin-top:2px}
+.mc.green .mc-val{color:var(--green)} .mc.red .mc-val{color:var(--red)} .mc.amber .mc-val{color:var(--amber)}
+
+.chart-box{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.05);margin-bottom:18px;height:260px}
+
+.tw{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05);margin-bottom:18px}
+.tw table{width:100%;border-collapse:collapse;font-size:13px}
+.tw thead tr{background:var(--navy);color:#fff}
+.tw th{padding:8px 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;text-align:left}
+.tw th.r{text-align:right}.tw th.c{text-align:center}
+.tw td{padding:7px 10px;border-bottom:1px solid #eef2f7;color:var(--navy)}
+.tw td.r{text-align:right}.tw td.c{text-align:center}.tw td.name{font-weight:600}
+.tw tr:nth-child(even) td{background:#f7f9fc}.tw tr:hover td{background:#eef4fb}
+.tw tr.total-row td{background:#dbe6f6!important;font-weight:700;border-top:2px solid var(--navy2)}
+.tw tr.discontinued td{color:var(--muted);font-style:italic}
+
+.chip{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace}
+.chi{background:#d1fae5;color:#065f46}.chl{background:#fee2e2;color:#991b1b}.chm{background:#f1f5f9;color:#64748b}
+
+.trendbox{border-radius:8px;padding:14px 16px;margin-bottom:18px;font-size:12px;line-height:1.7}
+.trendbox.good{background:#eafaf1;border:1px solid #86e0ac}
+.trendbox.bad{background:#fef2f2;border:1px solid #f5a3a3}
+.trendbox h4{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.trendbox.good h4{color:#065f46}.trendbox.bad h4{color:#991b1b}
+.trendbox ul{margin:0;padding-left:18px}
+.trendbox li{margin-bottom:4px}
+.trend-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media (max-width:800px){.trend-grid{grid-template-columns:1fr}}
+
+.flagbox{background:#fef7ec;border:1px solid #fbbf24;border-radius:8px;padding:12px 16px;font-size:12px;color:#92400e;margin-bottom:18px;line-height:1.6}
+
+.loc-btns{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.loc-btn{font-family:'Barlow',Arial,sans-serif;font-size:11.5px;font-weight:600;padding:6px 12px;border-radius:16px;border:1px solid var(--border);background:#fff;color:var(--navy2);cursor:pointer;transition:background .1s,color .1s}
+.loc-btn:hover{background:#eef4fb}
+.loc-btn.active{background:var(--navy);border-color:var(--navy);color:#fff}
+
+.footer{background:#1a2e4a;border-top:3px solid #00AEEF;padding:16px 40px;font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:30px}
+@media (max-width:700px){.header{padding:14px 20px;min-height:auto}.header-logo{height:34px}.header-brand{font-size:20px}.wrap{padding:18px 16px 40px}.footer{padding:14px 20px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <img class="header-logo" src="https://colauto.com/wp-content/uploads/2026/03/Collision-Auto-Parts_Web_Logo_Header-TM-White.png" alt="Collision Auto Parts" onerror="this.style.display='none'">
+    <div class="header-divider"></div>
+    <div class="header-brand">COL <em>AUTO PARTS</em></div>
+  </div>
+  <div class="header-right">
+    <div class="header-title">Sales Hub &middot; Location Performance</div>
+    <div class="header-sub">Generated August 3, 2026</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="page-hdr">
+    <div class="page-title">Location Sales Performance &mdash; Year over Year</div>
+    <div class="page-meta">WK31 (Jul 27&ndash;31) &middot; July 2026 (Calendar Month) &middot; YTD Jan&ndash;Jul 2026 &middot; All vs. Same Period 2025 &middot; Source: Sales by Location by Month and by Week</div>
+  </div>
+
+  <div class="flagbox">
+    <strong>&#9888; CLX (Calexico) &mdash; closed warehouse:</strong> confirmed &mdash; CLX was shut down, with the majority of its volume rolled into <strong>San Diego (SD)</strong> and <strong>Santa Fe Springs (SFS)</strong>. That's part of why both locations are showing strong, accelerating YoY growth this year. 2025 CLX activity is kept in the YoY math below for accurate comps; 2026 is essentially $0 and will keep shrinking toward full overlap as CLX's 2025 comps roll off the trailing 12 months. No action needed &mdash; this is expected, not a data error.
+  </div>
+
+  <div class="mc-grid">
+    <div class="mc red"><div class="mc-lbl">WK31 vs LY</div><div class="mc-val">-7.6%</div><div class="mc-sub">$708,858 vs $767,356</div></div>
+    <div class="mc red"><div class="mc-lbl">July vs LY</div><div class="mc-val">-6.1%</div><div class="mc-sub">$3,471,451 vs $3,695,256</div></div>
+    <div class="mc green"><div class="mc-lbl">YTD (Jan&ndash;Jul) vs LY</div><div class="mc-val">+2.4%</div><div class="mc-sub">$23,601,121 vs $23,053,871</div></div>
+    <div class="mc"><div class="mc-lbl">July GM% vs LY</div><div class="mc-val">54.5%</div><div class="mc-sub">vs 54.7% LY (-0.2pt)</div></div>
+  </div>
+  <p class="note">Two straight down weeks/months against last year, but the year is still slightly ahead cumulatively &mdash; recent softness hasn't undone the earlier-year gains yet. Worth watching whether WK31's -7.6% is a blip or the start of a trend.</p>
+
+  <div class="sub-lbl">Weekly Sales, 2026 vs 2025 &mdash; Last 12 Weeks</div>
+  <div class="loc-btns" id="loc-btns">
+    <button class="loc-btn active" data-loc="ALL">All Locations</button>
+    <button class="loc-btn" data-loc="HAY">Hayward</button>
+    <button class="loc-btn" data-loc="SFS">Santa Fe Springs</button>
+    <button class="loc-btn" data-loc="SD">San Diego</button>
+    <button class="loc-btn" data-loc="ABQ">Albuquerque</button>
+    <button class="loc-btn" data-loc="SAC">Sacramento</button>
+    <button class="loc-btn" data-loc="ECO">Santa Rosa</button>
+    <button class="loc-btn" data-loc="Fresno">Fresno</button>
+    <button class="loc-btn" data-loc="CLX">CLX</button>
+  </div>
+  <div class="chart-box"><canvas id="yoy-trend-chart"></canvas></div>
+  <p class="note" id="loc-chart-note">Company-wide total, all 8 locations. Click a location above to see its own 12-week trend.</p>
+
+  <div class="sec-lbl">Standouts &amp; Concerns</div>
+  <div class="trend-grid">
+    <div class="trendbox good">
+      <h4>&#9650; Growing</h4>
+      <ul>
+        <li><strong>Santa Fe Springs (SFS) &mdash; +21.0% YTD</strong>, and it's not a fluke: +21.1% in July alone and +23.5% for WK31 too. Consistent growth across all three windows &mdash; part of this is inherited volume from the closed CLX warehouse.</li>
+        <li><strong>San Diego (SD) &mdash; +11.6% YTD</strong>, accelerating: +24.0% in July, +47.8% in WK31. The strongest recent momentum of any location &mdash; also picking up some of CLX's former volume.</li>
+        <li><strong>Sacramento (SAC) &mdash; +8.9% YTD</strong>, though July (-4.9%) and WK31 (-15.1%) have both cooled &mdash; the YTD strength is from earlier in the year, not right now.</li>
+      </ul>
+    </div>
+    <div class="trendbox bad">
+      <h4>&#9660; Declining</h4>
+      <ul>
+        <li><strong>Albuquerque (ABQ) &mdash; the clearest concern.</strong> Down in all three windows: -13.3% YTD, -20.9% July, -33.1% WK31. This isn't a one-week dip, it's a sustained decline.</li>
+        <li><strong>Fresno &mdash; flat YTD (+0.3%) but a sharp recent drop</strong>: -12.0% July, -53.0% WK31 (a single very soft week, worth watching before calling it a trend).</li>
+        <li><strong>Hayward (HAY), the biggest location by volume &mdash; down -17.6% July, -21.1% WK31</strong>, though still +1.3% YTD. Worth watching given its size &mdash; it's the largest single driver of the company total.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sub-lbl">By Location &mdash; WK31, July, and YTD, All vs. Same Period Last Year</div>
+  <div class="tw"><table>
+    <thead><tr>
+      <th>Location</th>
+      <th class="r">WK31 2026</th><th class="r">vs LY</th>
+      <th class="r">July 2026</th><th class="r">vs LY</th>
+      <th class="r">YTD 2026</th><th class="r">vs LY</th>
+      <th class="r">July GM%</th>
+    </tr></thead>
+    <tbody>
+    <tr><td class="name">Hayward (HAY)</td><td class="r">$259,619</td><td class="r" style="color:var(--red);font-weight:700">-21.1%</td><td class="r">$1,337,912</td><td class="r" style="color:var(--red);font-weight:700">-17.6%</td><td class="r">$9,397,882</td><td class="r" style="color:var(--green);font-weight:700">+1.3%</td><td class="r">55.0%</td></tr>
+    <tr><td class="name">Santa Fe Springs (SFS)</td><td class="r">$158,244</td><td class="r" style="color:var(--green);font-weight:700">+23.5%</td><td class="r">$766,657</td><td class="r" style="color:var(--green);font-weight:700">+21.1%</td><td class="r">$5,061,513</td><td class="r" style="color:var(--green);font-weight:700">+21.0%</td><td class="r">52.4%</td></tr>
+    <tr><td class="name">San Diego (SD)</td><td class="r">$112,607</td><td class="r" style="color:var(--green);font-weight:700">+47.8%</td><td class="r">$492,487</td><td class="r" style="color:var(--green);font-weight:700">+24.0%</td><td class="r">$3,181,759</td><td class="r" style="color:var(--green);font-weight:700">+11.6%</td><td class="r">54.0%</td></tr>
+    <tr><td class="name">Albuquerque (ABQ)</td><td class="r">$58,868</td><td class="r" style="color:var(--red);font-weight:700">-33.1%</td><td class="r">$292,846</td><td class="r" style="color:var(--red);font-weight:700">-20.9%</td><td class="r">$2,098,160</td><td class="r" style="color:var(--red);font-weight:700">-13.3%</td><td class="r">57.3%</td></tr>
+    <tr><td class="name">Sacramento (SAC)</td><td class="r">$55,579</td><td class="r" style="color:var(--red);font-weight:700">-15.1%</td><td class="r">$298,086</td><td class="r" style="color:var(--red);font-weight:700">-4.9%</td><td class="r">$1,994,507</td><td class="r" style="color:var(--green);font-weight:700">+8.9%</td><td class="r">54.6%</td></tr>
+    <tr><td class="name">Santa Rosa (ECO)</td><td class="r">$56,410</td><td class="r" style="color:var(--green);font-weight:700">+5.5%</td><td class="r">$219,540</td><td class="r" style="color:var(--red);font-weight:700">-6.2%</td><td class="r">$1,415,406</td><td class="r" style="color:var(--red);font-weight:700">-2.5%</td><td class="r">55.4%</td></tr>
+    <tr><td class="name">Fresno</td><td class="r">$7,532</td><td class="r" style="color:var(--red);font-weight:700">-53.0%</td><td class="r">$63,923</td><td class="r" style="color:var(--red);font-weight:700">-12.0%</td><td class="r">$452,709</td><td class="r" style="color:var(--green);font-weight:700">+0.3%</td><td class="r">55.8%</td></tr>
+    <tr class="discontinued"><td class="name">CLX <span style="color:var(--amber)">&#9888;</span></td><td class="r">n/a</td><td class="r">n/a</td><td class="r">n/a</td><td class="r">n/a</td><td class="r">~$0</td><td class="r">-100.1%</td><td class="r">n/a</td></tr>
+    <tr class="total-row"><td class="name">TOTAL COL</td><td class="r">$708,858</td><td class="r" style="color:var(--red)">-7.6%</td><td class="r">$3,471,451</td><td class="r" style="color:var(--red)">-6.1%</td><td class="r">$23,601,121</td><td class="r" style="color:var(--green)">+2.4%</td><td class="r">54.5%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">"Santa Rosa (ECO)" &mdash; this location has appeared under a few different names across source files in the past (Santa Rosa / Rohnert Park / ECO); using ECO's numbers here since that's what this file provides. GM% shown is July 2026 only.</p>
+
+  <div class="sub-lbl">Monthly History by Location &mdash; 2026 vs 2025</div>
+  <div class="loc-btns" id="month-btns">
+    <button class="loc-btn" data-month="Jan">Jan</button>
+    <button class="loc-btn" data-month="Feb">Feb</button>
+    <button class="loc-btn" data-month="Mar">Mar</button>
+    <button class="loc-btn" data-month="Apr">Apr</button>
+    <button class="loc-btn" data-month="May">May</button>
+    <button class="loc-btn" data-month="Jun">Jun</button>
+    <button class="loc-btn active" data-month="Jul">Jul</button>
+  </div>
+  <div class="tw"><table>
+    <thead><tr>
+      <th>Location</th>
+      <th class="r" id="month-hdr-2026">Jul 2026</th>
+      <th class="r" id="month-hdr-2025">Jul 2025</th>
+      <th class="r">YoY %</th>
+      <th class="r">GP $</th>
+      <th class="r">GM%</th>
+    </tr></thead>
+    <tbody id="month-tbody">
+    </tbody>
+  </table></div>
+  <p class="note">Pick a month above to see that month's location-by-location performance vs. the same month last year. Only Jan&ndash;Jul 2026 are complete months so far this year.</p>
+
+</div>
+
+<div class="footer">
+  <span>COL Auto Parts &middot; Sales Hub &middot; Internal Use Only</span>
+  <span>Questions? See Blake.</span>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+try{
+  const labels = ['WK20','WK21','WK22','WK23','WK24','WK25','WK26','WK27','WK28','WK29','WK30','WK31'];
+  const locData = {
+    ALL:    { label: 'All Locations',        d2025: [655135,745090,531551,741737,753744,763980,771200,631261,859919,855733,830509,767356], d2026: [736764,746445,603230,841443,821455,773673,757077,629081,816943,768878,785156,708858] },
+    HAY:    { label: 'Hayward (HAY)',        d2025: [282237,310527,237225,314254,320277,326627,337662,275036,379492,380728,372006,329207], d2026: [303886,294494,262261,325709,308122,280551,304873,275552,318077,299705,281979,259619] },
+    SFS:    { label: 'Santa Fe Springs (SFS)', d2025: [105627,122751,86656,141392,136146,130977,140478,114384,152533,151238,128952,128162], d2026: [139243,160152,114914,195965,199469,182117,181280,108897,182963,176381,178595,158244] },
+    SD:     { label: 'San Diego (SD)',       d2025: [68670,90677,51184,84120,74704,91211,83604,64306,95813,95262,90824,76207], d2026: [96019,101999,80702,110427,113934,108878,92184,79636,104441,106554,117631,112607] },
+    ABQ:    { label: 'Albuquerque (ABQ)',    d2025: [73290,77953,65679,70373,74189,68091,79545,68277,82606,69253,86855,87950], d2026: [67236,63811,60168,74152,72503,71265,57089,61080,67160,63122,73591,58868] },
+    SAC:    { label: 'Sacramento (SAC)',     d2025: [57392,73351,40492,55439,73882,70924,58663,45816,70225,76262,71317,65453], d2026: [66414,64060,39397,71886,62320,69529,63914,56776,75430,69634,61329,55579] },
+    ECO:    { label: 'Santa Rosa (ECO)',     d2025: [47307,42394,30629,46991,46363,43370,43945,43282,49815,53180,50215,53471], d2026: [45314,49083,36333,51781,47103,45397,44256,36247,50102,38619,55875,56410] },
+    Fresno: { label: 'Fresno',               d2025: [10866,13655,14511,18144,12831,20018,14063,13145,17659,18469,16488,16037], d2026: [18652,12846,9454,11522,18003,15937,13480,10893,18770,14863,16156,7532] },
+    CLX:    { label: 'CLX (Calexico &mdash; closed)', d2025: [9747,13782,5175,11024,15352,12762,13241,7014,11776,11342,13852,10867], d2026: [null,null,null,null,null,null,null,null,null,null,null,null] }
+  };
+
+  const chart = new Chart(document.getElementById('yoy-trend-chart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: '2025', data: locData.ALL.d2025, borderColor: '#9ca3af', backgroundColor: 'rgba(156,163,175,.08)', borderDash: [5,3], borderWidth: 2, pointRadius: 2, tension: 0.25 },
+        { label: '2026', data: locData.ALL.d2026, borderColor: '#00AEEF', backgroundColor: 'rgba(0,174,239,.1)', borderWidth: 2, pointRadius: 2, tension: 0.25, fill: true }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { font: { size: 11 } } } },
+      scales: { y: { beginAtZero: false, ticks: { font: { size: 10 }, callback: v => '$'+(v/1000)+'k' } }, x: { ticks: { font: { size: 10 } } } }
+    }
+  });
+
+  const btns = document.querySelectorAll('#loc-btns .loc-btn');
+  const noteEl = document.getElementById('loc-chart-note');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.getAttribute('data-loc');
+      const d = locData[key];
+      if (!d) return;
+      chart.data.datasets[0].data = d.d2025;
+      chart.data.datasets[1].data = d.d2026;
+      chart.update();
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      noteEl.innerHTML = key === 'ALL'
+        ? 'Company-wide total, all 8 locations. Click a location above to see its own 12-week trend.'
+        : d.label + ' &mdash; 12-week trend. Click "All Locations" to return to the company total.';
+    });
+  });
+}catch(e){console.error('chart error:', e);}
+</script>
+
+<script>
+try{
+  const monthlyLocData = {"Jan": {"rows": [{"loc": "HAY", "label": "Hayward (HAY)", "v2025": 1342402.3799999428, "v2026": 1380205.5599999905, "gp2025": 755311.2699999951, "gp2026": 756845.5800000004, "gm2026": 0.5483571447140132}, {"loc": "SFS", "label": "Santa Fe Springs (SFS)", "v2025": 661812.9200000002, "v2026": 618432.6600000015, "gp2025": 373704.3999999997, "gp2026": 335819.98999999947, "gm2026": 0.5430178768372269}, {"loc": "SD", "label": "San Diego (SD)", "v2025": 468619.54000000004, "v2026": 388865.9100000003, "gp2025": 283680.1999999998, "gp2026": 218180.2099999992, "gm2026": 0.5610679784196023}, {"loc": "ABQ", "label": "Albuquerque (ABQ)", "v2025": 382341.84000000206, "v2026": 291907.1900000001, "gp2025": 227026.129999999, "gp2026": 174638.49999999997, "gm2026": 0.5982672095195734}, {"loc": "SAC", "label": "Sacramento (SAC)", "v2025": 264944.8700000003, "v2026": 283587.580000001, "gp2025": 152701.7399999998, "gp2026": 149004.39000000048, "gm2026": 0.5254263603504779}, {"loc": "ECO", "label": "Santa Rosa (ECO)", "v2025": 223951.18000000002, "v2026": 222161.06999999975, "gp2025": 130174.89999999976, "gp2026": 121807.82, "gm2026": 0.5482860701022018}, {"loc": "Fresno", "label": "Fresno", "v2025": 57933.47, "v2026": 62479.47000000004, "gp2025": 34557.64, "gp2026": 33551.579999999965, "gm2026": 0.5370016743099765}, {"loc": "CLX", "label": "CLX (Calexico)", "v2025": 114456.31000000003, "v2026": null, "gp2025": 69964.67000000001, "gp2026": null, "gm2026": null}], "total": {"v2025": 3516462.5100000035, "v2026": 3247639.4399999725, "gp2025": 2027120.9499999955, "gp2026": 1789848.069999999, "gm2026": 0.5511227779645435}}, "Feb": {"rows": [{"loc": "HAY", "label": "Hayward (HAY)", "v2025": 1059540.3599999894, "v2026": 1276269.4599999953, "gp2025": 587589.6599999984, "gp2026": 691483.1800000025, "gm2026": 0.5418003028921534}, {"loc": "SFS", "label": "Santa Fe Springs (SFS)", "v2025": 536792.18, "v2026": 573172.4100000005, "gp2025": 288252.9700000023, "gp2026": 289633.49000000046, "gm2026": 0.5053165242199991}, {"loc": "SD", "label": "San Diego (SD)", "v2025": 367768.41, "v2026": 385313.5900000005, "gp2025": 217858.74999999936, "gp2026": 205179.9600000009, "gm2026": 0.5325012284150181}, {"loc": "ABQ", "label": "Albuquerque (ABQ)", "v2025": 318008.6500000023, "v2026": 292276.76000000007, "gp2025": 189159.17999999976, "gp2026": 164676.90999999995, "gm2026": 0.5634279988597106}, {"loc": "SAC", "label": "Sacramento (SAC)", "v2025": 205329.58999999968, "v2026": 273896.13999999943, "gp2025": 117475.45999999998, "gp2026": 144004.9000000004, "gm2026": 0.5257646201220678}, {"loc": "ECO", "label": "Santa Rosa (ECO)", "v2025": 184634.4100000003, "v2026": 189544.0700000002, "gp2025": 104808.73999999996, "gp2026": 101562.86999999991, "gm2026": 0.5358272089440719}, {"loc": "Fresno", "label": "Fresno", "v2025": 51532.46999999999, "v2026": 66911.19999999997, "gp2025": 30140.48000000002, "gp2026": 36127.85999999997, "gm2026": 0.5399374095816544}, {"loc": "CLX", "label": "CLX (Calexico)", "v2025": 105295.84999999999, "v2026": null, "gp2025": 64690.64999999995, "gp2026": null, "gm2026": null}], "total": {"v2025": 2828901.9199999855, "v2026": 3057383.6299999696, "gp2025": 1599975.8899999994, "gp2026": 1632669.1700000027, "gm2026": 0.5340086059138149}}, "Mar": {"rows": [{"loc": "HAY", "label": "Hayward (HAY)", "v2025": 1307354.669999987, "v2026": 1420529.3399999912, "gp2025": 732270.4799999981, "gp2026": 804731.8899999949, "gm2026": 0.5665014212237248}, {"loc": "SFS", "label": "Santa Fe Springs (SFS)", "v2025": 576056.0900000001, "v2026": 779289.530000005, "gp2025": 297187.7799999994, "gp2026": 396069.12999999925, "gm2026": 0.5082438743915842}, {"loc": "SD", "label": "San Diego (SD)", "v2025": 434473.1899999998, "v2026": 525918.9700000038, "gp2025": 254782.319999999, "gp2026": 280895.6199999999, "gm2026": 0.5341043697282831}, {"loc": "ABQ", "label": "Albuquerque (ABQ)", "v2025": 354635.4900000022, "v2026": 292864.8499999998, "gp2025": 212950.95999999982, "gp2026": 167511.41000000015, "gm2026": 0.5719751277765163}, {"loc": "SAC", "label": "Sacramento (SAC)", "v2025": 263812.8900000005, "v2026": 289393.8400000011, "gp2025": 153925.43999999986, "gp2026": 159199.39999999953, "gm2026": 0.5501132988870769}, {"loc": "ECO", "label": "Santa Rosa (ECO)", "v2025": 219506.43000000017, "v2026": 202514.0199999994, "gp2025": 129137.68000000028, "gp2026": 112686.39999999978, "gm2026": 0.5564375246711319}, {"loc": "Fresno", "label": "Fresno", "v2025": 72455.37000000005, "v2026": 71745.69000000009, "gp2025": 45320.79000000001, "gp2026": 40678.46000000001, "gm2026": 0.5669812360854005}, {"loc": "CLX", "label": "CLX (Calexico)", "v2025": 96821.69999999998, "v2026": null, "gp2025": 59235.669999999875, "gp2026": null, "gm2026": null}], "total": {"v2025": 3325115.8299999777, "v2026": 3582256.239999993, "gp2025": 1884811.1199999931, "gp2026": 1961772.3100000033, "gm2026": 0.5476359530327756}}, "Apr": {"rows": [{"loc": "HAY", "label": "Hayward (HAY)", "v2025": 1417536.3799999796, "v2026": 1383771.9400000009, "gp2025": 823677.2900000052, "gp2026": 794640.5400000045, "gm2026": 0.5742568677899366}, {"loc": "SFS", "label": "Santa Fe Springs (SFS)", "v2025": 718751.8, "v2026": 795332.2799999971, "gp2025": 390495.0799999991, "gp2026": 424936.53999999777, "gm2026": 0.5342880588224073}, {"loc": "SD", "label": "San Diego (SD)", "v2025": 504649.49, "v2026": 501814.89000000025, "gp2025": 300589.47999999963, "gp2026": 278842.9499999999, "gm2026": 0.5556689439805179}, {"loc": "ABQ", "label": "Albuquerque (ABQ)", "v2025": 372586.74000000214, "v2026": 321303.52000000083, "gp2025": 217302.97000000035, "gp2026": 184988.0100000001, "gm2026": 0.5757422452141191}, {"loc": "SAC", "label": "Sacramento (SAC)", "v2025": 270506.1199999999, "v2026": 287713.0700000017, "gp2025": 163650.03999999986, "gp2026": 160216.60999999996, "gm2026": 0.5568624671795376}, {"loc": "ECO", "label": "Santa Rosa (ECO)", "v2025": 228095.62999999942, "v2026": 200346.72000000015, "gp2025": 139115.19999999995, "gp2026": 114601.09999999961, "gm2026": 0.5720138567778875}, {"loc": "Fresno", "label": "Fresno", "v2025": 67213.55999999992, "v2026": 62126.32999999995, "gp2025": 41095.37000000002, "gp2026": 35895.82000000005, "gm2026": 0.5777875499808226}, {"loc": "CLX", "label": "CLX (Calexico)", "v2025": 112779.84, "v2026": -815.56, "gp2025": 67503.21000000005, "gp2026": -583.0699999999999, "gm2026": 0.7149320712148707}], "total": {"v2025": 3692119.559999997, "v2026": 3551593.190000001, "gp2025": 2143428.639999997, "gp2026": 1993538.5000000126, "gm2026": 0.5613082336155769}}, "May": {"rows": [{"loc": "HAY", "label": "Hayward (HAY)", "v2025": 1197734.4700000004, "v2026": 1282917.4799999902, "gp2025": 694529.1899999998, "gp2026": 730776.1900000018, "gm2026": 0.5696205729459758}, {"loc": "SFS", "label": "Santa Fe Springs (SFS)", "v2025": 493929.61999999825, "v2026": 731376.8600000081, "gp2025": 297020.2100000005, "gp2026": 383579.38000000076, "gm2026": 0.5244620126483035}, {"loc": "SD", "label": "San Diego (SD)", "v2025": 331654.47000000015, "v2026": 433552.87999999867, "gp2025": 209524.21000000034, "gp2026": 237391.57000000082, "gm2026": 0.5475492862600787}, {"loc": "ABQ", "label": "Albuquerque (ABQ)", "v2025": 317534.2799999999, "v2026": 300977.26, "gp2025": 179522.21999999988, "gp2026": 178120.92000000033, "gm2026": 0.5918085638762222}, {"loc": "SAC", "label": "Sacramento (SAC)", "v2025": 249289.90999999992, "v2026": 273520.15000000095, "gp2025": 152628.8400000001, "gp2026": 155046.86000000022, "gm2026": 0.5668571767016056}, {"loc": "ECO", "label": "Santa Rosa (ECO)", "v2025": 172186.80999999965, "v2026": 175050.0100000001, "gp2025": 105825.26999999983, "gp2026": 97271.43, "gm2026": 0.5556779459766951}, {"loc": "Fresno", "label": "Fresno", "v2025": 59602.98999999987, "v2026": 62290.43999999999, "gp2025": 37722.22000000001, "gp2026": 36731.99999999998, "gm2026": 0.5896892043144981}, {"loc": "CLX", "label": "CLX (Calexico)", "v2025": 48792.77999999994, "v2026": null, "gp2025": 31448.290000000005, "gp2026": null, "gm2026": null}], "total": {"v2025": 2870725.33, "v2026": 3259685.079999986, "gp2025": 1708220.449999996, "gp2026": 1818918.3500000087, "gm2026": 0.5580043180122224}}, "Jun": {"rows": [{"loc": "HAY", "label": "Hayward (HAY)", "v2025": 1334142.039999998, "v2026": 1316276.0599999938, "gp2025": 715015.5900000023, "gp2026": 748500.1700000032, "gm2026": 0.568649839304991}, {"loc": "SFS", "label": "Santa Fe Springs (SFS)", "v2025": 563061.820000001, "v2026": 797252.1200000036, "gp2025": 305393.9700000002, "gp2026": 421176.3599999989, "gm2026": 0.528285029834724}, {"loc": "SD", "label": "San Diego (SD)", "v2025": 346453.6200000005, "v2026": 453806.0899999997, "gp2025": 205920.40999999992, "gp2026": 243617.34999999983, "gm2026": 0.5368313809979941}, {"loc": "ABQ", "label": "Albuquerque (ABQ)", "v2025": 304004.6699999999, "v2026": 305984.71, "gp2025": 170184.62999999998, "gp2026": 177343.75000000044, "gm2026": 0.5795836988063895}, {"loc": "SAC", "label": "Sacramento (SAC)", "v2025": 264158.4299999991, "v2026": 288310.7000000001, "gp2025": 142608.0499999997, "gp2026": 160630.5299999993, "gm2026": 0.5571438382272986}, {"loc": "ECO", "label": "Santa Rosa (ECO)", "v2025": 189400.61000000022, "v2026": 206249.90999999974, "gp2025": 106798.09999999993, "gp2026": 116352.73999999974, "gm2026": 0.5641347431375844}, {"loc": "Fresno", "label": "Fresno", "v2025": 70043.96999999993, "v2026": 63233.560000000056, "gp2025": 41840.91999999998, "gp2026": 36178.98000000002, "gm2026": 0.5721483971486025}, {"loc": "CLX", "label": "CLX (Calexico)", "v2025": 54024.81999999994, "v2026": null, "gp2025": 32730.900000000063, "gp2026": null, "gm2026": null}], "total": {"v2025": 3125289.979999992, "v2026": 3431113.149999991, "gp2025": 1720492.5700000166, "gp2026": 1903799.880000006, "gm2026": 0.5548636249434126}}, "Jul": {"rows": [{"loc": "HAY", "label": "Hayward (HAY)", "v2025": 1623140.1800000016, "v2026": 1337911.8299999987, "gp2025": 858064.4600000044, "gp2026": 736439.8099999989, "gm2026": 0.5504397176905145}, {"loc": "SFS", "label": "Santa Fe Springs (SFS)", "v2025": 633139.1199999996, "v2026": 766657.4800000044, "gp2025": 348582.57000000105, "gp2026": 401608.5799999995, "gm2026": 0.5238435552732065}, {"loc": "SD", "label": "San Diego (SD)", "v2025": 397277.280000001, "v2026": 492486.6200000013, "gp2025": 231739.3200000008, "gp2026": 266010.3100000001, "gm2026": 0.5401371310351526}, {"loc": "ABQ", "label": "Albuquerque (ABQ)", "v2025": 370403.6700000003, "v2026": 292845.8100000005, "gp2025": 206977.21000000008, "gp2026": 167779.7199999997, "gm2026": 0.5729285319124061}, {"loc": "SAC", "label": "Sacramento (SAC)", "v2025": 313432.28999999946, "v2026": 298085.9500000004, "gp2025": 174163.62000000064, "gp2026": 162614.20999999985, "gm2026": 0.5455279257542988}, {"loc": "ECO", "label": "Santa Rosa (ECO)", "v2025": 234030.2399999998, "v2026": 219540.07999999996, "gp2025": 127923.3499999998, "gp2026": 121687.51999999999, "gm2026": 0.5542838464848879}, {"loc": "Fresno", "label": "Fresno", "v2025": 72666.82000000012, "v2026": 63922.78000000007, "gp2025": 41690.76999999999, "gp2026": 35647.32000000002, "gm2026": 0.55766222933358}, {"loc": "CLX", "label": "CLX (Calexico)", "v2025": 51165.94999999994, "v2026": null, "gp2025": 30394.470000000005, "gp2026": null, "gm2026": null}], "total": {"v2025": 3695255.5500000203, "v2026": 3471450.549999986, "gp2025": 2019535.7700000126, "gp2026": 1891787.4699999955, "gm2026": 0.5449559032318646}}};
+  const locOrder = ['HAY','SFS','SD','ABQ','SAC','ECO','Fresno','CLX'];
+  const monthFullNames = {Jan:'January',Feb:'February',Mar:'March',Apr:'April',May:'May',Jun:'June',Jul:'July'};
+
+  function fmtMoney(v){
+    if (v === null || v === undefined) return 'n/a';
+    return '$' + Math.round(v).toLocaleString();
+  }
+  function fmtPct(v){
+    if (v === null || v === undefined) return 'n/a';
+    return (v*100).toFixed(1) + '%';
+  }
+  function yoyCell(v2025, v2026){
+    if (v2025 === null || v2026 === null || v2025 === undefined || v2026 === undefined || v2025 === 0) {
+      return '<td class="r">n/a</td>';
+    }
+    const pct = (v2026 - v2025) / Math.abs(v2025) * 100;
+    const color = pct >= 0 ? 'var(--green)' : 'var(--red)';
+    const sign = pct >= 0 ? '+' : '';
+    return '<td class="r" style="color:' + color + ';font-weight:700">' + sign + pct.toFixed(1) + '%</td>';
+  }
+
+  function renderMonth(m){
+    const md = monthlyLocData[m];
+    const rowsByLoc = {};
+    md.rows.forEach(r => rowsByLoc[r.loc] = r);
+    let html = '';
+    locOrder.forEach(key => {
+      const r = rowsByLoc[key];
+      const rowClass = (r.v2026 === null || r.v2026 === undefined) ? ' class="discontinued"' : '';
+      html += '<tr' + rowClass + '><td class="name">' + r.label + '</td>';
+      html += '<td class="r">' + fmtMoney(r.v2026) + '</td>';
+      html += '<td class="r">' + fmtMoney(r.v2025) + '</td>';
+      html += yoyCell(r.v2025, r.v2026);
+      html += '<td class="r">' + fmtMoney(r.gp2026) + '</td>';
+      html += '<td class="r">' + fmtPct(r.gm2026) + '</td></tr>';
+    });
+    html += '<tr class="total-row"><td class="name">TOTAL COL</td>';
+    html += '<td class="r">' + fmtMoney(md.total.v2026) + '</td>';
+    html += '<td class="r">' + fmtMoney(md.total.v2025) + '</td>';
+    html += yoyCell(md.total.v2025, md.total.v2026).replace('style="color:var(--green);font-weight:700"','style="color:var(--green)"').replace('style="color:var(--red);font-weight:700"','style="color:var(--red)"');
+    html += '<td class="r">' + fmtMoney(md.total.gp2026) + '</td>';
+    html += '<td class="r">' + fmtPct(md.total.gm2026) + '</td></tr>';
+    document.getElementById('month-tbody').innerHTML = html;
+    document.getElementById('month-hdr-2026').textContent = monthFullNames[m] + ' 2026';
+    document.getElementById('month-hdr-2025').textContent = monthFullNames[m] + ' 2025';
+  }
+
+  renderMonth('Jul');
+
+  const monthBtns = document.querySelectorAll('#month-btns .loc-btn');
+  monthBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      monthBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderMonth(btn.getAttribute('data-month'));
+    });
+  });
+}catch(e){console.error('monthly table error:', e);}
+</script>
+
+</body>
+</html>

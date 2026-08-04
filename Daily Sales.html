@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>COL Sales Hub &mdash; Daily Sales</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a2e4a;--navy2:#2e5090;--cyan:#00AEEF;--green:#1a7a38;--amber:#b56800;--red:#b91c1c;--purple:#6d28d9;--pink:#be185d;--border:#dde3ea;--bg:#f0f3f8;--muted:#6b7280;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:var(--navy);font-size:13px}
+
+.header{background:#1a2e4a;border-bottom:4px solid #00AEEF;padding:0 40px;display:flex;align-items:center;justify-content:space-between;min-height:80px;gap:20px;flex-wrap:wrap;box-shadow:0 2px 16px rgba(0,0,0,.25)}
+.header-left{display:flex;align-items:center;gap:20px}
+.header-logo{height:44px;width:auto;display:block;filter:brightness(0) invert(1)}
+.header-divider{width:1px;height:36px;background:rgba(255,255,255,.2);flex-shrink:0}
+.header-brand{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;letter-spacing:.08em;color:#00AEEF;line-height:1}
+.header-brand em{color:#fff;font-style:normal}
+.header-right{text-align:right}
+.header-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:.04em;text-transform:uppercase}
+.header-sub{font-family:'DM Mono',monospace;font-size:11px;color:#00AEEF;margin-top:3px;opacity:.85}
+
+.wrap{max-width:1200px;margin:0 auto;padding:24px 24px 60px}
+.page-hdr{margin-bottom:14px}
+.page-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--navy)}
+.page-meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px}
+
+.sec-lbl{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:26px 0 4px;padding:10px 0 6px;border-bottom:3px solid var(--cyan)}
+.sub-lbl{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--navy2);margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.note{font-size:11px;color:var(--muted);margin-bottom:14px;font-family:'DM Mono',monospace;line-height:1.6}
+
+.mc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:8px}
+.mc{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.mc-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-family:'DM Mono',monospace;margin-bottom:4px}
+.mc-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--navy)}
+.mc-sub{font-size:10.5px;color:var(--muted);margin-top:2px}
+.mc.green .mc-val{color:var(--green)} .mc.red .mc-val{color:var(--red)} .mc.amber .mc-val{color:var(--amber)}
+
+.chart-box{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.05);margin-bottom:18px;height:250px}
+
+.tw{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05);margin-bottom:18px}
+.tw table{width:100%;border-collapse:collapse;font-size:13px}
+.tw thead tr{background:var(--navy);color:#fff}
+.tw th{padding:8px 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;text-align:left}
+.tw th.r{text-align:right}.tw th.c{text-align:center}
+.tw td{padding:7px 10px;border-bottom:1px solid #eef2f7;color:var(--navy)}
+.tw td.r{text-align:right}.tw td.c{text-align:center}.tw td.name{font-weight:600}
+.tw tr:nth-child(even) td{background:#f7f9fc}.tw tr:hover td{background:#eef4fb}
+
+.chip{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace}
+.chi{background:#d1fae5;color:#065f46}.chl{background:#fee2e2;color:#991b1b}.chm{background:#f1f5f9;color:#64748b}
+
+.trendbox{border-radius:8px;padding:14px 16px;margin-bottom:18px;font-size:12px;line-height:1.7}
+.trendbox.good{background:#eafaf1;border:1px solid #86e0ac}
+.trendbox.bad{background:#fef2f2;border:1px solid #f5a3a3}
+.trendbox h4{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.trendbox.good h4{color:#065f46}.trendbox.bad h4{color:#991b1b}
+.trendbox ul{margin:0;padding-left:18px}
+.trendbox li{margin-bottom:4px}
+.trend-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media (max-width:800px){.trend-grid{grid-template-columns:1fr}}
+
+.infobox{background:#eef4fb;border:1px solid #bcd7f0;border-radius:8px;padding:12px 16px;font-size:12px;color:var(--navy2);margin-bottom:18px;line-height:1.7}
+.infobox strong{color:var(--navy)}
+
+.hm-wrap{overflow-x:auto}
+.hm-table{border-collapse:collapse;font-size:10px;width:auto}
+.hm-table th{background:var(--navy);color:#fff;padding:4px 3px;font-size:9px;text-align:center;white-space:nowrap;font-family:'DM Mono',monospace}
+.hm-table td{padding:4px 3px;text-align:center;font-family:'DM Mono',monospace;font-size:10px;border:1px solid #fff;min-width:32px}
+.hm-name,.hm-namehdr{text-align:left!important;font-weight:600;font-size:10.5px;padding:4px 8px!important;white-space:nowrap;background:#fff;position:sticky;left:0;font-family:'Barlow',sans-serif}
+.hm-namehdr{background:var(--navy)}
+.hm-g{background:#8fd4a8;color:#0d3d1f}
+.hm-y{background:#fde68a;color:#78450a}
+.hm-r{background:#f5a3a3;color:#7a1010}
+.hm-off{background:#e5e7eb;color:#9ca3af}
+.hm-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:8px 0 18px}
+.hm-lg-item{display:flex;align-items:center;gap:6px}
+.hm-swatch{width:12px;height:12px;border-radius:2px;display:inline-block}
+
+.footer{background:#1a2e4a;border-top:3px solid #00AEEF;padding:16px 40px;font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:30px}
+@media (max-width:700px){.header{padding:14px 20px;min-height:auto}.header-logo{height:34px}.header-brand{font-size:20px}.wrap{padding:18px 16px 40px}.footer{padding:14px 20px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <img class="header-logo" src="https://colauto.com/wp-content/uploads/2026/03/Collision-Auto-Parts_Web_Logo_Header-TM-White.png" alt="Collision Auto Parts" onerror="this.style.display='none'">
+    <div class="header-divider"></div>
+    <div class="header-brand">COL <em>AUTO PARTS</em></div>
+  </div>
+  <div class="header-right">
+    <div class="header-title">Sales Hub &middot; Daily Sales</div>
+    <div class="header-sub">Generated August 3, 2026</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="page-hdr">
+    <div class="page-title">Daily Sales &mdash; Rep $ Sold</div>
+    <div class="page-meta">Latest Day: Jul 31, 2026 &middot; Trailing 23 Trading Days Shown (Jul 1&ndash;31) &middot; Source: Sales Rep Daily</div>
+  </div>
+
+  <div class="infobox">
+    <strong>Why these numbers won't match the other sales reports:</strong> dollars here are <strong>credited by role, not by full order value</strong>. A rep who quotes AND processes an order gets 100% credit. If they only quoted it (someone else processed), they get 80%. If they only processed an order someone else quoted, they get 20%. Processing an online order also earns 20%. This is intentional &mdash; it's meant to reflect who actually did the work, not just who's attached to the order &mdash; but it means the $ figures on this report will not tie out to Location Sales Performance, Sales-to-Plan, or any other report that counts full order value. Treat this report as a read on individual rep activity and trend, not as a company revenue reconciliation.
+  </div>
+
+  <div class="mc-grid">
+    <div class="mc"><div class="mc-lbl">Latest Day (Jul 31)</div><div class="mc-val">$63,424</div><div class="mc-sub">Company-wide, all 24 reps</div></div>
+    <div class="mc"><div class="mc-lbl">WK31 (Jul 27&ndash;31)</div><div class="mc-val">$363,636</div><div class="mc-sub">Most recent complete week</div></div>
+    <div class="mc"><div class="mc-lbl">WK30 (Jul 20&ndash;24)</div><div class="mc-val">$401,972</div><div class="mc-sub">Prior complete week</div></div>
+    <div class="mc red"><div class="mc-lbl">Week-over-Week</div><div class="mc-val">-9.5%</div><div class="mc-sub">Company total, WK31 vs WK30</div></div>
+    <div class="mc"><div class="mc-lbl">Company $/Call (WK31)</div><div class="mc-val">$65.06</div><div class="mc-sub">21 phone reps &middot; $358,691 &divide; 5,514 calls</div></div>
+    <div class="mc green"><div class="mc-lbl">Overachieving (Core Reps)</div><div class="mc-val">3 of 12</div><div class="mc-sub">&ge;120% of own July avg/day</div></div>
+    <div class="mc red"><div class="mc-lbl">Underperforming (Core Reps)</div><div class="mc-val">1 of 12</div><div class="mc-sub">&lt;70% of own July avg/day</div></div>
+  </div>
+  <p class="note">"Core Reps" = the 12 full-time inside phone reps benchmarked below. 12 more reps are shown separately and NOT scored this week &mdash; vacation, outside/warehouse roles, or chronic zero-activity make their numbers not comparable. See "Not Benchmarked This Week" below.</p>
+
+  <div class="sub-lbl">Company-Wide Daily Sales &mdash; Last 23 Trading Days</div>
+  <div class="chart-box"><canvas id="daily-sales-chart"></canvas></div>
+  <p class="note">Shows the trailing trading-day window rather than a fixed calendar month, so this keeps building day by day into August instead of resetting to a blank chart on the 1st.</p>
+
+
+  <div class="sub-lbl">Daily Sales Heatmap &mdash; Last 23 Trading Days (Jul 1&ndash;31)</div>
+  <p class="note">Colored relative to each rep's OWN July daily average (same Index used elsewhere on this report) &mdash; green = at or above their own normal day, yellow = 50&ndash;99% of normal, red = under half their normal day or negative. Gray = no meaningful baseline to compare against (AshleyT, ChristianH, JoseA).</p>
+  <div class="tw hm-wrap"><table class="hm-table">
+    <thead><tr><th class="hm-namehdr">Rep</th><th>7/1</th><th>7/2</th><th>7/3</th><th>7/6</th><th>7/7</th><th>7/8</th><th>7/9</th><th>7/10</th><th>7/13</th><th>7/14</th><th>7/15</th><th>7/16</th><th>7/17</th><th>7/20</th><th>7/21</th><th>7/22</th><th>7/23</th><th>7/24</th><th>7/27</th><th>7/28</th><th>7/29</th><th>7/30</th><th>7/31</th></tr></thead>
+    <tbody>
+    <tr><td class="hm-name">OLeal, MatthewO</td><td class="hm-y">9.5k</td><td class="hm-y">7.1k</td><td class="hm-y">6.1k</td><td class="hm-g">11.4k</td><td class="hm-g">12.1k</td><td class="hm-g">10.6k</td><td class="hm-g">11.9k</td><td class="hm-y">9.6k</td><td class="hm-y">6.5k</td><td class="hm-g">13.1k</td><td class="hm-g">14.3k</td><td class="hm-g">10.5k</td><td class="hm-y">8.1k</td><td class="hm-r">3.1k</td><td class="hm-g">13.7k</td><td class="hm-g">11.8k</td><td class="hm-y">6.5k</td><td class="hm-y">8.5k</td><td class="hm-r">4.5k</td><td class="hm-g">11.0k</td><td class="hm-g">10.5k</td><td class="hm-g">12.8k</td><td class="hm-y">8.2k</td></tr><tr><td class="hm-name">Romero, EliasR</td><td class="hm-r">1.2k</td><td class="hm-y">3.2k</td><td class="hm-r">3.1k</td><td class="hm-y">3.8k</td><td class="hm-r">2.2k</td><td class="hm-y">5.7k</td><td class="hm-y">5.3k</td><td class="hm-y">4.2k</td><td class="hm-y">6.1k</td><td class="hm-g">7.0k</td><td class="hm-g">12.5k</td><td class="hm-g">6.9k</td><td class="hm-g">6.9k</td><td class="hm-g">6.6k</td><td class="hm-g">7.8k</td><td class="hm-g">9.6k</td><td class="hm-g">7.8k</td><td class="hm-g">7.3k</td><td class="hm-g">6.7k</td><td class="hm-g">12.1k</td><td class="hm-y">6.2k</td><td class="hm-g">7.0k</td><td class="hm-y">5.0k</td></tr><tr><td class="hm-name">Reyes, OmarR</td><td class="hm-y">3.6k</td><td class="hm-g">6.6k</td><td class="hm-r">980</td><td class="hm-y">3.7k</td><td class="hm-g">11.3k</td><td class="hm-g">7.4k</td><td class="hm-y">5.1k</td><td class="hm-g">8.4k</td><td class="hm-g">6.2k</td><td class="hm-g">8.3k</td><td class="hm-y">5.3k</td><td class="hm-r">2.0k</td><td class="hm-y">5.4k</td><td class="hm-y">4.8k</td><td class="hm-g">6.7k</td><td class="hm-g">8.0k</td><td class="hm-g">8.0k</td><td class="hm-g">6.5k</td><td class="hm-g">6.7k</td><td class="hm-y">5.9k</td><td class="hm-y">5.7k</td><td class="hm-g">9.9k</td><td class="hm-y">5.0k</td></tr><tr><td class="hm-name">Sanchez, JacquelineS</td><td class="hm-g">6.7k</td><td class="hm-g">4.5k</td><td class="hm-r">1.2k</td><td class="hm-y">2.6k</td><td class="hm-g">6.4k</td><td class="hm-g">4.8k</td><td class="hm-g">5.9k</td><td class="hm-y">2.4k</td><td class="hm-g">4.7k</td><td class="hm-y">2.6k</td><td class="hm-g">4.4k</td><td class="hm-g">4.3k</td><td class="hm-y">3.7k</td><td class="hm-y">3.7k</td><td class="hm-g">6.2k</td><td class="hm-g">6.2k</td><td class="hm-g">6.5k</td><td class="hm-g">6.6k</td><td class="hm-r">1.9k</td><td class="hm-r">-20</td><td class="hm-y">2.4k</td><td class="hm-g">5.7k</td><td class="hm-g">4.9k</td></tr><tr><td class="hm-name">Serrano, ArturoS</td><td class="hm-r">2.3k</td><td class="hm-y">3.0k</td><td class="hm-r">1.8k</td><td class="hm-y">3.8k</td><td class="hm-r">406</td><td class="hm-y">4.2k</td><td class="hm-g">6.2k</td><td class="hm-y">4.7k</td><td class="hm-y">2.7k</td><td class="hm-y">3.9k</td><td class="hm-g">7.8k</td><td class="hm-g">8.2k</td><td class="hm-y">4.4k</td><td class="hm-y">4.8k</td><td class="hm-r">2.1k</td><td class="hm-g">5.9k</td><td class="hm-g">8.2k</td><td class="hm-g">6.6k</td><td class="hm-g">9.5k</td><td class="hm-g">5.7k</td><td class="hm-g">5.4k</td><td class="hm-g">6.9k</td><td class="hm-y">4.4k</td></tr><tr><td class="hm-name">Becerra, IvanB</td><td class="hm-y">4.9k</td><td class="hm-g">8.2k</td><td class="hm-r">1.9k</td><td class="hm-y">3.8k</td><td class="hm-g">9.1k</td><td class="hm-g">6.8k</td><td class="hm-g">10.0k</td><td class="hm-g">6.6k</td><td class="hm-y">2.6k</td><td class="hm-g">7.2k</td><td class="hm-g">9.2k</td><td class="hm-g">9.4k</td><td class="hm-y">4.7k</td><td class="hm-y">3.8k</td><td class="hm-g">6.2k</td><td class="hm-g">7.2k</td><td class="hm-g">7.4k</td><td class="hm-g">6.1k</td><td class="hm-r">247</td><td class="hm-r">-368</td><td class="hm-r">-559</td><td class="hm-r">-96</td><td class="hm-r">-381</td></tr><tr><td class="hm-name">Pedraza, LuisP</td><td class="hm-y">4.4k</td><td class="hm-y">5.2k</td><td class="hm-y">3.8k</td><td class="hm-y">4.8k</td><td class="hm-g">14.0k</td><td class="hm-g">7.6k</td><td class="hm-y">5.6k</td><td class="hm-y">5.3k</td><td class="hm-y">5.7k</td><td class="hm-g">8.1k</td><td class="hm-r">1.8k</td><td class="hm-g">6.2k</td><td class="hm-y">5.2k</td><td class="hm-g">7.4k</td><td class="hm-r">2.9k</td><td class="hm-g">8.7k</td><td class="hm-g">7.3k</td><td class="hm-r">1.3k</td><td class="hm-y">5.3k</td><td class="hm-g">9.2k</td><td class="hm-g">6.5k</td><td class="hm-g">9.7k</td><td class="hm-y">4.2k</td></tr><tr><td class="hm-name">Anaya, ZulemaA</td><td class="hm-g">11.1k</td><td class="hm-y">7.5k</td><td class="hm-r">4.3k</td><td class="hm-y">7.7k</td><td class="hm-r">3.4k</td><td class="hm-g">11.7k</td><td class="hm-y">8.4k</td><td class="hm-g">8.8k</td><td class="hm-y">6.8k</td><td class="hm-g">12.6k</td><td class="hm-y">4.7k</td><td class="hm-y">6.9k</td><td class="hm-g">10.5k</td><td class="hm-g">8.9k</td><td class="hm-g">10.1k</td><td class="hm-g">12.3k</td><td class="hm-y">5.9k</td><td class="hm-g">10.2k</td><td class="hm-y">5.0k</td><td class="hm-g">14.5k</td><td class="hm-g">10.2k</td><td class="hm-y">8.2k</td><td class="hm-g">8.8k</td></tr><tr><td class="hm-name">Zoreque, JoannaZ</td><td class="hm-y">2.7k</td><td class="hm-g">3.8k</td><td class="hm-y">2.3k</td><td class="hm-r">1.6k</td><td class="hm-g">5.1k</td><td class="hm-y">2.7k</td><td class="hm-y">1.7k</td><td class="hm-y">2.1k</td><td class="hm-g">4.5k</td><td class="hm-g">5.9k</td><td class="hm-g">7.5k</td><td class="hm-g">4.7k</td><td class="hm-g">5.4k</td><td class="hm-r">980</td><td class="hm-y">2.8k</td><td class="hm-y">2.2k</td><td class="hm-g">3.5k</td><td class="hm-r">1.4k</td><td class="hm-r">624</td><td class="hm-g">5.0k</td><td class="hm-y">2.7k</td><td class="hm-r">1.3k</td><td class="hm-y">2.8k</td></tr><tr><td class="hm-name">Navarro, PaulinaN</td><td class="hm-g">4.2k</td><td class="hm-g">5.1k</td><td class="hm-r">936</td><td class="hm-r">539</td><td class="hm-y">2.0k</td><td class="hm-y">3.1k</td><td class="hm-g">5.9k</td><td class="hm-y">2.8k</td><td class="hm-y">3.1k</td><td class="hm-g">5.9k</td><td class="hm-g">5.7k</td><td class="hm-y">3.3k</td><td class="hm-r">1.5k</td><td class="hm-g">4.3k</td><td class="hm-y">2.5k</td><td class="hm-g">4.5k</td><td class="hm-y">3.3k</td><td class="hm-g">5.7k</td><td class="hm-y">2.2k</td><td class="hm-y">3.5k</td><td class="hm-g">4.7k</td><td class="hm-g">6.6k</td><td class="hm-g">5.2k</td></tr><tr><td class="hm-name">Serrano, ManuelSe</td><td class="hm-y">2.7k</td><td class="hm-y">3.9k</td><td class="hm-r">280</td><td class="hm-y">2.8k</td><td class="hm-g">5.2k</td><td class="hm-y">4.6k</td><td class="hm-g">6.0k</td><td class="hm-y">5.0k</td><td class="hm-g">6.1k</td><td class="hm-g">6.6k</td><td class="hm-g">7.2k</td><td class="hm-g">7.6k</td><td class="hm-y">4.2k</td><td class="hm-g">7.8k</td><td class="hm-g">6.1k</td><td class="hm-g">5.5k</td><td class="hm-g">5.8k</td><td class="hm-g">7.0k</td><td class="hm-g">6.0k</td><td class="hm-y">5.0k</td><td class="hm-g">5.9k</td><td class="hm-y">4.7k</td><td class="hm-r">317</td></tr><tr><td class="hm-name">Gonzales, MarioGO</td><td class="hm-y">2.5k</td><td class="hm-g">5.0k</td><td class="hm-r">89</td><td class="hm-g">4.2k</td><td class="hm-g">3.5k</td><td class="hm-g">4.7k</td><td class="hm-y">2.7k</td><td class="hm-y">2.3k</td><td class="hm-y">2.8k</td><td class="hm-r">-442</td><td class="hm-r">-214</td><td class="hm-r">-1.3k</td><td class="hm-r">-543</td><td class="hm-r">458</td><td class="hm-g">5.7k</td><td class="hm-g">5.2k</td><td class="hm-g">6.7k</td><td class="hm-g">3.0k</td><td class="hm-g">3.4k</td><td class="hm-g">3.9k</td><td class="hm-g">6.1k</td><td class="hm-g">3.2k</td><td class="hm-g">4.0k</td></tr><tr><td class="hm-name">Johnson, KeinaJ</td><td class="hm-y">1.8k</td><td class="hm-y">1.3k</td><td class="hm-r">797</td><td class="hm-r">752</td><td class="hm-g">3.9k</td><td class="hm-g">3.4k</td><td class="hm-r">1.1k</td><td class="hm-y">1.5k</td><td class="hm-g">2.6k</td><td class="hm-g">3.2k</td><td class="hm-g">3.7k</td><td class="hm-g">2.4k</td><td class="hm-g">3.4k</td><td class="hm-g">3.5k</td><td class="hm-y">1.8k</td><td class="hm-g">4.0k</td><td class="hm-y">2.4k</td><td class="hm-g">3.2k</td><td class="hm-r">379</td><td class="hm-y">2.3k</td><td class="hm-g">2.7k</td><td class="hm-y">1.5k</td><td class="hm-g">3.2k</td></tr><tr><td class="hm-name">Rulon, TerenceR</td><td class="hm-r">-103</td><td class="hm-r">0</td><td class="hm-r">5</td><td class="hm-r">119</td><td class="hm-g">3.4k</td><td class="hm-g">2.3k</td><td class="hm-g">2.0k</td><td class="hm-g">3.0k</td><td class="hm-g">1.1k</td><td class="hm-r">-36</td><td class="hm-r">-80</td><td class="hm-r">56</td><td class="hm-r">248</td><td class="hm-r">187</td><td class="hm-r">-12</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">82</td><td class="hm-g">2.5k</td><td class="hm-g">3.4k</td><td class="hm-g">3.4k</td><td class="hm-r">82</td><td class="hm-y">750</td></tr><tr><td class="hm-name">Gonzales, IsaacG</td><td class="hm-g">7.8k</td><td class="hm-g">9.2k</td><td class="hm-g">1.2k</td><td class="hm-g">7.0k</td><td class="hm-g">4.3k</td><td class="hm-r">-279</td><td class="hm-r">-77</td><td class="hm-r">-254</td><td class="hm-r">-95</td><td class="hm-r">-279</td><td class="hm-r">-225</td><td class="hm-r">-1.4k</td><td class="hm-r">-227</td><td class="hm-r">-247</td><td class="hm-r">-259</td><td class="hm-r">-96</td><td class="hm-r">-200</td><td class="hm-r">-28</td><td class="hm-r">-424</td><td class="hm-r">-13</td><td class="hm-r">-132</td><td class="hm-r">-58</td><td class="hm-r">-182</td></tr><tr><td class="hm-name">Dylan, DylanB</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-y">652</td><td class="hm-y">625</td><td class="hm-r">0</td><td class="hm-r">44</td><td class="hm-r">0</td><td class="hm-g">1.2k</td><td class="hm-g">3.1k</td><td class="hm-y">586</td><td class="hm-g">1.8k</td><td class="hm-g">1.8k</td><td class="hm-g">1.7k</td><td class="hm-y">702</td><td class="hm-g">1.8k</td><td class="hm-g">1.6k</td><td class="hm-g">6.0k</td></tr><tr><td class="hm-name">Lucero, FrankieL</td><td class="hm-g">2.0k</td><td class="hm-g">4.7k</td><td class="hm-y">361</td><td class="hm-g">3.8k</td><td class="hm-g">1.3k</td><td class="hm-r">-18</td><td class="hm-r">-203</td><td class="hm-r">-137</td><td class="hm-r">0</td><td class="hm-r">-20</td><td class="hm-r">0</td><td class="hm-r">-2.6k</td><td class="hm-r">0</td><td class="hm-r">-170</td><td class="hm-r">-341</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">-338</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td></tr><tr><td class="hm-name">Sales, DavidO</td><td class="hm-g">3.4k</td><td class="hm-g">2.9k</td><td class="hm-g">361</td><td class="hm-r">32</td><td class="hm-r">-521</td><td class="hm-r">-651</td><td class="hm-r">-112</td><td class="hm-r">0</td><td class="hm-r">-11</td><td class="hm-r">-22</td><td class="hm-r">0</td><td class="hm-r">-131</td><td class="hm-r">-12</td><td class="hm-r">-320</td><td class="hm-r">-79</td><td class="hm-r">-71</td><td class="hm-r">-270</td><td class="hm-r">0</td><td class="hm-r">-25</td><td class="hm-r">-36</td><td class="hm-r">-12</td><td class="hm-r">0</td><td class="hm-r">0</td></tr><tr><td class="hm-name">Puffelis, CynthiaP</td><td class="hm-g">3.9k</td><td class="hm-g">2.5k</td><td class="hm-y">2.1k</td><td class="hm-r">1.1k</td><td class="hm-g">3.3k</td><td class="hm-g">2.4k</td><td class="hm-g">3.6k</td><td class="hm-g">2.9k</td><td class="hm-g">2.5k</td><td class="hm-g">2.3k</td><td class="hm-g">2.8k</td><td class="hm-g">4.2k</td><td class="hm-y">2.0k</td><td class="hm-g">3.0k</td><td class="hm-g">2.4k</td><td class="hm-r">67</td><td class="hm-r">-315</td><td class="hm-g">3.6k</td><td class="hm-r">-842</td><td class="hm-r">392</td><td class="hm-g">2.6k</td><td class="hm-g">2.6k</td><td class="hm-y">2.0k</td></tr><tr><td class="hm-name">Apolonio, ApolonioA</td><td class="hm-g">1.5k</td><td class="hm-y">1.4k</td><td class="hm-y">695</td><td class="hm-g">2.0k</td><td class="hm-g">1.9k</td><td class="hm-g">1.6k</td><td class="hm-g">1.4k</td><td class="hm-r">508</td><td class="hm-g">3.6k</td><td class="hm-g">2.2k</td><td class="hm-y">730</td><td class="hm-g">1.8k</td><td class="hm-r">0</td><td class="hm-g">2.5k</td><td class="hm-g">1.5k</td><td class="hm-g">1.7k</td><td class="hm-y">1.3k</td><td class="hm-y">939</td><td class="hm-g">2.4k</td><td class="hm-y">1.0k</td><td class="hm-y">886</td><td class="hm-y">1.1k</td><td class="hm-r">-692</td></tr><tr><td class="hm-name">Amber, AmberM</td><td class="hm-g">152</td><td class="hm-r">-67</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">-303</td><td class="hm-g">241</td><td class="hm-r">0</td><td class="hm-r">20</td><td class="hm-g">370</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-g">450</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-r">0</td><td class="hm-g">225</td><td class="hm-r">0</td><td class="hm-g">74</td><td class="hm-r">0</td><td class="hm-r">0</td></tr><tr><td class="hm-name">Tuttle, AshleyT</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">17</td><td class="hm-off">-17</td></tr><tr><td class="hm-name">Henington, ChristianH</td><td class="hm-off">-54</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td></tr><tr><td class="hm-name">Araya, JoseA</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">-117</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td><td class="hm-off">0</td></tr>
+    </tbody>
+  </table></div>
+  <div class="hm-legend">
+    <span class="hm-lg-item"><span class="hm-swatch hm-g"></span>&ge;100% of own avg</span>
+    <span class="hm-lg-item"><span class="hm-swatch hm-y"></span>50&ndash;99% of own avg</span>
+    <span class="hm-lg-item"><span class="hm-swatch hm-r"></span>&lt;50% or negative</span>
+    <span class="hm-lg-item"><span class="hm-swatch hm-off"></span>no meaningful baseline</span>
+  </div>
+
+  <div class="sec-lbl">Sales-per-Call Benchmark &mdash; Core Full-Time Phone Reps</div>
+  <p class="note">Benchmark tiers below are set from the core group's own $/call distribution, using round thresholds meant to hold steady build to build (not re-fit to just this week): <strong>ELITE &ge;$80</strong> &middot; <strong>STRONG $65&ndash;79.99</strong> &middot; <strong>SOLID $50&ndash;64.99</strong> &middot; <strong>DEVELOPING $35&ndash;49.99</strong> &middot; <strong>NEEDS COACHING &lt;$35</strong>. Index = WK31 avg $/day &divide; that rep's own Jul 1&ndash;31 avg $/day &mdash; a self-comparison so a top rep and a newer rep are each judged against their OWN normal pace, not each other's.</p>
+
+  <div class="trend-grid">
+    <div class="trendbox good">
+      <h4>&#9650; Standouts</h4>
+      <ul>
+        <li><strong>ZulemaA and MatthewO are the efficiency leaders</strong>, ELITE tier at $97.52 and $83.68/call &mdash; consistent, not just a good week.</li>
+        <li><strong>ArturoS &mdash; 130% of his own pace</strong>, SOLID tier ($60.11/call) &mdash; a real, sustained step up.</li>
+        <li><strong>MarioGO &mdash; 141% of his own pace</strong>, a genuinely strong month off a real base.</li>
+      </ul>
+    </div>
+    <div class="trendbox bad">
+      <h4>&#9660; Needs Attention</h4>
+      <ul>
+        <li><strong>JoannaZ &mdash; the clearest EFFICIENCY concern.</strong> $29.96/call, lowest of the core group (NEEDS COACHING tier). She's dialing but not converting like her peers &mdash; a call-technique or offer-fit conversation, not a motivation problem.</li>
+        <li><strong>JacquelineS &mdash; the clearest TREND concern, a different problem than Joanna's.</strong> Normally a $4,263/day performer (STRONG-tier efficiency historically), this week she's at 69% of her own pace and DEVELOPING-tier on $/call. A dip from a good baseline, not a chronic gap &mdash; worth a quick "what happened this week" check-in.</li>
+        <li><strong>ManuelSe slipped to 86%</strong> of his own pace, second straight week softening.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note"><strong>Not counted above:</strong> IvanB, CynthiaP, TerenceR, and KeinaJ would otherwise show up as under- or over-performers, but their numbers reflect vacation or a role that isn't full-time inside phone sales &mdash; see the table below.</p>
+
+  <div class="sub-lbl">Core Full-Time Phone Reps &mdash; Ranked by $/Call</div>
+  <div class="tw"><table>
+    <thead><tr>
+      <th style="width:30px">#</th><th>Rep</th>
+      <th class="r">WK31 $/Call</th>
+      <th class="c">Benchmark</th>
+      <th class="r">WK31 Avg/Day</th>
+      <th class="r">Own Jul Avg/Day</th>
+      <th class="c">Index (Self)</th>
+      <th class="c">Trend Status</th>
+    </tr></thead>
+    <tbody>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">1</td><td class="name">Anaya, ZulemaA</td><td class="r" style="font-weight:700;color:var(--green)">$97.52</td><td class="c"><span class="chip chi">ELITE</span></td><td class="r">$9,342</td><td class="r">$8,631</td><td class="c">108%</td><td class="c"><span class="chip chm">ON PACE</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">2</td><td class="name">OLeal, MatthewO</td><td class="r" style="font-weight:700;color:var(--green)">$83.68</td><td class="c"><span class="chip chi">ELITE</span></td><td class="r">$9,389</td><td class="r">$9,618</td><td class="c">98%</td><td class="c"><span class="chip chm">ON PACE</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">3</td><td class="name">Pedraza, LuisP</td><td class="r">$73.79</td><td class="c"><span class="chip chi">STRONG</span></td><td class="r">$6,980</td><td class="r">$6,095</td><td class="c">115%</td><td class="c"><span class="chip chm">ON PACE</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">4</td><td class="name">Romero, EliasR</td><td class="r">$73.63</td><td class="c"><span class="chip chi">STRONG</span></td><td class="r">$7,393</td><td class="r">$6,277</td><td class="c">118%</td><td class="c"><span class="chip chm">ON PACE</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">5</td><td class="name">Serrano, ManuelSe</td><td class="r">$73.02</td><td class="c"><span class="chip chi">STRONG</span></td><td class="r">$4,367</td><td class="r">$5,054</td><td class="c" style="color:var(--amber);font-weight:700">86%</td><td class="c"><span class="chip chm">BELOW PACE</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">6</td><td class="name">Dylan, DylanB</td><td class="r">$68.02</td><td class="c"><span class="chip chi">STRONG</span></td><td class="r">$2,367</td><td class="r">$939</td><td class="c" style="color:var(--green);font-weight:700">252%*</td><td class="c"><span class="chip chi">OVERACHIEVING</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">7</td><td class="name">Reyes, OmarR</td><td class="r">$66.55</td><td class="c"><span class="chip chi">STRONG</span></td><td class="r">$6,642</td><td class="r">$6,159</td><td class="c">108%</td><td class="c"><span class="chip chm">ON PACE</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">8</td><td class="name">Serrano, ArturoS</td><td class="r">$60.11</td><td class="c"><span class="chip chm">SOLID</span></td><td class="r">$6,396</td><td class="r">$4,924</td><td class="c" style="color:var(--green);font-weight:700">130%</td><td class="c"><span class="chip chi">OVERACHIEVING</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">9</td><td class="name">Navarro, PaulinaN</td><td class="r">$56.11</td><td class="c"><span class="chip chm">SOLID</span></td><td class="r">$4,433</td><td class="r">$3,754</td><td class="c">118%</td><td class="c"><span class="chip chm">ON PACE</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">10</td><td class="name">Gonzales, MarioGO</td><td class="r">$47.97</td><td class="c"><span class="chip chm">DEVELOPING</span></td><td class="r">$4,116</td><td class="r">$2,915</td><td class="c" style="color:var(--green);font-weight:700">141%</td><td class="c"><span class="chip chi">OVERACHIEVING</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">11</td><td class="name">Sanchez, JacquelineS</td><td class="r" style="color:var(--red)">$39.35</td><td class="c"><span class="chip chl">DEVELOPING</span></td><td class="r">$2,943</td><td class="r">$4,263</td><td class="c" style="color:var(--red);font-weight:700">69%</td><td class="c"><span class="chip chl">UNDERPERFORMING</span></td></tr>
+    <tr><td class="c" style="color:var(--muted);font-size:11px">12</td><td class="name">Zoreque, JoannaZ</td><td class="r" style="color:var(--red);font-weight:700">$29.96</td><td class="c"><span class="chip chl">NEEDS COACHING</span></td><td class="r">$2,475</td><td class="r">$3,182</td><td class="c" style="color:var(--amber);font-weight:700">78%</td><td class="c"><span class="chip chm">BELOW PACE</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">* DylanB's 252% index is off a small base (several near-zero weeks before this one) &mdash; real, but worth confirming it sticks before reading it as a trend. Trend Status bands (self-comparison): OVERACHIEVING &ge;120% &middot; ON PACE 90&ndash;119% &middot; BELOW PACE 70&ndash;89% &middot; UNDERPERFORMING &lt;70%.</p>
+
+  <div class="sub-lbl">Not Benchmarked This Week</div>
+  <div class="tw"><table>
+    <thead><tr><th>Rep</th><th>Why Not Benchmarked</th><th class="r">WK31 $ Sold</th><th class="r">WK31 Avg/Day</th><th>Note</th></tr></thead>
+    <tbody>
+    <tr><td class="name">Becerra, IvanB</td><td>On vacation (WK30 &amp; WK31)</td><td class="r" style="color:var(--red)">-$1,157</td><td class="r" style="color:var(--red)">-$231</td><td style="font-size:11px;color:var(--muted)">Negative $ and 0 calls are explained by vacation, not performance. Not a flag.</td></tr>
+    <tr><td class="name">Puffelis, CynthiaP</td><td>Outside rep, occasional inside help</td><td class="r">$6,649</td><td class="r">$1,330</td><td style="font-size:11px;color:var(--muted)">Lower numbers expected given limited inside hours.</td></tr>
+    <tr><td class="name">Rulon, TerenceR</td><td>Outside rep, occasional inside help</td><td class="r">$10,112</td><td class="r">$2,022</td><td style="font-size:11px;color:var(--muted)">Same as CynthiaP &mdash; this week's strong number is a nice bonus, not a benchmark data point.</td></tr>
+    <tr><td class="name">Johnson, KeinaJ</td><td>Warehouse manager / dispatcher, partial phone duty</td><td class="r">$10,096</td><td class="r">$2,019</td><td style="font-size:11px;color:var(--muted)">Lower numbers expected &mdash; phones aren't her primary role.</td></tr>
+    <tr><td class="name">Apolonio, ApolonioA</td><td>Non-phone role</td><td class="r">$4,646</td><td class="r">$929</td><td style="font-size:11px;color:var(--muted)">No call volume to benchmark against.</td></tr>
+    <tr><td class="name">Amber, AmberM</td><td>Non-phone role</td><td class="r">$299</td><td class="r">$60</td><td style="font-size:11px;color:var(--muted)">No call volume to benchmark against.</td></tr>
+    <tr><td class="name">Tuttle, AshleyT</td><td>New hire, no activity yet</td><td class="r">$0</td><td class="r">$0</td><td style="font-size:11px;color:var(--muted)">Too early to read anything into this.</td></tr>
+    <tr><td class="name">Sales, DavidO</td><td>Net-negative, 0 calls &mdash; still unexplained</td><td class="r" style="color:var(--red)">-$73</td><td class="r" style="color:var(--red)">-$15</td><td style="font-size:11px;color:var(--muted)">Unlike the reps above, this is a standing, unexcused pattern &mdash; still worth following up.</td></tr>
+    <tr><td class="name">Lucero, FrankieL</td><td>Net-negative, 0 calls &mdash; still unexplained</td><td class="r" style="color:var(--red)">-$338</td><td class="r" style="color:var(--red)">-$68</td><td style="font-size:11px;color:var(--muted)">Same standing pattern as DavidO, not excused by any known context.</td></tr>
+    <tr><td class="name">Gonzales, IsaacG</td><td>Net-negative, 0 calls &mdash; still unexplained</td><td class="r" style="color:var(--red)">-$809</td><td class="r" style="color:var(--red)">-$162</td><td style="font-size:11px;color:var(--muted)">Same standing pattern, not excused by any known context.</td></tr>
+    <tr><td class="name">Henington, ChristianH</td><td>Chronic zero-activity</td><td class="r">$0</td><td class="r">$0</td><td style="font-size:11px;color:var(--muted)">Standing roster-status flag, unrelated to this week.</td></tr>
+    <tr><td class="name">Araya, JoseA</td><td>Chronic zero-activity, unconfirmed roster status</td><td class="r">$0</td><td class="r">$0</td><td style="font-size:11px;color:var(--muted)">Standing roster-status flag, unrelated to this week.</td></tr>
+    </tbody>
+  </table></div>
+
+</div>
+
+<div class="footer">
+  <span>COL Auto Parts &middot; Sales Hub &middot; Internal Use Only</span>
+  <span>Questions? See Blake.</span>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+try{
+  const labels = ['7/1','7/2','7/3','7/6','7/7','7/8','7/9','7/10','7/13','7/14','7/15','7/16','7/17','7/20','7/21','7/22','7/23','7/24','7/27','7/28','7/29','7/30','7/31'];
+  const data = [76367,85120,32272,65552,91909,82815,82606,69836,68480,88712,87064,73122,64875,66308,81147,93367,81333,79816,57505,83029,76997,82680,63424];
+  new Chart(document.getElementById('daily-sales-chart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Company Daily Sales',
+        data: data,
+        backgroundColor: '#00AEEF', borderRadius: 3
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, ticks: { font: { size: 10 }, callback: v => '$'+(v/1000)+'k' } }, x: { ticks: { font: { size: 9 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 12 } } }
+    }
+  });
+}catch(e){console.error('chart error:', e);}
+</script>
+
+</body>
+</html>

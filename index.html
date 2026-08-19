@@ -52,7 +52,48 @@ body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:
 .takeaway strong{color:var(--navy)}
 
 .footer{background:#1a2e4a;border-top:3px solid #00AEEF;padding:16px 40px;font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:10px}
-@media (max-width:700px){.header{padding:14px 20px;min-height:auto}.header-logo{height:34px}.header-brand{font-size:20px}.tabnav{padding:0 10px}.tabnav a{padding:14px 12px;font-size:13px}.wrap{padding:18px 16px 40px}.footer{padding:14px 20px}}
+
+/* ===== WEEKLY LEADERBOARD ===== */
+.lb-hero{background:linear-gradient(135deg,#16283f 0%,#24466f 100%);border-radius:14px;padding:22px 26px 20px;margin-bottom:24px;color:#fff;box-shadow:0 6px 22px rgba(20,35,60,.3);position:relative;overflow:hidden}
+.lb-hero::before{content:"";position:absolute;top:-40%;right:-8%;width:280px;height:280px;background:radial-gradient(circle,rgba(0,174,239,.25) 0%,rgba(0,174,239,0) 70%);pointer-events:none}
+.lb-header{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:16px;position:relative}
+.lb-title{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;letter-spacing:.01em}
+.lb-title span{color:#ffd76a}
+.lb-meta{font-family:'DM Mono',monospace;font-size:10.5px;color:#9dc2ec}
+
+.lb-callouts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;position:relative}
+.lb-callout{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:11px 14px;display:flex;gap:12px;align-items:center}
+.lb-callout-ico{font-size:24px;line-height:1;flex-shrink:0}
+.lb-callout-lbl{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#9dc2ec;margin-bottom:2px}
+.lb-callout-val{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;line-height:1.15}
+.lb-callout-sub{font-size:10.5px;color:#b8cbe8;margin-top:1px}
+
+.lb-podium{display:grid;grid-template-columns:1fr 1.12fr 1fr;gap:12px;align-items:end;margin-bottom:20px;position:relative}
+.lb-pod-card{border-radius:12px;padding:14px 10px 12px;text-align:center}
+.lb-pod-card.gold{background:linear-gradient(160deg,#ffe08a,#f0a83a);color:#4a2f00;padding-top:20px;transform:translateY(-10px);box-shadow:0 8px 20px rgba(240,168,58,.35)}
+.lb-pod-card.silver{background:linear-gradient(160deg,#eef1f5,#c3ccd8);color:#2a3444;box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.lb-pod-card.bronze{background:linear-gradient(160deg,#e6b483,#c98650);color:#3a1f08;box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.lb-pod-medal{font-size:26px;margin-bottom:2px}
+.lb-pod-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:14.5px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-pod-val{font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:800}
+.lb-pod-sub{font-size:10px;opacity:.85;margin-top:2px;font-family:'DM Mono',monospace}
+
+.lb-list{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:4px 16px;position:relative}
+.lb-row{display:grid;grid-template-columns:22px 168px 1fr 88px 118px;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:12.5px}
+.lb-row:last-child{border-bottom:none}
+.lb-rank{font-family:'DM Mono',monospace;color:#9dc2ec;font-size:11px}
+.lb-name{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-bar-wrap{background:rgba(255,255,255,.1);border-radius:4px;height:9px;overflow:hidden}
+.lb-bar{background:linear-gradient(90deg,#00AEEF,#4fd0ff);height:100%;border-radius:4px}
+.lb-bar.flat{background:rgba(255,255,255,.14)}
+.lb-amt{font-family:'DM Mono',monospace;text-align:right;font-weight:700}
+.lb-amt.neg{color:#ffb4b4;font-weight:600}
+.lb-meta2{font-family:'DM Mono',monospace;font-size:10px;color:#9dc2ec;text-align:right;white-space:nowrap}
+.lb-footnote{font-size:10.5px;color:#9dc2ec;margin-top:12px;line-height:1.6;position:relative}
+@media (max-width:700px){.header{padding:14px 20px;min-height:auto}.header-logo{height:34px}.header-brand{font-size:20px}.tabnav{padding:0 10px}.tabnav a{padding:14px 12px;font-size:13px}.wrap{padding:18px 16px 40px}.footer{padding:14px 20px}
+.lb-callouts{grid-template-columns:1fr}.lb-podium{grid-template-columns:1fr;gap:8px}.lb-pod-card.gold{transform:none}
+.lb-row{grid-template-columns:20px 1fr auto;grid-template-areas:"rank name amt" "rank bar bar" "rank meta2 meta2";row-gap:3px}
+.lb-rank{grid-area:rank}.lb-name{grid-area:name}.lb-amt{grid-area:amt}.lb-bar-wrap{grid-area:bar}.lb-meta2{grid-area:meta2}}
 </style>
 </head>
 <body>
@@ -81,6 +122,150 @@ body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:
   <div class="page-hdr">
     <div class="page-title">Performance Summary</div>
     <div class="page-meta">WK33 (Aug 10&ndash;14, 2026, COMPLETE) &middot; WK34 (Aug 17&ndash;21, 2026, IN PROGRESS &mdash; 2 of 5 days posted) &middot; August 2026 (Calendar Month, 12 of 21 Workdays, IN PROGRESS) &middot; July closed FINAL &middot; Click any tab above for the full report</div>
+  </div>
+
+  <!-- WEEKLY LEADERBOARD (experimental, added Aug 19 at Blake's request) -->
+  <div class="lb-hero">
+    <div class="lb-header">
+      <div class="lb-title">&#128293; This Week's <span>Leaderboard</span></div>
+      <div class="lb-meta">WK34 &middot; Aug 17&ndash;18, 2026 (2 of 5 days) &middot; Ranked by $ Sold &middot; Updates every build</div>
+    </div>
+
+    <div class="lb-callouts">
+      <div class="lb-callout">
+        <div class="lb-callout-ico">&#128640;</div>
+        <div>
+          <div class="lb-callout-lbl">Yesterday's Top Day</div>
+          <div class="lb-callout-val">OLeal, MatthewO &mdash; $15,516.82</div>
+          <div class="lb-callout-sub">Aug 18 &middot; one of the best single days all month</div>
+        </div>
+      </div>
+      <div class="lb-callout">
+        <div class="lb-callout-ico">&#128222;</div>
+        <div>
+          <div class="lb-callout-lbl">Best $/Call This Week</div>
+          <div class="lb-callout-val">Reyes, OmarR &mdash; $91.52/call</div>
+          <div class="lb-callout-sub">184 calls &middot; $16,839.52 sold</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lb-podium">
+    <div class="lb-pod-card silver">
+      <div class="lb-pod-medal">&#129352;</div>
+      <div class="lb-pod-name">Becerra, IvanB</div>
+      <div class="lb-pod-val">$19,700.93</div>
+      <div class="lb-pod-sub">317 calls &middot; $62.15/call</div>
+    </div>
+    <div class="lb-pod-card gold">
+      <div class="lb-pod-medal">&#127942;</div>
+      <div class="lb-pod-name">OLeal, MatthewO</div>
+      <div class="lb-pod-val">$27,040.97</div>
+      <div class="lb-pod-sub">342 calls &middot; $79.07/call</div>
+    </div>
+    <div class="lb-pod-card bronze">
+      <div class="lb-pod-medal">&#129353;</div>
+      <div class="lb-pod-name">Reyes, OmarR</div>
+      <div class="lb-pod-val">$16,839.52</div>
+      <div class="lb-pod-sub">184 calls &middot; $91.52/call</div>
+    </div>
+    </div>
+
+    <div class="lb-list">
+    <div class="lb-row">
+      <div class="lb-rank">4</div>
+      <div class="lb-name">Henington, ChristianH</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:60.6%"></div></div>
+      <div class="lb-amt">$16,393.12</div>
+      <div class="lb-meta2">334 calls &middot; $49.08/call</div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank">5</div>
+      <div class="lb-name">Serrano, ManuelSe</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:51.2%"></div></div>
+      <div class="lb-amt">$13,841.59</div>
+      <div class="lb-meta2">155 calls &middot; $89.30/call</div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank">6</div>
+      <div class="lb-name">Serrano, ArturoS</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:51.0%"></div></div>
+      <div class="lb-amt">$13,796.79</div>
+      <div class="lb-meta2">229 calls &middot; $60.25/call</div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank">7</div>
+      <div class="lb-name">Sanchez, JacquelineS</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:43.6%"></div></div>
+      <div class="lb-amt">$11,779.48</div>
+      <div class="lb-meta2">195 calls &middot; $60.41/call</div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank">8</div>
+      <div class="lb-name">Navarro, PaulinaN</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:38.0%"></div></div>
+      <div class="lb-amt">$10,283.86</div>
+      <div class="lb-meta2">245 calls &middot; $41.97/call</div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank">9</div>
+      <div class="lb-name">Zoreque, JoannaZ</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:25.5%"></div></div>
+      <div class="lb-amt">$6,893.05</div>
+      <div class="lb-meta2">171 calls &middot; $40.31/call</div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank">10</div>
+      <div class="lb-name">Puffelis, CynthiaP</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:22.5%"></div></div>
+      <div class="lb-amt">$6,090.10</div>
+      <div class="lb-meta2">0 calls &middot; N/A</div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank">11</div>
+      <div class="lb-name">Romero, EliasR</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:16.1%"></div></div>
+      <div class="lb-amt">$4,358.33</div>
+      <div class="lb-meta2">0 calls &middot; N/A</div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank">12</div>
+      <div class="lb-name">Dylan, DylanB</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:11.5%"></div></div>
+      <div class="lb-amt">$3,120.64</div>
+      <div class="lb-meta2">52 calls &middot; $60.01/call</div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank">13</div>
+      <div class="lb-name">Araya, JoseA</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:5.5%"></div></div>
+      <div class="lb-amt">$1,481.30</div>
+      <div class="lb-meta2">79 calls &middot; $18.75/call</div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank">14</div>
+      <div class="lb-name">Rulon, TerenceR</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:3.3%"></div></div>
+      <div class="lb-amt">$901.11</div>
+      <div class="lb-meta2">0 calls &middot; N/A</div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank">15</div>
+      <div class="lb-name">Johnson, KeinaJ</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:2.3%"></div></div>
+      <div class="lb-amt">$612.09</div>
+      <div class="lb-meta2">58 calls &middot; $10.55/call</div>
+    </div>
+    <div class="lb-row">
+      <div class="lb-rank">16</div>
+      <div class="lb-name">Pedraza, LuisP</div>
+      <div class="lb-bar-wrap"><div class="lb-bar flat" style="width:0.0%"></div></div>
+      <div class="lb-amt neg">-$2,311.01</div>
+      <div class="lb-meta2">on vacation &middot; back Aug 20</div>
+    </div>
+    </div>
+
+    <p class="lb-footnote">Ranked by $ sold, Aug 17&ndash;18 so far (WK34, 2 of 5 days) &mdash; will keep moving as the week fills in. Bars scaled to the week's leader. Anaya, ZulemaA and Gonzales, MarioGO are not shown (no longer with the company). Source: Sales Rep Daily, same figures as the Daily Sales report.</p>
   </div>
 
   <!-- REP PERFORMANCE -->

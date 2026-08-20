@@ -383,7 +383,7 @@ try{
       const inProgress = (wk === 34);
       const actual = e && e.actual ? e.actual[sblMetric] : null;
       const ly = e && e.ly ? e.ly[sblMetric] : null;
-      const paceOpts = (inProgress && isAdditiveMetric) ? { daysElapsed: 2, daysFull: 5, pace: true } : null;
+      const paceOpts = (inProgress && isAdditiveMetric) ? { daysElapsed: 3, daysFull: 5, pace: true } : null;
       body += '<tr><td>WK' + wk + '</td>' +
         '<td class="r">' + sblFmt(actual, metricDef.fmt) + '</td>' +
         '<td class="r">' + sblFmt(ly, metricDef.fmt) + '</td>' +

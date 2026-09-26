@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>COL Sales Hub &mdash; Org Chart</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a2e4a;--navy2:#2e5090;--cyan:#00AEEF;--green:#1a7a38;--amber:#b56800;--red:#b91c1c;--border:#dde3ea;--bg:#f0f3f8;--muted:#6b7280;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:var(--navy);font-size:13px}
+.header{background:#1a2e4a;border-bottom:4px solid #00AEEF;padding:0 40px;display:flex;align-items:center;justify-content:space-between;min-height:80px;gap:20px;flex-wrap:wrap;box-shadow:0 2px 16px rgba(0,0,0,.25)}
+.header-left{display:flex;align-items:center;gap:20px}
+.header-logo{height:44px;width:auto;display:block;filter:brightness(0) invert(1)}
+.header-divider{width:1px;height:36px;background:rgba(255,255,255,.2);flex-shrink:0}
+.header-brand{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;letter-spacing:.08em;color:#00AEEF;line-height:1}
+.header-brand em{color:#fff;font-style:normal}
+.header-right{text-align:right}
+.header-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:.04em;text-transform:uppercase}
+.header-sub{font-family:'DM Mono',monospace;font-size:11px;color:#00AEEF;margin-top:3px;opacity:.85}
+.tabnav{background:#243a58;display:flex;flex-wrap:wrap;padding:0 40px}
+.tabnav a{display:flex;align-items:center;gap:8px;padding:16px 22px;text-decoration:none;color:rgba(255,255,255,.7);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-bottom:3px solid transparent;transition:background .15s,color .15s,border-color .15s}
+.tabnav a:hover{background:rgba(255,255,255,.06);color:#fff;border-bottom-color:rgba(0,174,239,.5)}
+.tabnav a.active{color:#fff;border-bottom-color:#00AEEF;background:rgba(255,255,255,.04)}
+.tabnav a .tab-ico{font-size:1.1rem}
+.wrap{max-width:1200px;margin:0 auto;padding:24px 24px 60px}
+.page-hdr{margin-bottom:14px}
+.page-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--navy)}
+.page-meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6}
+.mc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px}
+.mc{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.mc-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-family:'DM Mono',monospace;margin-bottom:4px}
+.mc-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--navy)}
+.mc-sub{font-size:10.5px;color:var(--muted);margin-top:2px}
+.ctrl-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;align-items:center}
+.search-box{flex:1;min-width:220px;position:relative}
+.search-box input{width:100%;padding:9px 14px 9px 34px;border:1px solid var(--border);border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;background:#fff url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%2214%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236b7280%22 stroke-width=%222%22%3E%3Ccircle cx=%2211%22 cy=%2211%22 r=%228%22/%3E%3Cline x1=%2221%22 y1=%2221%22 x2=%2216.65%22 y2=%2216.65%22/%3E%3C/svg%3E') no-repeat 12px center}
+.search-box input:focus{outline:2px solid var(--cyan);outline-offset:-1px}
+.ctrl-btn{font-family:'Barlow',sans-serif;font-size:12px;font-weight:600;padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--navy2);cursor:pointer}
+.ctrl-btn:hover{background:#eef4fb}
+
+.org-wrap{background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.05);padding:18px 18px 22px;margin-bottom:22px;overflow-x:auto}
+ul.org-root, ul.org-children{list-style:none}
+ul.org-root{padding-left:0}
+ul.org-children{padding-left:26px;border-left:2px solid #e2e8f0;margin-top:2px}
+ul.org-children.collapsed{display:none}
+li.org-node{margin:2px 0}
+li.org-node.hidden{display:none}
+.node-row{display:flex;align-items:center;gap:10px;padding:6px 10px;border-radius:8px;transition:background .1s}
+.node-row.has-kids{cursor:pointer}
+.node-row:hover{background:#f7f9fc}
+.node-row.match{background:#fff4d6}
+.node-toggle{width:16px;flex-shrink:0;color:var(--muted);font-size:11px;text-align:center}
+.node-toggle.leaf{color:#cbd5e1}
+.node-avatar{width:30px;height:30px;border-radius:50%;background:var(--navy2);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;flex-shrink:0}
+.node-info{display:flex;flex-direction:column;flex:1;min-width:0}
+.node-name{font-weight:700;color:var(--navy);font-size:13.5px;display:flex;align-items:center;gap:8px}
+.node-sub{font-size:11px;color:var(--muted);display:flex;gap:8px}
+.node-loc{font-family:'DM Mono',monospace}
+.node-count{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--muted);white-space:nowrap;flex-shrink:0}
+.badge{font-family:'DM Mono',monospace;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:100px;background:#e2e8f0;color:#475569}
+.badge.st-pending{background:#fef3c7;color:#92400e}
+.badge.st-new{background:#d1fae5;color:#065f46}
+.badge-missing{background:#fee2e2;color:#991b1b}
+
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:16px}
+.legend-item{display:flex;align-items:center;gap:6px}
+
+.tw{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05);margin-bottom:18px}
+.tw table{width:100%;border-collapse:collapse;font-size:13px}
+.tw thead tr{background:var(--navy);color:#fff}
+.tw th{padding:8px 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;text-align:left}
+.tw td{padding:7px 10px;border-bottom:1px solid #eef2f7;color:var(--navy)}
+.tw td.name{font-weight:600}
+.tw tr:nth-child(even) td{background:#f7f9fc}
+.sub-lbl{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--navy2);margin:20px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.note{font-size:11px;color:var(--muted);margin-bottom:10px;font-family:'DM Mono',monospace;line-height:1.6}
+.footer{background:#1a2e4a;border-top:3px solid #00AEEF;padding:16px 40px;font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:30px}
+@media (max-width:700px){.header{padding:14px 20px;min-height:auto}.header-logo{height:34px}.header-brand{font-size:20px}.tabnav{padding:0 10px}.tabnav a{padding:14px 12px;font-size:13px}.wrap{padding:18px 16px 40px}.footer{padding:14px 20px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <img class="header-logo" src="https://colauto.com/wp-content/uploads/2026/03/Collision-Auto-Parts_Web_Logo_Header-TM-White.png" alt="Collision Auto Parts" onerror="this.style.display='none'">
+    <div class="header-divider"></div>
+    <div class="header-brand">COL <em>AUTO PARTS</em></div>
+  </div>
+  <div class="header-right">
+    <div class="header-title">Sales Hub &middot; Org Chart</div>
+    <div class="header-sub">Generated Sep 25, 2026</div>
+  </div>
+</div>
+
+<div class="tabnav">
+  <a href="Rep Performance.html"><span class="tab-ico">&#127942;</span> Rep Performance</a>
+  <a href="Call Data.html"><span class="tab-ico">&#9742;&#65039;</span> Call Data</a>
+  <a href="Daily Sales.html"><span class="tab-ico">&#128176;</span> Daily Sales</a>
+  <a href="Sales by Location.html"><span class="tab-ico">&#128205;</span> Sales by Location</a>
+  <a href="Training &amp; Principles.html"><span class="tab-ico">&#127891;</span> Training &amp; Principles</a>
+  <a href="Org Chart.html" class="active"><span class="tab-ico">&#127970;</span> Org Chart</a>
+</div>
+
+<div class="wrap">
+
+  <div class="page-hdr">
+    <div class="page-title">Org Chart</div>
+    <div class="page-meta">Source: Headcount as of 08272026.xlsx &middot; MWest, SoCal, NorCal rosters combined &middot; click a name to expand/collapse their reports &middot; Note: Rios-Sanchez, Marisol appears as a supervisor in this export but has no row of their own (grouped under "not in current export") &mdash; check the source file if that's unexpected.</div>
+  </div>
+
+  <div class="mc-grid">
+    <div class="mc"><div class="mc-lbl">Active Headcount</div><div class="mc-val">142</div><div class="mc-sub">across 3 regions</div></div>
+    <div class="mc amber"><div class="mc-lbl">Pending / New Hires</div><div class="mc-val">7</div><div class="mc-sub">not yet active in the roster</div></div>
+    <div class="mc"><div class="mc-lbl">Open Requisitions</div><div class="mc-val">5</div><div class="mc-sub">see table below</div></div>
+  </div>
+
+  <div class="ctrl-row">
+    <div class="search-box"><input type="text" id="org-search" placeholder="Search by name or department..." oninput="filterOrg(this.value)"></div>
+    <button class="ctrl-btn" onclick="expandAll()">Expand All</button>
+    <button class="ctrl-btn" onclick="collapseAll()">Collapse All</button>
+  </div>
+
+  <div class="legend">
+    <span class="legend-item"><span class="badge">Active</span> current employee</span>
+    <span class="legend-item"><span class="badge st-pending">Pending</span> future hire, not yet started</span>
+    <span class="legend-item"><span class="badge st-new">New Hire</span> recently started</span>
+    <span class="legend-item"><span class="badge badge-missing">Not in export</span> referenced as a supervisor but no row of their own this file</span>
+  </div>
+
+  <div class="org-wrap" id="org-wrap">
+    <ul class="org-root"><li class="org-node" data-name="blake kidwell" data-dept="executive" data-region="norcal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9662;</span>
+    <span class="node-avatar">BK</span>
+    <span class="node-info">
+      <span class="node-name">Blake Kidwell</span>
+      <span class="node-sub">Executive <span class="node-loc">Oakland</span></span>
+    </span>
+    <span class="node-count">9 direct &middot; 149 total</span>
+  </div><ul class="org-children "><li class="org-node" data-name="rios-sanchez, marisol" data-dept="" data-region="">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9662;</span>
+    <span class="node-avatar">RM</span>
+    <span class="node-info">
+      <span class="node-name">Rios-Sanchez, Marisol<span class="badge badge-missing">not in current export</span></span>
+      <span class="node-sub">Referenced as a supervisor, but no row of their own in this headcount file </span>
+    </span>
+    <span class="node-count">4 direct</span>
+  </div><ul class="org-children "><li class="org-node" data-name="jenny marin" data-dept="accounts receivables" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JM</span>
+    <span class="node-info">
+      <span class="node-name">Jenny Marin</span>
+      <span class="node-sub">Accounts Receivables <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="ali mohammad" data-dept="accounts receivables" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AM</span>
+    <span class="node-info">
+      <span class="node-name">Ali Mohammad</span>
+      <span class="node-sub">Accounts Receivables <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="brittania oleal" data-dept="accounts receivables" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">BO</span>
+    <span class="node-info">
+      <span class="node-name">Brittania OLeal</span>
+      <span class="node-sub">Accounts Receivables <span class="node-loc">Santa Rosa</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="li chin wang" data-dept="accounts receivables" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">LW</span>
+    <span class="node-info">
+      <span class="node-name">Li Chin Wang</span>
+      <span class="node-sub">Accounts Receivables <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li></ul></li><li class="org-node" data-name="alex chen" data-dept="executive" data-region="norcal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9662;</span>
+    <span class="node-avatar">AC</span>
+    <span class="node-info">
+      <span class="node-name">Alex Chen</span>
+      <span class="node-sub">Executive <span class="node-loc">Oakland</span></span>
+    </span>
+    <span class="node-count">5 direct &middot; 59 total</span>
+  </div><ul class="org-children "><li class="org-node" data-name="matthew oleal" data-dept="administrative" data-region="norcal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9656;</span>
+    <span class="node-avatar">MO</span>
+    <span class="node-info">
+      <span class="node-name">Matthew Oleal</span>
+      <span class="node-sub">Administrative <span class="node-loc">Santa Rosa</span></span>
+    </span>
+    <span class="node-count">6 direct</span>
+  </div><ul class="org-children collapsed"><li class="org-node" data-name="amber mead" data-dept="administrative" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AM</span>
+    <span class="node-info">
+      <span class="node-name">Amber Mead</span>
+      <span class="node-sub">Administrative <span class="node-loc">Santa Rosa</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="gary alderette" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">GA</span>
+    <span class="node-info">
+      <span class="node-name">Gary Alderette</span>
+      <span class="node-sub">Shipping <span class="node-loc">Santa Rosa</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jamie ferrari" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JF</span>
+    <span class="node-info">
+      <span class="node-name">Jamie Ferrari</span>
+      <span class="node-sub">Shipping <span class="node-loc">Santa Rosa</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jesse giovanni saldana" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JS</span>
+    <span class="node-info">
+      <span class="node-name">Jesse Giovanni Saldana</span>
+      <span class="node-sub">Shipping <span class="node-loc">Santa Rosa</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="chau tra" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">CT</span>
+    <span class="node-info">
+      <span class="node-name">Chau Tra</span>
+      <span class="node-sub">Shipping <span class="node-loc">Santa Rosa</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="corey sack" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">CS</span>
+    <span class="node-info">
+      <span class="node-name">Corey Sack</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Santa Rosa</span></span>
+    </span>
+    
+  </div></li></ul></li><li class="org-node" data-name="andy lin" data-dept="purchasing" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AL</span>
+    <span class="node-info">
+      <span class="node-name">Andy Lin</span>
+      <span class="node-sub">Purchasing <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="amy lynn" data-dept="purchasing" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AL</span>
+    <span class="node-info">
+      <span class="node-name">Amy Lynn</span>
+      <span class="node-sub">Purchasing <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="george wang" data-dept="shipping" data-region="norcal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9656;</span>
+    <span class="node-avatar">GW</span>
+    <span class="node-info">
+      <span class="node-name">George Wang</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    <span class="node-count">32 direct</span>
+  </div><ul class="org-children collapsed"><li class="org-node" data-name="eulices arteaga" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">EA</span>
+    <span class="node-info">
+      <span class="node-name">Eulices Arteaga</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="juan avila" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JA</span>
+    <span class="node-info">
+      <span class="node-name">Juan Avila</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="javier barboza" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JB</span>
+    <span class="node-info">
+      <span class="node-name">Javier Barboza</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="roosevelt blandon" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">RB</span>
+    <span class="node-info">
+      <span class="node-name">Roosevelt Blandon</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jalen brice" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JB</span>
+    <span class="node-info">
+      <span class="node-name">Jalen Brice</span>
+      <span class="node-sub">Shipping <span class="node-loc">Sacramento</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="godfrey brown" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">GB</span>
+    <span class="node-info">
+      <span class="node-name">Godfrey Brown</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="damion brown sr." data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">DS</span>
+    <span class="node-info">
+      <span class="node-name">Damion Brown Sr.</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="ruben calmo ahilon" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">RA</span>
+    <span class="node-info">
+      <span class="node-name">Ruben Calmo Ahilon</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="andre camarena" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AC</span>
+    <span class="node-info">
+      <span class="node-name">Andre Camarena<span class="badge st-new">New Hire</span></span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="juan cervantes" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JC</span>
+    <span class="node-info">
+      <span class="node-name">Juan Cervantes</span>
+      <span class="node-sub">Shipping <span class="node-loc">Fresno</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="marcos cortes" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">MC</span>
+    <span class="node-info">
+      <span class="node-name">Marcos Cortes</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="yoel cruz albines" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">YA</span>
+    <span class="node-info">
+      <span class="node-name">Yoel Cruz Albines</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="luis flores" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">LF</span>
+    <span class="node-info">
+      <span class="node-name">Luis Flores</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="petrick fries" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">PF</span>
+    <span class="node-info">
+      <span class="node-name">Petrick Fries</span>
+      <span class="node-sub">Shipping <span class="node-loc">Sacramento</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="mario garcia" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">MG</span>
+    <span class="node-info">
+      <span class="node-name">Mario Garcia</span>
+      <span class="node-sub">Shipping <span class="node-loc">Fresno</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="maria gonzalez portillo" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">MP</span>
+    <span class="node-info">
+      <span class="node-name">Maria Gonzalez Portillo</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="cesar gutierrez" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">CG</span>
+    <span class="node-info">
+      <span class="node-name">Cesar Gutierrez</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="kylan harris" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">KH</span>
+    <span class="node-info">
+      <span class="node-name">Kylan Harris</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="kelvin jones" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">KJ</span>
+    <span class="node-info">
+      <span class="node-name">Kelvin Jones</span>
+      <span class="node-sub">Shipping <span class="node-loc">Sacramento</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="garry anthony lawrence" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">GL</span>
+    <span class="node-info">
+      <span class="node-name">Garry Anthony Lawrence</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="steven le" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">SL</span>
+    <span class="node-info">
+      <span class="node-name">Steven Le</span>
+      <span class="node-sub">Shipping <span class="node-loc">Sacramento</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="wen bin liang" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">WL</span>
+    <span class="node-info">
+      <span class="node-name">Wen Bin Liang</span>
+      <span class="node-sub">Shipping <span class="node-loc">Sacramento</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="george mendez jr." data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">GJ</span>
+    <span class="node-info">
+      <span class="node-name">George Mendez Jr.</span>
+      <span class="node-sub">Shipping <span class="node-loc">Fresno</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="javier miranda vargas" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JV</span>
+    <span class="node-info">
+      <span class="node-name">Javier Miranda Vargas</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="lorena navarrete ortega" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">LO</span>
+    <span class="node-info">
+      <span class="node-name">Lorena Navarrete Ortega</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="rosa navarro" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">RN</span>
+    <span class="node-info">
+      <span class="node-name">Rosa Navarro</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="omar ortega" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">OO</span>
+    <span class="node-info">
+      <span class="node-name">Omar Ortega</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="anthony patillo" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AP</span>
+    <span class="node-info">
+      <span class="node-name">Anthony Patillo</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="alberto portillo estrada" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AE</span>
+    <span class="node-info">
+      <span class="node-name">Alberto Portillo Estrada<span class="badge st-new">New Hire</span></span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="tou vang" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">TV</span>
+    <span class="node-info">
+      <span class="node-name">Tou Vang</span>
+      <span class="node-sub">Shipping <span class="node-loc">Sacramento</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="liliana vazquez" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">LV</span>
+    <span class="node-info">
+      <span class="node-name">Liliana Vazquez</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="maria vega-gonzalez" data-dept="shipping" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">MV</span>
+    <span class="node-info">
+      <span class="node-name">Maria Vega-Gonzalez</span>
+      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li></ul></li><li class="org-node" data-name="davis lu" data-dept="warehouse" data-region="norcal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9656;</span>
+    <span class="node-avatar">DL</span>
+    <span class="node-info">
+      <span class="node-name">Davis Lu</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Sacramento</span></span>
+    </span>
+    <span class="node-count">16 direct</span>
+  </div><ul class="org-children collapsed"><li class="org-node" data-name="diego barragan" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">DB</span>
+    <span class="node-info">
+      <span class="node-name">Diego Barragan</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="brandon camarena" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">BC</span>
+    <span class="node-info">
+      <span class="node-name">Brandon Camarena</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="gabriel diaz roque" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">GR</span>
+    <span class="node-info">
+      <span class="node-name">Gabriel Diaz Roque</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="francisco duenas" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">FD</span>
+    <span class="node-info">
+      <span class="node-name">Francisco Duenas</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="pedro embarcadero" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">PE</span>
+    <span class="node-info">
+      <span class="node-name">Pedro Embarcadero</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jose manuel esparza carrillo" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JC</span>
+    <span class="node-info">
+      <span class="node-name">Jose Manuel Esparza Carrillo</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="zhi fu" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">ZF</span>
+    <span class="node-info">
+      <span class="node-name">Zhi Fu</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Sacramento</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="vencent guan" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">VG</span>
+    <span class="node-info">
+      <span class="node-name">Vencent Guan</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jian xing hu" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JH</span>
+    <span class="node-info">
+      <span class="node-name">Jian Xing Hu</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="yu jin" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">YJ</span>
+    <span class="node-info">
+      <span class="node-name">Yu Jin</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Sacramento</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jonathan lambarena" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JL</span>
+    <span class="node-info">
+      <span class="node-name">Jonathan Lambarena</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jorge lopez" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JL</span>
+    <span class="node-info">
+      <span class="node-name">Jorge Lopez</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="rabin rana magar" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">RM</span>
+    <span class="node-info">
+      <span class="node-name">Rabin Rana Magar</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="cristian de jesus sanchez" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">CS</span>
+    <span class="node-info">
+      <span class="node-name">Cristian de Jesus Sanchez</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jamar terrell" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JT</span>
+    <span class="node-info">
+      <span class="node-name">Jamar Terrell</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="victor vasquez" data-dept="warehouse" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">VV</span>
+    <span class="node-info">
+      <span class="node-name">Victor Vasquez</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li></ul></li></ul></li><li class="org-node" data-name="amy fuentes" data-dept="human resources" data-region="socal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9662;</span>
+    <span class="node-avatar">AF</span>
+    <span class="node-info">
+      <span class="node-name">Amy Fuentes</span>
+      <span class="node-sub">Human Resources <span class="node-loc">San Diego</span></span>
+    </span>
+    <span class="node-count">5 direct &middot; 11 total</span>
+  </div><ul class="org-children "><li class="org-node" data-name="eyenerhit duron" data-dept="accounts receivables" data-region="socal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9656;</span>
+    <span class="node-avatar">ED</span>
+    <span class="node-info">
+      <span class="node-name">Eyenerhit Duron</span>
+      <span class="node-sub">Accounts Receivables <span class="node-loc">San Diego</span></span>
+    </span>
+    <span class="node-count">6 direct</span>
+  </div><ul class="org-children collapsed"><li class="org-node" data-name="jeremy acosta" data-dept="accounts receivables" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JA</span>
+    <span class="node-info">
+      <span class="node-name">Jeremy Acosta</span>
+      <span class="node-sub">Accounts Receivables <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="miriam benitez" data-dept="accounts receivables" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">MB</span>
+    <span class="node-info">
+      <span class="node-name">Miriam Benitez</span>
+      <span class="node-sub">Accounts Receivables <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="gema cid barrera" data-dept="accounts receivables" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">GB</span>
+    <span class="node-info">
+      <span class="node-name">Gema Cid Barrera</span>
+      <span class="node-sub">Accounts Receivables <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="adarija padilla" data-dept="accounts receivables" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AP</span>
+    <span class="node-info">
+      <span class="node-name">Adarija Padilla</span>
+      <span class="node-sub">Accounts Receivables <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="ashley townsend" data-dept="accounts receivables" data-region="mwest">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AT</span>
+    <span class="node-info">
+      <span class="node-name">Ashley Townsend</span>
+      <span class="node-sub">Accounts Receivables <span class="node-loc">Albuquerque</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="graciela vargas" data-dept="accounts receivables" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">GV</span>
+    <span class="node-info">
+      <span class="node-name">Graciela Vargas</span>
+      <span class="node-sub">Accounts Receivables <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li></ul></li><li class="org-node" data-name="joseph santos" data-dept="finance" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JS</span>
+    <span class="node-info">
+      <span class="node-name">Joseph Santos</span>
+      <span class="node-sub">Finance <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="denise velasco" data-dept="finance" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">DV</span>
+    <span class="node-info">
+      <span class="node-name">Denise Velasco</span>
+      <span class="node-sub">Finance <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jacqueline hernandez niebla" data-dept="human resources" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JN</span>
+    <span class="node-info">
+      <span class="node-name">Jacqueline Hernandez Niebla</span>
+      <span class="node-sub">Human Resources <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="sevena johnston" data-dept="human resources" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">SJ</span>
+    <span class="node-info">
+      <span class="node-name">Sevena Johnston</span>
+      <span class="node-sub">Human Resources <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li></ul></li><li class="org-node" data-name="luis pedraza" data-dept="sales" data-region="norcal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9662;</span>
+    <span class="node-avatar">LP</span>
+    <span class="node-info">
+      <span class="node-name">Luis Pedraza</span>
+      <span class="node-sub">Sales <span class="node-loc">Oakland</span></span>
+    </span>
+    <span class="node-count">5 direct</span>
+  </div><ul class="org-children "><li class="org-node" data-name="keina johnson" data-dept="administrative" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">KJ</span>
+    <span class="node-info">
+      <span class="node-name">Keina Johnson</span>
+      <span class="node-sub">Administrative <span class="node-loc">Sacramento</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="lupita contreras" data-dept="sales" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">LC</span>
+    <span class="node-info">
+      <span class="node-name">Lupita Contreras</span>
+      <span class="node-sub">Sales <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="christian henington" data-dept="sales" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">CH</span>
+    <span class="node-info">
+      <span class="node-name">Christian Henington</span>
+      <span class="node-sub">Sales <span class="node-loc">Santa Rosa</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="paulina navarro" data-dept="sales" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">PN</span>
+    <span class="node-info">
+      <span class="node-name">Paulina Navarro</span>
+      <span class="node-sub">Sales <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="elias romero" data-dept="sales" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">ER</span>
+    <span class="node-info">
+      <span class="node-name">Elias Romero</span>
+      <span class="node-sub">Sales <span class="node-loc">Oakland</span></span>
+    </span>
+    
+  </div></li></ul></li><li class="org-node" data-name="cynthia puffelis" data-dept="sales" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">CP</span>
+    <span class="node-info">
+      <span class="node-name">Cynthia Puffelis</span>
+      <span class="node-sub">Sales <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="omar reyes" data-dept="sales" data-region="socal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9662;</span>
+    <span class="node-avatar">OR</span>
+    <span class="node-info">
+      <span class="node-name">Omar Reyes</span>
+      <span class="node-sub">Sales <span class="node-loc">Los Angeles</span></span>
+    </span>
+    <span class="node-count">4 direct</span>
+  </div><ul class="org-children "><li class="org-node" data-name="ivan becerra" data-dept="sales" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">IB</span>
+    <span class="node-info">
+      <span class="node-name">Ivan Becerra</span>
+      <span class="node-sub">Sales <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jacqueline sanchez" data-dept="sales" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JS</span>
+    <span class="node-info">
+      <span class="node-name">Jacqueline Sanchez</span>
+      <span class="node-sub">Sales <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="arturo serrano" data-dept="sales" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AS</span>
+    <span class="node-info">
+      <span class="node-name">Arturo Serrano</span>
+      <span class="node-sub">Sales <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="joanna zoreque" data-dept="sales" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JZ</span>
+    <span class="node-info">
+      <span class="node-name">Joanna Zoreque</span>
+      <span class="node-sub">Sales <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li></ul></li><li class="org-node" data-name="terence rulon" data-dept="sales" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">TR</span>
+    <span class="node-info">
+      <span class="node-name">Terence Rulon</span>
+      <span class="node-sub">Sales <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="raymond tsai" data-dept="technology" data-region="mwest">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9662;</span>
+    <span class="node-avatar">RT</span>
+    <span class="node-info">
+      <span class="node-name">Raymond Tsai</span>
+      <span class="node-sub">Technology <span class="node-loc">Albuquerque</span></span>
+    </span>
+    <span class="node-count">5 direct &middot; 21 total</span>
+  </div><ul class="org-children "><li class="org-node" data-name="thomas chen" data-dept="engineering" data-region="norcal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">TC</span>
+    <span class="node-info">
+      <span class="node-name">Thomas Chen</span>
+      <span class="node-sub">Engineering <span class="node-loc">Sacramento</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="arturo hernández loredo" data-dept="engineering" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AL</span>
+    <span class="node-info">
+      <span class="node-name">Arturo Hernández Loredo</span>
+      <span class="node-sub">Engineering <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="dylan blakeway" data-dept="operations" data-region="mwest">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9656;</span>
+    <span class="node-avatar">DB</span>
+    <span class="node-info">
+      <span class="node-name">Dylan Blakeway</span>
+      <span class="node-sub">Operations <span class="node-loc">Albuquerque</span></span>
+    </span>
+    <span class="node-count">4 direct &middot; 14 total</span>
+  </div><ul class="org-children collapsed"><li class="org-node" data-name="private private" data-dept="sales" data-region="mwest">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">PP</span>
+    <span class="node-info">
+      <span class="node-name">Private Private<span class="badge st-pending">Pending</span></span>
+      <span class="node-sub">Sales <span class="node-loc">Albuquerque</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="private private" data-dept="sales" data-region="mwest">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">PP</span>
+    <span class="node-info">
+      <span class="node-name">Private Private<span class="badge st-pending">Pending</span></span>
+      <span class="node-sub">Sales <span class="node-loc">Albuquerque</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="manuel serrano marquez" data-dept="sales" data-region="mwest">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">MM</span>
+    <span class="node-info">
+      <span class="node-name">Manuel Serrano Marquez</span>
+      <span class="node-sub">Sales <span class="node-loc">Albuquerque</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="ivan luna favela" data-dept="warehouse" data-region="mwest">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9656;</span>
+    <span class="node-avatar">IF</span>
+    <span class="node-info">
+      <span class="node-name">Ivan Luna Favela</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Albuquerque</span></span>
+    </span>
+    <span class="node-count">10 direct</span>
+  </div><ul class="org-children collapsed"><li class="org-node" data-name="adan acosta" data-dept="shipping" data-region="mwest">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AA</span>
+    <span class="node-info">
+      <span class="node-name">Adan Acosta</span>
+      <span class="node-sub">Shipping <span class="node-loc">Albuquerque</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="daniel archuleta" data-dept="shipping" data-region="mwest">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">DA</span>
+    <span class="node-info">
+      <span class="node-name">Daniel Archuleta</span>
+      <span class="node-sub">Shipping <span class="node-loc">Albuquerque</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="vernon jake" data-dept="shipping" data-region="mwest">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">VJ</span>
+    <span class="node-info">
+      <span class="node-name">Vernon Jake</span>
+      <span class="node-sub">Shipping <span class="node-loc">Albuquerque</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jacob ortiz y pino" data-dept="shipping" data-region="mwest">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JP</span>
+    <span class="node-info">
+      <span class="node-name">Jacob Ortiz y Pino</span>
+      <span class="node-sub">Shipping <span class="node-loc">Albuquerque</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="private private" data-dept="shipping" data-region="mwest">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">PP</span>
+    <span class="node-info">
+      <span class="node-name">Private Private<span class="badge st-pending">Pending</span></span>
+      <span class="node-sub">Shipping <span class="node-loc">Albuquerque</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="private private" data-dept="shipping" data-region="mwest">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">PP</span>
+    <span class="node-info">
+      <span class="node-name">Private Private<span class="badge st-pending">Pending</span></span>
+      <span class="node-sub">Shipping <span class="node-loc">Albuquerque</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="enrique solano" data-dept="shipping" data-region="mwest">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">ES</span>
+    <span class="node-info">
+      <span class="node-name">Enrique Solano</span>
+      <span class="node-sub">Shipping <span class="node-loc">Albuquerque</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="cameron barbone" data-dept="warehouse" data-region="mwest">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">CB</span>
+    <span class="node-info">
+      <span class="node-name">Cameron Barbone</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Albuquerque</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="private private" data-dept="warehouse" data-region="mwest">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">PP</span>
+    <span class="node-info">
+      <span class="node-name">Private Private<span class="badge st-pending">Pending</span></span>
+      <span class="node-sub">Warehouse <span class="node-loc">Albuquerque</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="delfred vandever" data-dept="warehouse" data-region="mwest">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">DV</span>
+    <span class="node-info">
+      <span class="node-name">Delfred Vandever</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Albuquerque</span></span>
+    </span>
+    
+  </div></li></ul></li></ul></li><li class="org-node" data-name="apolonio arellano" data-dept="sales" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AA</span>
+    <span class="node-info">
+      <span class="node-name">Apolonio Arellano</span>
+      <span class="node-sub">Sales <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="simon schultz" data-dept="technology" data-region="socal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9656;</span>
+    <span class="node-avatar">SS</span>
+    <span class="node-info">
+      <span class="node-name">Simon Schultz</span>
+      <span class="node-sub">Technology <span class="node-loc">San Diego</span></span>
+    </span>
+    <span class="node-count">2 direct</span>
+  </div><ul class="org-children collapsed"><li class="org-node" data-name="jose escalona" data-dept="technology" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JE</span>
+    <span class="node-info">
+      <span class="node-name">Jose Escalona</span>
+      <span class="node-sub">Technology <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="bruno romero parra" data-dept="technology" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">BP</span>
+    <span class="node-info">
+      <span class="node-name">Bruno Romero Parra</span>
+      <span class="node-sub">Technology <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li></ul></li></ul></li><li class="org-node" data-name="robert flores" data-dept="warehouse" data-region="socal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9662;</span>
+    <span class="node-avatar">RF</span>
+    <span class="node-info">
+      <span class="node-name">Robert Flores</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Los Angeles</span></span>
+    </span>
+    <span class="node-count">4 direct &middot; 36 total</span>
+  </div><ul class="org-children "><li class="org-node" data-name="miguel daut" data-dept="shipping" data-region="socal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9656;</span>
+    <span class="node-avatar">MD</span>
+    <span class="node-info">
+      <span class="node-name">Miguel Daut</span>
+      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+    </span>
+    <span class="node-count">12 direct</span>
+  </div><ul class="org-children collapsed"><li class="org-node" data-name="arnold aviles" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AA</span>
+    <span class="node-info">
+      <span class="node-name">Arnold Aviles</span>
+      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jonathan alonzo" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JA</span>
+    <span class="node-info">
+      <span class="node-name">Jonathan Alonzo</span>
+      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="estevan avalos" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">EA</span>
+    <span class="node-info">
+      <span class="node-name">Estevan Avalos</span>
+      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jonni castellanos lopez" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JL</span>
+    <span class="node-info">
+      <span class="node-name">Jonni Castellanos Lopez</span>
+      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="rogelio diaz castro" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">RC</span>
+    <span class="node-info">
+      <span class="node-name">Rogelio Diaz Castro</span>
+      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="anthonie lopez" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AL</span>
+    <span class="node-info">
+      <span class="node-name">Anthonie Lopez</span>
+      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="arturo lopez" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AL</span>
+    <span class="node-info">
+      <span class="node-name">Arturo Lopez</span>
+      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="alison magat" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AM</span>
+    <span class="node-info">
+      <span class="node-name">Alison Magat</span>
+      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="juan ossorio" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JO</span>
+    <span class="node-info">
+      <span class="node-name">Juan Ossorio</span>
+      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="ricardo peraza" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">RP</span>
+    <span class="node-info">
+      <span class="node-name">Ricardo Peraza</span>
+      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="ricardo valadez martinez" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">RM</span>
+    <span class="node-info">
+      <span class="node-name">Ricardo Valadez Martinez</span>
+      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jovani zelaya" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JZ</span>
+    <span class="node-info">
+      <span class="node-name">Jovani Zelaya</span>
+      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li></ul></li><li class="org-node" data-name="miguel luna" data-dept="shipping" data-region="socal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9656;</span>
+    <span class="node-avatar">ML</span>
+    <span class="node-info">
+      <span class="node-name">Miguel Luna</span>
+      <span class="node-sub">Shipping <span class="node-loc">San Diego</span></span>
+    </span>
+    <span class="node-count">8 direct</span>
+  </div><ul class="org-children collapsed"><li class="org-node" data-name="eduardo angulo" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">EA</span>
+    <span class="node-info">
+      <span class="node-name">Eduardo Angulo</span>
+      <span class="node-sub">Shipping <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="gilberto aponte" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">GA</span>
+    <span class="node-info">
+      <span class="node-name">Gilberto Aponte</span>
+      <span class="node-sub">Shipping <span class="node-loc">Calexico</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="enrique duran trejo" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">ET</span>
+    <span class="node-info">
+      <span class="node-name">Enrique Duran Trejo</span>
+      <span class="node-sub">Shipping <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="jennifer espinoza" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JE</span>
+    <span class="node-info">
+      <span class="node-name">Jennifer Espinoza</span>
+      <span class="node-sub">Shipping <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="arturo herrera" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AH</span>
+    <span class="node-info">
+      <span class="node-name">Arturo Herrera</span>
+      <span class="node-sub">Shipping <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="juan moreno" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JM</span>
+    <span class="node-info">
+      <span class="node-name">Juan Moreno</span>
+      <span class="node-sub">Shipping <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="netzahualcoyotl rosales shaw" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">NS</span>
+    <span class="node-info">
+      <span class="node-name">Netzahualcoyotl Rosales Shaw</span>
+      <span class="node-sub">Shipping <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="luis valenzuela" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">LV</span>
+    <span class="node-info">
+      <span class="node-name">Luis Valenzuela</span>
+      <span class="node-sub">Shipping <span class="node-loc">Calexico</span></span>
+    </span>
+    
+  </div></li></ul></li><li class="org-node" data-name="edgar jimenez" data-dept="warehouse" data-region="socal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9656;</span>
+    <span class="node-avatar">EJ</span>
+    <span class="node-info">
+      <span class="node-name">Edgar Jimenez</span>
+      <span class="node-sub">Warehouse <span class="node-loc">San Diego</span></span>
+    </span>
+    <span class="node-count">5 direct</span>
+  </div><ul class="org-children collapsed"><li class="org-node" data-name="antonio alvarez" data-dept="warehouse" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AA</span>
+    <span class="node-info">
+      <span class="node-name">Antonio Alvarez</span>
+      <span class="node-sub">Warehouse <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="enoc flores" data-dept="warehouse" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">EF</span>
+    <span class="node-info">
+      <span class="node-name">Enoc Flores</span>
+      <span class="node-sub">Warehouse <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="carlos gonzalez" data-dept="warehouse" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">CG</span>
+    <span class="node-info">
+      <span class="node-name">Carlos Gonzalez</span>
+      <span class="node-sub">Warehouse <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="fausto martinez salinas" data-dept="warehouse" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">FS</span>
+    <span class="node-info">
+      <span class="node-name">Fausto Martinez Salinas</span>
+      <span class="node-sub">Warehouse <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="mario vazquez villaseñor" data-dept="warehouse" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">MV</span>
+    <span class="node-info">
+      <span class="node-name">Mario Vazquez Villaseñor</span>
+      <span class="node-sub">Warehouse <span class="node-loc">San Diego</span></span>
+    </span>
+    
+  </div></li></ul></li><li class="org-node" data-name="christian llerenas" data-dept="warehouse" data-region="socal">
+  <div class="node-row has-kids" onclick="toggleNode(this)">
+    <span class="node-toggle">&#9656;</span>
+    <span class="node-avatar">CL</span>
+    <span class="node-info">
+      <span class="node-name">Christian Llerenas</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Los Angeles</span></span>
+    </span>
+    <span class="node-count">7 direct</span>
+  </div><ul class="org-children collapsed"><li class="org-node" data-name="carlos amaro" data-dept="warehouse" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">CA</span>
+    <span class="node-info">
+      <span class="node-name">Carlos Amaro</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="ines champet" data-dept="warehouse" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">IC</span>
+    <span class="node-info">
+      <span class="node-name">Ines Champet</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="ruben gonzalez" data-dept="warehouse" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">RG</span>
+    <span class="node-info">
+      <span class="node-name">Ruben Gonzalez</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="angel juarez" data-dept="warehouse" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AJ</span>
+    <span class="node-info">
+      <span class="node-name">Angel Juarez</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="joseph magat" data-dept="warehouse" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">JM</span>
+    <span class="node-info">
+      <span class="node-name">Joseph Magat</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="ranulfo peralta" data-dept="warehouse" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">RP</span>
+    <span class="node-info">
+      <span class="node-name">Ranulfo Peralta</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="eddie torres" data-dept="warehouse" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">ET</span>
+    <span class="node-info">
+      <span class="node-name">Eddie Torres</span>
+      <span class="node-sub">Warehouse <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li></ul></li></ul></li></ul></li></ul>
+  </div>
+
+  <div class="sub-lbl">Open Requisitions</div>
+  <p class="note">Pulled from the Open Req tabs of the same file. Notes column intentionally left off this page.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Role</th><th>Region</th><th>Type</th></tr></thead>
+    <tbody><tr><td class="name">Delivery Driver</td><td>SoCal</td><td>Pooling</td></tr><tr><td class="name">AR Clerk</td><td>SoCal</td><td>Backfill</td></tr><tr><td class="name">Controller</td><td>NorCal</td><td>Backfill</td></tr><tr><td class="name">Senior Business Performance Analyst</td><td>NorCal</td><td>New H/C Increase</td></tr><tr><td class="name">Delivery Driver</td><td>NorCal</td><td>Backfill</td></tr></tbody>
+  </table></div>
+
+</div>
+
+<div class="footer">
+  <span>COL Auto Parts &middot; Sales Hub &middot; Internal Use Only</span>
+  <span>Questions? See Blake.</span>
+</div>
+
+<script>
+function toggleNode(rowEl){
+  const li = rowEl.closest('li.org-node');
+  const kids = li.querySelector(':scope > ul.org-children');
+  if (!kids) return;
+  const toggle = rowEl.querySelector('.node-toggle');
+  kids.classList.toggle('collapsed');
+  toggle.innerHTML = kids.classList.contains('collapsed') ? '&#9656;' : '&#9662;';
+}
+function expandAll(){
+  document.querySelectorAll('.org-children').forEach(u => u.classList.remove('collapsed'));
+  document.querySelectorAll('.node-toggle:not(.leaf)').forEach(t => t.innerHTML = '&#9662;');
+}
+function collapseAll(){
+  document.querySelectorAll('#org-wrap > ul.org-root > li.org-node > ul.org-children').forEach(u => {});
+  document.querySelectorAll('.org-children').forEach(u => u.classList.add('collapsed'));
+  document.querySelectorAll('.node-toggle:not(.leaf)').forEach(t => t.innerHTML = '&#9656;');
+}
+function filterOrg(q){
+  q = q.trim().toLowerCase();
+  const nodes = document.querySelectorAll('li.org-node');
+  if (!q){
+    nodes.forEach(n => { n.classList.remove('hidden'); n.querySelector(':scope > .node-row').classList.remove('match'); });
+    return;
+  }
+  nodes.forEach(n => n.classList.add('hidden'));
+  nodes.forEach(n => n.querySelector(':scope > .node-row').classList.remove('match'));
+  nodes.forEach(n => {
+    const name = n.getAttribute('data-name') || '';
+    const dept = n.getAttribute('data-dept') || '';
+    if (name.includes(q) || dept.includes(q)){
+      n.classList.remove('hidden');
+      n.querySelector(':scope > .node-row').classList.add('match');
+      let p = n.parentElement;
+      while (p){
+        if (p.classList && p.classList.contains('org-children')) { p.classList.remove('collapsed'); }
+        if (p.tagName === 'LI') { p.classList.remove('hidden'); const tog = p.querySelector(':scope > .node-row .node-toggle'); if (tog && !tog.classList.contains('leaf')) tog.innerHTML = '&#9662;'; }
+        p = p.parentElement;
+      }
+    }
+  });
+}
+</script>
+
+</body>
+</html>

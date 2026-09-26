@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>COL Sales Hub &mdash; Training &amp; Principles</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a2e4a;--navy2:#2e5090;--cyan:#00AEEF;--green:#1a7a38;--amber:#b56800;--red:#b91c1c;--purple:#6d28d9;--border:#dde3ea;--bg:#f0f3f8;--muted:#6b7280;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:var(--navy);font-size:13px}
+
+.header{background:#1a2e4a;border-bottom:4px solid #00AEEF;padding:0 40px;display:flex;align-items:center;justify-content:space-between;min-height:80px;gap:20px;flex-wrap:wrap;box-shadow:0 2px 16px rgba(0,0,0,.25)}
+.header-left{display:flex;align-items:center;gap:20px}
+.header-logo{height:44px;width:auto;display:block;filter:brightness(0) invert(1)}
+.header-divider{width:1px;height:36px;background:rgba(255,255,255,.2);flex-shrink:0}
+.header-brand{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;letter-spacing:.08em;color:#00AEEF;line-height:1}
+.header-brand em{color:#fff;font-style:normal}
+.header-right{text-align:right}
+.header-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:.04em;text-transform:uppercase}
+.header-sub{font-family:'DM Mono',monospace;font-size:11px;color:#00AEEF;margin-top:3px;opacity:.85}
+
+.tabnav{background:#243a58;display:flex;flex-wrap:wrap;padding:0 40px}
+.tabnav a{display:flex;align-items:center;gap:8px;padding:16px 22px;text-decoration:none;color:rgba(255,255,255,.7);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-bottom:3px solid transparent;transition:background .15s,color .15s,border-color .15s}
+.tabnav a:hover{background:rgba(255,255,255,.06);color:#fff;border-bottom-color:rgba(0,174,239,.5)}
+.tabnav a.active{color:#fff;border-bottom-color:#00AEEF;background:rgba(255,255,255,.04)}
+.tabnav a .tab-ico{font-size:1.1rem}
+
+.wrap{max-width:1200px;margin:0 auto;padding:24px 24px 60px}
+.page-hdr{margin-bottom:20px}
+.page-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--navy)}
+.page-meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6}
+
+.sec-lbl{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:26px 0 12px;padding:10px 0 6px;border-bottom:3px solid var(--cyan)}
+
+.focus-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:10px}
+.focus-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05);text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s,border-color .15s}
+.focus-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.1);border-color:var(--cyan)}
+.focus-thumb{height:150px;background:linear-gradient(135deg,#1a2e4a,#2e5090);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.focus-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.focus-thumb .focus-ico{font-size:44px}
+.focus-badge{position:absolute;top:10px;left:10px;background:rgba(0,174,239,.92);color:#fff;font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:100px}
+.focus-body{padding:16px 18px 18px;flex:1;display:flex;flex-direction:column}
+.focus-name{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:800;color:var(--navy);margin-bottom:5px}
+.focus-desc{font-size:12.5px;color:#445570;line-height:1.55;margin-bottom:12px;flex:1}
+.focus-meta{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;border-top:1px dashed var(--border);padding-top:10px}
+.focus-cta{color:var(--cyan);font-weight:700}
+
+.empty-note{background:#fff;border:1px dashed var(--border);border-radius:10px;padding:18px 20px;font-size:12.5px;color:var(--muted);line-height:1.6}
+
+.footer{background:#1a2e4a;border-top:3px solid #00AEEF;padding:16px 40px;font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:30px}
+@media (max-width:700px){.header{padding:14px 20px;min-height:auto}.header-logo{height:34px}.header-brand{font-size:20px}.tabnav{padding:0 10px}.tabnav a{padding:14px 12px;font-size:13px}.wrap{padding:18px 16px 40px}.footer{padding:14px 20px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <img class="header-logo" src="https://colauto.com/wp-content/uploads/2026/03/Collision-Auto-Parts_Web_Logo_Header-TM-White.png" alt="Collision Auto Parts" onerror="this.style.display='none'">
+    <div class="header-divider"></div>
+    <div class="header-brand">COL <em>AUTO PARTS</em></div>
+  </div>
+  <div class="header-right">
+    <div class="header-title">Sales Hub &middot; Training &amp; Principles</div>
+    <div class="header-sub">Generated September 25, 2026</div>
+  </div>
+</div>
+
+<div class="tabnav">
+  <a href="Rep Performance.html"><span class="tab-ico">&#127942;</span> Rep Performance</a>
+  <a href="Call Data.html"><span class="tab-ico">&#9742;&#65039;</span> Call Data</a>
+  <a href="Daily Sales.html"><span class="tab-ico">&#128176;</span> Daily Sales</a>
+  <a href="Sales by Location.html"><span class="tab-ico">&#128205;</span> Sales by Location</a>
+  <a href="Training &amp; Principles.html" class="active"><span class="tab-ico">&#127891;</span> Training &amp; Principles</a>
+</div>
+
+<div class="wrap">
+
+  <div class="page-hdr">
+    <div class="page-title">Training &amp; Principles</div>
+    <div class="page-meta">Company principles, leadership training, and the weekly/quarterly focus topics Blake covers with the team &middot; new focus added roughly once a quarter &middot; ask Blake or Claude to add the next one here</div>
+  </div>
+
+  <div class="sec-lbl">Current &amp; Past Focus Topics</div>
+  <div class="focus-grid">
+
+    <a class="focus-card" href="COL - Leadership Principles.html">
+      <div class="focus-thumb">
+        <span class="focus-ico">&#128218;</span>
+        <span class="focus-badge">Q3 2026</span>
+      </div>
+      <div class="focus-body">
+        <div class="focus-name">The 12 Leadership Principles</div>
+        <div class="focus-desc">Blake's decision-making framework for the company &mdash; 12 principles covering trust, clarity, accountability, and how we treat customers and each other. Interactive &mdash; click any principle to expand it, with a discussion question for the week.</div>
+        <div class="focus-meta"><span>Company-wide framework</span><span class="focus-cta">Open &rsaquo;</span></div>
+      </div>
+    </a>
+
+    <a class="focus-card" href="Simple Habits of Great COL Leaders.html">
+      <div class="focus-thumb">
+        <img src="Simple Habits of Great COL Leaders.png" alt="10 Simple Habits of Great COL Leaders">
+        <span class="focus-badge">Q3 2026</span>
+      </div>
+      <div class="focus-body">
+        <div class="focus-name">10 Simple Habits of Great COL Leaders</div>
+        <div class="focus-desc">A one-page reference for people managers &mdash; frequent recognition, clarity on what "good" looks like, 10-minute check-ins, fixing one annoying thing a month, and measuring whether it's actually working.</div>
+        <div class="focus-meta"><span>For people managers</span><span class="focus-cta">Open &rsaquo;</span></div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="empty-note">Next quarter's focus topic goes here &mdash; send Blake's new material over and it gets added as a new card, oldest topics stay archived below rather than getting removed.</div>
+
+</div>
+
+<div class="footer">
+  <span>COL Auto Parts &middot; Sales Hub &middot; Internal Use Only</span>
+  <span>Questions? See Blake.</span>
+</div>
+
+</body>
+</html>

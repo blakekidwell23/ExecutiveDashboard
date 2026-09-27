@@ -31,6 +31,34 @@ body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:
 .mc-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-family:'DM Mono',monospace;margin-bottom:4px}
 .mc-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--navy)}
 .mc-sub{font-size:10.5px;color:var(--muted);margin-top:2px}
+.mc.amber .mc-val{color:var(--amber)}
+.sec-lbl{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);margin:26px 0 4px;padding:10px 0 6px;border-bottom:3px solid var(--cyan)}
+
+/* ---- leadership snapshot ---- */
+.leader-wrap{background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.05);padding:28px 22px 24px;margin-bottom:10px}
+.leader-tree{display:flex;flex-direction:column;align-items:center}
+.leader-ceo-wrap{display:flex;justify-content:center}
+.leader-ceo{background:linear-gradient(135deg,#16283f 0%,#24466f 100%);color:#fff;border-radius:12px;padding:16px 30px;text-align:center;box-shadow:0 6px 18px rgba(20,35,60,.28);position:relative}
+.leader-ceo-name{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:800}
+.leader-ceo-title{font-family:'DM Mono',monospace;font-size:10.5px;color:#9dc2ec;margin-top:3px;text-transform:uppercase;letter-spacing:.05em}
+.leader-connector{width:2px;height:22px;background:#c7d2e0}
+.lead-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;width:100%;margin-top:2px}
+.lead-card{background:#f7f9fc;border:1px solid var(--border);border-left:4px solid var(--cyan);border-radius:10px;padding:12px 13px;text-align:left;position:relative}
+.lead-avatar{width:28px;height:28px;border-radius:50%;background:var(--navy2);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;margin-bottom:8px}
+.lead-name{font-weight:700;color:var(--navy);font-size:13px}
+.lead-title{font-size:11px;color:var(--navy2);font-weight:600;margin-top:1px}
+.lead-meta{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--muted);margin-top:5px}
+.lead-reports{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--muted);margin-top:4px}
+.lead-extra{font-size:10px;color:var(--amber);background:#fef3e2;border-radius:6px;padding:4px 7px;margin-top:8px;line-height:1.4}
+
+.sales-panel{background:linear-gradient(180deg,#eaf6fd,#f3f9fd);border:1px solid #cfe8f7;border-radius:10px;padding:16px 16px 12px;margin-bottom:22px}
+.sales-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.sales-chip{background:#fff;border:1px solid #cfe0ee;border-radius:8px;padding:9px 11px}
+.sales-chip.pending{border:1.5px dashed #7fb8d8;background:#fdfefe}
+.sales-chip-name{font-weight:700;font-size:12.5px;color:var(--navy);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.sales-chip-title{font-size:10.5px;color:var(--navy2);margin-top:1px}
+.sales-chip-meta{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-top:4px}
+
 .ctrl-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;align-items:center}
 .search-box{flex:1;min-width:220px;position:relative}
 .search-box input{width:100%;padding:9px 14px 9px 34px;border:1px solid var(--border);border-radius:8px;font-family:'Barlow',sans-serif;font-size:13px;background:#fff url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%2214%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236b7280%22 stroke-width=%222%22%3E%3Ccircle cx=%2211%22 cy=%2211%22 r=%228%22/%3E%3Cline x1=%2221%22 y1=%2221%22 x2=%2216.65%22 y2=%2216.65%22/%3E%3C/svg%3E') no-repeat 12px center}
@@ -93,7 +121,7 @@ li.org-node.hidden{display:none}
 </div>
 
 <div class="tabnav">
-  <a href="Rep Performance.html"><span class="tab-ico">&#127942;</span> Rep Performance</a>
+  <a href="Rep Performance.html"><span class="tab-ico">&#127942;</span> Monthly Rankings</a>
   <a href="Call Data.html"><span class="tab-ico">&#9742;&#65039;</span> Call Data</a>
   <a href="Daily Sales.html"><span class="tab-ico">&#128176;</span> Daily Sales</a>
   <a href="Sales by Location.html"><span class="tab-ico">&#128205;</span> Sales by Location</a>
@@ -106,7 +134,7 @@ li.org-node.hidden{display:none}
 
   <div class="page-hdr">
     <div class="page-title">Org Chart</div>
-    <div class="page-meta">Source: Headcount as of 08272026.xlsx &middot; MWest, SoCal, NorCal rosters combined &middot; click a name to expand/collapse their reports &middot; Note: Rios-Sanchez, Marisol appears as a supervisor in this export but has no row of their own (grouped under "not in current export") &mdash; check the source file if that's unexpected.</div>
+    <div class="page-meta">Source: Headcount as of 08272026.xlsx &middot; MWest, SoCal, NorCal rosters combined &middot; click a name in the full directory below to expand/collapse their reports &middot; Note: Rios-Sanchez, Marisol appears as a supervisor in this export but has no row of their own (grouped under "not in current export") &mdash; check the source file if that's unexpected.</div>
   </div>
 
   <div class="mc-grid">
@@ -115,6 +143,140 @@ li.org-node.hidden{display:none}
     <div class="mc"><div class="mc-lbl">Open Requisitions</div><div class="mc-val">5</div><div class="mc-sub">see table below</div></div>
   </div>
 
+  <div class="sec-lbl">Leadership Snapshot</div>
+  <p class="note">The CEO's direct reports and the Sales individual-contributor team, straight from this export's reporting lines &mdash; "also oversees" call-outs are computed from the departments actually found under each person's own chain, not hand-labeled.</p>
+  <div class="leader-wrap">
+    <div class="leader-tree">
+    <div class="leader-ceo-wrap">
+      <div class="leader-ceo">
+        <div class="leader-ceo-name">Blake Kidwell</div>
+        <div class="leader-ceo-title">Chief Executive Officer</div>
+      </div>
+    </div>
+    <div class="leader-connector"></div>
+    <div class="lead-grid"><div class="lead-card">
+      <div class="lead-avatar">AC</div>
+      <div class="lead-name">Alex Chen</div>
+      <div class="lead-title">VP, Purchasing</div>
+      <div class="lead-meta">Executive &middot; Oakland</div>
+      <div class="lead-reports">5 direct &middot; 59 total</div>
+      <div class="lead-extra">+ also oversees: Administrative, Purchasing, Shipping, Warehouse</div>
+    </div><div class="lead-card">
+      <div class="lead-avatar">RF</div>
+      <div class="lead-name">Robert Flores</div>
+      <div class="lead-title">General Manager, SoCal Operations</div>
+      <div class="lead-meta">Warehouse &middot; Los Angeles</div>
+      <div class="lead-reports">4 direct &middot; 36 total</div>
+      <div class="lead-extra">+ also oversees: Shipping</div>
+    </div><div class="lead-card">
+      <div class="lead-avatar">RT</div>
+      <div class="lead-name">Raymond Tsai</div>
+      <div class="lead-title">Chief Technology Officer</div>
+      <div class="lead-meta">Technology &middot; Albuquerque</div>
+      <div class="lead-reports">5 direct &middot; 21 total</div>
+      <div class="lead-extra">+ also oversees: Engineering, Operations, Sales, Shipping, Warehouse</div>
+    </div><div class="lead-card">
+      <div class="lead-avatar">AF</div>
+      <div class="lead-name">Amy Fuentes</div>
+      <div class="lead-title">VP, Human Resources</div>
+      <div class="lead-meta">Human Resources &middot; San Diego</div>
+      <div class="lead-reports">5 direct &middot; 11 total</div>
+      <div class="lead-extra">+ also oversees: Accounts Receivables, Finance</div>
+    </div><div class="lead-card">
+      <div class="lead-avatar">LP</div>
+      <div class="lead-name">Luis Pedraza</div>
+      <div class="lead-title">Sales Manager, NorCal</div>
+      <div class="lead-meta">Sales &middot; Oakland</div>
+      <div class="lead-reports">5 direct</div>
+      <div class="lead-extra">+ also oversees: Administrative</div>
+    </div><div class="lead-card">
+      <div class="lead-avatar">OR</div>
+      <div class="lead-name">Omar Reyes</div>
+      <div class="lead-title">Sales Manager, SoCal</div>
+      <div class="lead-meta">Sales &middot; Los Angeles</div>
+      <div class="lead-reports">4 direct</div>
+      
+    </div><div class="lead-card">
+      <div class="lead-avatar">CP</div>
+      <div class="lead-name">Cynthia Puffelis</div>
+      <div class="lead-title">Field Sales Representative (FSR)</div>
+      <div class="lead-meta">Sales &middot; San Diego</div>
+      
+      
+    </div><div class="lead-card">
+      <div class="lead-avatar">TR</div>
+      <div class="lead-name">Terence Rulon</div>
+      <div class="lead-title">Field Sales Representative (FSR)</div>
+      <div class="lead-meta">Sales &middot; Los Angeles</div>
+      
+      
+    </div></div>
+  </div>
+
+  <div class="sub-lbl">Sales Team &mdash; Individual Contributors</div>
+  <p class="note">Every ISR/FSR-titled sales role across all regions, wherever they sit in the tree today &mdash; some report to a Sales Manager, a few (per this export) report straight to Blake Kidwell or a regional lead.</p>
+  <div class="sales-panel">
+    <div class="sales-grid"><div class="sales-chip">
+      <div class="sales-chip-name">Manuel Serrano Marquez</div>
+      <div class="sales-chip-title">Inside Sales Representative (ISR)</div>
+      <div class="sales-chip-meta">Albuquerque &middot; reports to Blakeway, Dylan</div>
+    </div><div class="sales-chip">
+      <div class="sales-chip-name">Cynthia Puffelis</div>
+      <div class="sales-chip-title">Field Sales Representative (FSR)</div>
+      <div class="sales-chip-meta">San Diego &middot; reports to Kidwell, Blake</div>
+    </div><div class="sales-chip">
+      <div class="sales-chip-name">Terence Rulon</div>
+      <div class="sales-chip-title">Field Sales Representative (FSR)</div>
+      <div class="sales-chip-meta">Los Angeles &middot; reports to Kidwell, Blake</div>
+    </div><div class="sales-chip">
+      <div class="sales-chip-name">Christian Henington</div>
+      <div class="sales-chip-title">Inside Sales Representative (ISR)</div>
+      <div class="sales-chip-meta">Santa Rosa &middot; reports to Pedraza, Luis</div>
+    </div><div class="sales-chip">
+      <div class="sales-chip-name">Elias Romero</div>
+      <div class="sales-chip-title">Inside Sales Representative (ISR)</div>
+      <div class="sales-chip-meta">Oakland &middot; reports to Pedraza, Luis</div>
+    </div><div class="sales-chip">
+      <div class="sales-chip-name">Lupita Contreras</div>
+      <div class="sales-chip-title">Inside Sales Representative (ISR)</div>
+      <div class="sales-chip-meta">Oakland &middot; reports to Pedraza, Luis</div>
+    </div><div class="sales-chip">
+      <div class="sales-chip-name">Paulina Navarro</div>
+      <div class="sales-chip-title">Inside Sales Representative (ISR)</div>
+      <div class="sales-chip-meta">Oakland &middot; reports to Pedraza, Luis</div>
+    </div><div class="sales-chip">
+      <div class="sales-chip-name">Arturo Serrano</div>
+      <div class="sales-chip-title">Inside Sales Representative (ISR)</div>
+      <div class="sales-chip-meta">San Diego &middot; reports to Reyes, Omar</div>
+    </div><div class="sales-chip">
+      <div class="sales-chip-name">Ivan Becerra</div>
+      <div class="sales-chip-title">Inside Sales Representative (ISR)</div>
+      <div class="sales-chip-meta">Los Angeles &middot; reports to Reyes, Omar</div>
+    </div><div class="sales-chip">
+      <div class="sales-chip-name">Jacqueline Sanchez</div>
+      <div class="sales-chip-title">Inside Sales Representative (ISR)</div>
+      <div class="sales-chip-meta">Los Angeles &middot; reports to Reyes, Omar</div>
+    </div><div class="sales-chip">
+      <div class="sales-chip-name">Joanna Zoreque</div>
+      <div class="sales-chip-title">Inside Sales Representative (ISR)</div>
+      <div class="sales-chip-meta">San Diego &middot; reports to Reyes, Omar</div>
+    </div><div class="sales-chip">
+      <div class="sales-chip-name">Apolonio Arellano</div>
+      <div class="sales-chip-title">Inside Sales Representative (ISR)</div>
+      <div class="sales-chip-meta">San Diego &middot; reports to Tsai, Raymond</div>
+    </div><div class="sales-chip pending">
+      <div class="sales-chip-name">Private Private<span class="badge st-pending">Pending</span></div>
+      <div class="sales-chip-title">Inside Sales Representative (ISR)</div>
+      <div class="sales-chip-meta">Albuquerque &middot; reports to Blakeway, Dylan</div>
+    </div><div class="sales-chip pending">
+      <div class="sales-chip-name">Private Private<span class="badge st-pending">Pending</span></div>
+      <div class="sales-chip-title">Inside Sales Representative (ISR)</div>
+      <div class="sales-chip-meta">Albuquerque &middot; reports to Blakeway, Dylan</div>
+    </div></div>
+  </div>
+  </div>
+
+  <div class="sec-lbl">Full Company Directory</div>
   <div class="ctrl-row">
     <div class="search-box"><input type="text" id="org-search" placeholder="Search by name or department..." oninput="filterOrg(this.value)"></div>
     <button class="ctrl-btn" onclick="expandAll()">Expand All</button>
@@ -135,7 +297,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">BK</span>
     <span class="node-info">
       <span class="node-name">Blake Kidwell</span>
-      <span class="node-sub">Executive <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Chief Executive Officer &amp;middot; Executive <span class="node-loc">Oakland</span></span>
     </span>
     <span class="node-count">9 direct &middot; 149 total</span>
   </div><ul class="org-children "><li class="org-node" data-name="rios-sanchez, marisol" data-dept="" data-region="">
@@ -153,7 +315,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JM</span>
     <span class="node-info">
       <span class="node-name">Jenny Marin</span>
-      <span class="node-sub">Accounts Receivables <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">AR Specialist &amp;middot; Accounts Receivables <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="ali mohammad" data-dept="accounts receivables" data-region="norcal">
@@ -162,7 +324,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">AM</span>
     <span class="node-info">
       <span class="node-name">Ali Mohammad</span>
-      <span class="node-sub">Accounts Receivables <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">AR Specialist &amp;middot; Accounts Receivables <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="brittania oleal" data-dept="accounts receivables" data-region="norcal">
@@ -171,7 +333,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">BO</span>
     <span class="node-info">
       <span class="node-name">Brittania OLeal</span>
-      <span class="node-sub">Accounts Receivables <span class="node-loc">Santa Rosa</span></span>
+      <span class="node-sub">AR Specialist &amp;middot; Accounts Receivables <span class="node-loc">Santa Rosa</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="li chin wang" data-dept="accounts receivables" data-region="norcal">
@@ -180,7 +342,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">LW</span>
     <span class="node-info">
       <span class="node-name">Li Chin Wang</span>
-      <span class="node-sub">Accounts Receivables <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">AR Specialist &amp;middot; Accounts Receivables <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li></ul></li><li class="org-node" data-name="alex chen" data-dept="executive" data-region="norcal">
@@ -189,7 +351,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">AC</span>
     <span class="node-info">
       <span class="node-name">Alex Chen</span>
-      <span class="node-sub">Executive <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">VP, Purchasing &amp;middot; Executive <span class="node-loc">Oakland</span></span>
     </span>
     <span class="node-count">5 direct &middot; 59 total</span>
   </div><ul class="org-children "><li class="org-node" data-name="matthew oleal" data-dept="administrative" data-region="norcal">
@@ -198,7 +360,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">MO</span>
     <span class="node-info">
       <span class="node-name">Matthew Oleal</span>
-      <span class="node-sub">Administrative <span class="node-loc">Santa Rosa</span></span>
+      <span class="node-sub">General Manager, Rohnert Park &amp;middot; Administrative <span class="node-loc">Santa Rosa</span></span>
     </span>
     <span class="node-count">6 direct</span>
   </div><ul class="org-children collapsed"><li class="org-node" data-name="amber mead" data-dept="administrative" data-region="norcal">
@@ -216,7 +378,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">GA</span>
     <span class="node-info">
       <span class="node-name">Gary Alderette</span>
-      <span class="node-sub">Shipping <span class="node-loc">Santa Rosa</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Santa Rosa</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="jamie ferrari" data-dept="shipping" data-region="norcal">
@@ -225,7 +387,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JF</span>
     <span class="node-info">
       <span class="node-name">Jamie Ferrari</span>
-      <span class="node-sub">Shipping <span class="node-loc">Santa Rosa</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Santa Rosa</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="jesse giovanni saldana" data-dept="shipping" data-region="norcal">
@@ -243,7 +405,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">CT</span>
     <span class="node-info">
       <span class="node-name">Chau Tra</span>
-      <span class="node-sub">Shipping <span class="node-loc">Santa Rosa</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Santa Rosa</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="corey sack" data-dept="warehouse" data-region="norcal">
@@ -270,7 +432,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">AL</span>
     <span class="node-info">
       <span class="node-name">Amy Lynn</span>
-      <span class="node-sub">Purchasing <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Purchasing Specialist &amp;middot; Purchasing <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="george wang" data-dept="shipping" data-region="norcal">
@@ -279,7 +441,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">GW</span>
     <span class="node-info">
       <span class="node-name">George Wang</span>
-      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Shipping Manager - NorCal &amp;middot; Shipping <span class="node-loc">Oakland</span></span>
     </span>
     <span class="node-count">32 direct</span>
   </div><ul class="org-children collapsed"><li class="org-node" data-name="eulices arteaga" data-dept="shipping" data-region="norcal">
@@ -297,7 +459,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JA</span>
     <span class="node-info">
       <span class="node-name">Juan Avila</span>
-      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="javier barboza" data-dept="shipping" data-region="norcal">
@@ -306,7 +468,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JB</span>
     <span class="node-info">
       <span class="node-name">Javier Barboza</span>
-      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="roosevelt blandon" data-dept="shipping" data-region="norcal">
@@ -315,7 +477,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">RB</span>
     <span class="node-info">
       <span class="node-name">Roosevelt Blandon</span>
-      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="jalen brice" data-dept="shipping" data-region="norcal">
@@ -333,7 +495,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">GB</span>
     <span class="node-info">
       <span class="node-name">Godfrey Brown</span>
-      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="damion brown sr." data-dept="shipping" data-region="norcal">
@@ -369,7 +531,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JC</span>
     <span class="node-info">
       <span class="node-name">Juan Cervantes</span>
-      <span class="node-sub">Shipping <span class="node-loc">Fresno</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Fresno</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="marcos cortes" data-dept="shipping" data-region="norcal">
@@ -378,7 +540,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">MC</span>
     <span class="node-info">
       <span class="node-name">Marcos Cortes</span>
-      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Dispatch Supervisor &amp;middot; Shipping <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="yoel cruz albines" data-dept="shipping" data-region="norcal">
@@ -387,7 +549,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">YA</span>
     <span class="node-info">
       <span class="node-name">Yoel Cruz Albines</span>
-      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="luis flores" data-dept="shipping" data-region="norcal">
@@ -396,7 +558,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">LF</span>
     <span class="node-info">
       <span class="node-name">Luis Flores</span>
-      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="petrick fries" data-dept="shipping" data-region="norcal">
@@ -405,7 +567,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">PF</span>
     <span class="node-info">
       <span class="node-name">Petrick Fries</span>
-      <span class="node-sub">Shipping <span class="node-loc">Sacramento</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Sacramento</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="mario garcia" data-dept="shipping" data-region="norcal">
@@ -414,7 +576,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">MG</span>
     <span class="node-info">
       <span class="node-name">Mario Garcia</span>
-      <span class="node-sub">Shipping <span class="node-loc">Fresno</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Fresno</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="maria gonzalez portillo" data-dept="shipping" data-region="norcal">
@@ -432,7 +594,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">CG</span>
     <span class="node-info">
       <span class="node-name">Cesar Gutierrez</span>
-      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="kylan harris" data-dept="shipping" data-region="norcal">
@@ -441,7 +603,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">KH</span>
     <span class="node-info">
       <span class="node-name">Kylan Harris</span>
-      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="kelvin jones" data-dept="shipping" data-region="norcal">
@@ -450,7 +612,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">KJ</span>
     <span class="node-info">
       <span class="node-name">Kelvin Jones</span>
-      <span class="node-sub">Shipping <span class="node-loc">Sacramento</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Sacramento</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="garry anthony lawrence" data-dept="shipping" data-region="norcal">
@@ -477,7 +639,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">WL</span>
     <span class="node-info">
       <span class="node-name">Wen Bin Liang</span>
-      <span class="node-sub">Shipping <span class="node-loc">Sacramento</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Sacramento</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="george mendez jr." data-dept="shipping" data-region="norcal">
@@ -495,7 +657,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JV</span>
     <span class="node-info">
       <span class="node-name">Javier Miranda Vargas</span>
-      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="lorena navarrete ortega" data-dept="shipping" data-region="norcal">
@@ -513,7 +675,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">RN</span>
     <span class="node-info">
       <span class="node-name">Rosa Navarro</span>
-      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="omar ortega" data-dept="shipping" data-region="norcal">
@@ -522,7 +684,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">OO</span>
     <span class="node-info">
       <span class="node-name">Omar Ortega</span>
-      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="anthony patillo" data-dept="shipping" data-region="norcal">
@@ -531,7 +693,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">AP</span>
     <span class="node-info">
       <span class="node-name">Anthony Patillo</span>
-      <span class="node-sub">Shipping <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="alberto portillo estrada" data-dept="shipping" data-region="norcal">
@@ -549,7 +711,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">TV</span>
     <span class="node-info">
       <span class="node-name">Tou Vang</span>
-      <span class="node-sub">Shipping <span class="node-loc">Sacramento</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Sacramento</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="liliana vazquez" data-dept="shipping" data-region="norcal">
@@ -729,7 +891,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">AF</span>
     <span class="node-info">
       <span class="node-name">Amy Fuentes</span>
-      <span class="node-sub">Human Resources <span class="node-loc">San Diego</span></span>
+      <span class="node-sub">VP, Human Resources &amp;middot; Human Resources <span class="node-loc">San Diego</span></span>
     </span>
     <span class="node-count">5 direct &middot; 11 total</span>
   </div><ul class="org-children "><li class="org-node" data-name="eyenerhit duron" data-dept="accounts receivables" data-region="socal">
@@ -738,7 +900,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">ED</span>
     <span class="node-info">
       <span class="node-name">Eyenerhit Duron</span>
-      <span class="node-sub">Accounts Receivables <span class="node-loc">San Diego</span></span>
+      <span class="node-sub">AR Manager &amp;middot; Accounts Receivables <span class="node-loc">San Diego</span></span>
     </span>
     <span class="node-count">6 direct</span>
   </div><ul class="org-children collapsed"><li class="org-node" data-name="jeremy acosta" data-dept="accounts receivables" data-region="socal">
@@ -747,7 +909,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JA</span>
     <span class="node-info">
       <span class="node-name">Jeremy Acosta</span>
-      <span class="node-sub">Accounts Receivables <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">AR Specialist &amp;middot; Accounts Receivables <span class="node-loc">Los Angeles</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="miriam benitez" data-dept="accounts receivables" data-region="socal">
@@ -756,7 +918,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">MB</span>
     <span class="node-info">
       <span class="node-name">Miriam Benitez</span>
-      <span class="node-sub">Accounts Receivables <span class="node-loc">San Diego</span></span>
+      <span class="node-sub">AR Specialist &amp;middot; Accounts Receivables <span class="node-loc">San Diego</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="gema cid barrera" data-dept="accounts receivables" data-region="socal">
@@ -765,7 +927,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">GB</span>
     <span class="node-info">
       <span class="node-name">Gema Cid Barrera</span>
-      <span class="node-sub">Accounts Receivables <span class="node-loc">San Diego</span></span>
+      <span class="node-sub">AR Specialist &amp;middot; Accounts Receivables <span class="node-loc">San Diego</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="adarija padilla" data-dept="accounts receivables" data-region="socal">
@@ -774,7 +936,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">AP</span>
     <span class="node-info">
       <span class="node-name">Adarija Padilla</span>
-      <span class="node-sub">Accounts Receivables <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">AR Specialist &amp;middot; Accounts Receivables <span class="node-loc">Los Angeles</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="ashley townsend" data-dept="accounts receivables" data-region="mwest">
@@ -783,7 +945,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">AT</span>
     <span class="node-info">
       <span class="node-name">Ashley Townsend</span>
-      <span class="node-sub">Accounts Receivables <span class="node-loc">Albuquerque</span></span>
+      <span class="node-sub">AR Specialist &amp;middot; Accounts Receivables <span class="node-loc">Albuquerque</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="graciela vargas" data-dept="accounts receivables" data-region="socal">
@@ -792,7 +954,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">GV</span>
     <span class="node-info">
       <span class="node-name">Graciela Vargas</span>
-      <span class="node-sub">Accounts Receivables <span class="node-loc">San Diego</span></span>
+      <span class="node-sub">AR Specialist &amp;middot; Accounts Receivables <span class="node-loc">San Diego</span></span>
     </span>
     
   </div></li></ul></li><li class="org-node" data-name="joseph santos" data-dept="finance" data-region="socal">
@@ -837,7 +999,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">LP</span>
     <span class="node-info">
       <span class="node-name">Luis Pedraza</span>
-      <span class="node-sub">Sales <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Sales Manager, NorCal &amp;middot; Sales <span class="node-loc">Oakland</span></span>
     </span>
     <span class="node-count">5 direct</span>
   </div><ul class="org-children "><li class="org-node" data-name="keina johnson" data-dept="administrative" data-region="norcal">
@@ -846,7 +1008,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">KJ</span>
     <span class="node-info">
       <span class="node-name">Keina Johnson</span>
-      <span class="node-sub">Administrative <span class="node-loc">Sacramento</span></span>
+      <span class="node-sub">General Manager, Sacramento &amp;middot; Administrative <span class="node-loc">Sacramento</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="lupita contreras" data-dept="sales" data-region="norcal">
@@ -855,7 +1017,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">LC</span>
     <span class="node-info">
       <span class="node-name">Lupita Contreras</span>
-      <span class="node-sub">Sales <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Inside Sales Representative (ISR) &amp;middot; Sales <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="christian henington" data-dept="sales" data-region="norcal">
@@ -864,7 +1026,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">CH</span>
     <span class="node-info">
       <span class="node-name">Christian Henington</span>
-      <span class="node-sub">Sales <span class="node-loc">Santa Rosa</span></span>
+      <span class="node-sub">Inside Sales Representative (ISR) &amp;middot; Sales <span class="node-loc">Santa Rosa</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="paulina navarro" data-dept="sales" data-region="norcal">
@@ -873,7 +1035,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">PN</span>
     <span class="node-info">
       <span class="node-name">Paulina Navarro</span>
-      <span class="node-sub">Sales <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Inside Sales Representative (ISR) &amp;middot; Sales <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="elias romero" data-dept="sales" data-region="norcal">
@@ -882,7 +1044,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">ER</span>
     <span class="node-info">
       <span class="node-name">Elias Romero</span>
-      <span class="node-sub">Sales <span class="node-loc">Oakland</span></span>
+      <span class="node-sub">Inside Sales Representative (ISR) &amp;middot; Sales <span class="node-loc">Oakland</span></span>
     </span>
     
   </div></li></ul></li><li class="org-node" data-name="cynthia puffelis" data-dept="sales" data-region="socal">
@@ -891,7 +1053,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">CP</span>
     <span class="node-info">
       <span class="node-name">Cynthia Puffelis</span>
-      <span class="node-sub">Sales <span class="node-loc">San Diego</span></span>
+      <span class="node-sub">Field Sales Representative (FSR) &amp;middot; Sales <span class="node-loc">San Diego</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="omar reyes" data-dept="sales" data-region="socal">
@@ -900,7 +1062,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">OR</span>
     <span class="node-info">
       <span class="node-name">Omar Reyes</span>
-      <span class="node-sub">Sales <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">Sales Manager, SoCal &amp;middot; Sales <span class="node-loc">Los Angeles</span></span>
     </span>
     <span class="node-count">4 direct</span>
   </div><ul class="org-children "><li class="org-node" data-name="ivan becerra" data-dept="sales" data-region="socal">
@@ -909,7 +1071,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">IB</span>
     <span class="node-info">
       <span class="node-name">Ivan Becerra</span>
-      <span class="node-sub">Sales <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">Inside Sales Representative (ISR) &amp;middot; Sales <span class="node-loc">Los Angeles</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="jacqueline sanchez" data-dept="sales" data-region="socal">
@@ -918,7 +1080,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JS</span>
     <span class="node-info">
       <span class="node-name">Jacqueline Sanchez</span>
-      <span class="node-sub">Sales <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">Inside Sales Representative (ISR) &amp;middot; Sales <span class="node-loc">Los Angeles</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="arturo serrano" data-dept="sales" data-region="socal">
@@ -927,7 +1089,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">AS</span>
     <span class="node-info">
       <span class="node-name">Arturo Serrano</span>
-      <span class="node-sub">Sales <span class="node-loc">San Diego</span></span>
+      <span class="node-sub">Inside Sales Representative (ISR) &amp;middot; Sales <span class="node-loc">San Diego</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="joanna zoreque" data-dept="sales" data-region="socal">
@@ -936,7 +1098,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JZ</span>
     <span class="node-info">
       <span class="node-name">Joanna Zoreque</span>
-      <span class="node-sub">Sales <span class="node-loc">San Diego</span></span>
+      <span class="node-sub">Inside Sales Representative (ISR) &amp;middot; Sales <span class="node-loc">San Diego</span></span>
     </span>
     
   </div></li></ul></li><li class="org-node" data-name="terence rulon" data-dept="sales" data-region="socal">
@@ -945,7 +1107,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">TR</span>
     <span class="node-info">
       <span class="node-name">Terence Rulon</span>
-      <span class="node-sub">Sales <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">Field Sales Representative (FSR) &amp;middot; Sales <span class="node-loc">Los Angeles</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="raymond tsai" data-dept="technology" data-region="mwest">
@@ -954,7 +1116,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">RT</span>
     <span class="node-info">
       <span class="node-name">Raymond Tsai</span>
-      <span class="node-sub">Technology <span class="node-loc">Albuquerque</span></span>
+      <span class="node-sub">Chief Technology Officer &amp;middot; Technology <span class="node-loc">Albuquerque</span></span>
     </span>
     <span class="node-count">5 direct &middot; 21 total</span>
   </div><ul class="org-children "><li class="org-node" data-name="thomas chen" data-dept="engineering" data-region="norcal">
@@ -981,7 +1143,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">DB</span>
     <span class="node-info">
       <span class="node-name">Dylan Blakeway</span>
-      <span class="node-sub">Operations <span class="node-loc">Albuquerque</span></span>
+      <span class="node-sub">Area Manager, MWest &amp;middot; Operations <span class="node-loc">Albuquerque</span></span>
     </span>
     <span class="node-count">4 direct &middot; 14 total</span>
   </div><ul class="org-children collapsed"><li class="org-node" data-name="private private" data-dept="sales" data-region="mwest">
@@ -990,7 +1152,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">PP</span>
     <span class="node-info">
       <span class="node-name">Private Private<span class="badge st-pending">Pending</span></span>
-      <span class="node-sub">Sales <span class="node-loc">Albuquerque</span></span>
+      <span class="node-sub">Inside Sales Representative (ISR) &amp;middot; Sales <span class="node-loc">Albuquerque</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="private private" data-dept="sales" data-region="mwest">
@@ -999,7 +1161,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">PP</span>
     <span class="node-info">
       <span class="node-name">Private Private<span class="badge st-pending">Pending</span></span>
-      <span class="node-sub">Sales <span class="node-loc">Albuquerque</span></span>
+      <span class="node-sub">Inside Sales Representative (ISR) &amp;middot; Sales <span class="node-loc">Albuquerque</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="manuel serrano marquez" data-dept="sales" data-region="mwest">
@@ -1008,7 +1170,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">MM</span>
     <span class="node-info">
       <span class="node-name">Manuel Serrano Marquez</span>
-      <span class="node-sub">Sales <span class="node-loc">Albuquerque</span></span>
+      <span class="node-sub">Inside Sales Representative (ISR) &amp;middot; Sales <span class="node-loc">Albuquerque</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="ivan luna favela" data-dept="warehouse" data-region="mwest">
@@ -1026,7 +1188,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">AA</span>
     <span class="node-info">
       <span class="node-name">Adan Acosta</span>
-      <span class="node-sub">Shipping <span class="node-loc">Albuquerque</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Albuquerque</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="daniel archuleta" data-dept="shipping" data-region="mwest">
@@ -1035,7 +1197,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">DA</span>
     <span class="node-info">
       <span class="node-name">Daniel Archuleta</span>
-      <span class="node-sub">Shipping <span class="node-loc">Albuquerque</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Albuquerque</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="vernon jake" data-dept="shipping" data-region="mwest">
@@ -1044,7 +1206,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">VJ</span>
     <span class="node-info">
       <span class="node-name">Vernon Jake</span>
-      <span class="node-sub">Shipping <span class="node-loc">Albuquerque</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Albuquerque</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="jacob ortiz y pino" data-dept="shipping" data-region="mwest">
@@ -1053,7 +1215,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JP</span>
     <span class="node-info">
       <span class="node-name">Jacob Ortiz y Pino</span>
-      <span class="node-sub">Shipping <span class="node-loc">Albuquerque</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Albuquerque</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="private private" data-dept="shipping" data-region="mwest">
@@ -1062,7 +1224,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">PP</span>
     <span class="node-info">
       <span class="node-name">Private Private<span class="badge st-pending">Pending</span></span>
-      <span class="node-sub">Shipping <span class="node-loc">Albuquerque</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Albuquerque</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="private private" data-dept="shipping" data-region="mwest">
@@ -1071,7 +1233,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">PP</span>
     <span class="node-info">
       <span class="node-name">Private Private<span class="badge st-pending">Pending</span></span>
-      <span class="node-sub">Shipping <span class="node-loc">Albuquerque</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Albuquerque</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="enrique solano" data-dept="shipping" data-region="mwest">
@@ -1080,7 +1242,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">ES</span>
     <span class="node-info">
       <span class="node-name">Enrique Solano</span>
-      <span class="node-sub">Shipping <span class="node-loc">Albuquerque</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Albuquerque</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="cameron barbone" data-dept="warehouse" data-region="mwest">
@@ -1116,7 +1278,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">AA</span>
     <span class="node-info">
       <span class="node-name">Apolonio Arellano</span>
-      <span class="node-sub">Sales <span class="node-loc">San Diego</span></span>
+      <span class="node-sub">Inside Sales Representative (ISR) &amp;middot; Sales <span class="node-loc">San Diego</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="simon schultz" data-dept="technology" data-region="socal">
@@ -1152,7 +1314,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">RF</span>
     <span class="node-info">
       <span class="node-name">Robert Flores</span>
-      <span class="node-sub">Warehouse <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">General Manager, SoCal Operations &amp;middot; Warehouse <span class="node-loc">Los Angeles</span></span>
     </span>
     <span class="node-count">4 direct &middot; 36 total</span>
   </div><ul class="org-children "><li class="org-node" data-name="miguel daut" data-dept="shipping" data-region="socal">
@@ -1161,19 +1323,10 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">MD</span>
     <span class="node-info">
       <span class="node-name">Miguel Daut</span>
-      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">Dispatch Supervisor &amp;middot; Shipping <span class="node-loc">Los Angeles</span></span>
     </span>
     <span class="node-count">12 direct</span>
-  </div><ul class="org-children collapsed"><li class="org-node" data-name="arnold aviles" data-dept="shipping" data-region="socal">
-  <div class="node-row" >
-    <span class="node-toggle leaf">&middot;</span>
-    <span class="node-avatar">AA</span>
-    <span class="node-info">
-      <span class="node-name">Arnold Aviles</span>
-      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
-    </span>
-    
-  </div></li><li class="org-node" data-name="jonathan alonzo" data-dept="shipping" data-region="socal">
+  </div><ul class="org-children collapsed"><li class="org-node" data-name="jonathan alonzo" data-dept="shipping" data-region="socal">
   <div class="node-row" >
     <span class="node-toggle leaf">&middot;</span>
     <span class="node-avatar">JA</span>
@@ -1188,6 +1341,15 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">EA</span>
     <span class="node-info">
       <span class="node-name">Estevan Avalos</span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Los Angeles</span></span>
+    </span>
+    
+  </div></li><li class="org-node" data-name="arnold aviles" data-dept="shipping" data-region="socal">
+  <div class="node-row" >
+    <span class="node-toggle leaf">&middot;</span>
+    <span class="node-avatar">AA</span>
+    <span class="node-info">
+      <span class="node-name">Arnold Aviles</span>
       <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
     </span>
     
@@ -1197,7 +1359,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JL</span>
     <span class="node-info">
       <span class="node-name">Jonni Castellanos Lopez</span>
-      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Los Angeles</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="rogelio diaz castro" data-dept="shipping" data-region="socal">
@@ -1215,7 +1377,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">AL</span>
     <span class="node-info">
       <span class="node-name">Anthonie Lopez</span>
-      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Los Angeles</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="arturo lopez" data-dept="shipping" data-region="socal">
@@ -1224,7 +1386,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">AL</span>
     <span class="node-info">
       <span class="node-name">Arturo Lopez</span>
-      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Los Angeles</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="alison magat" data-dept="shipping" data-region="socal">
@@ -1233,7 +1395,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">AM</span>
     <span class="node-info">
       <span class="node-name">Alison Magat</span>
-      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Los Angeles</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="juan ossorio" data-dept="shipping" data-region="socal">
@@ -1242,7 +1404,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JO</span>
     <span class="node-info">
       <span class="node-name">Juan Ossorio</span>
-      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Los Angeles</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="ricardo peraza" data-dept="shipping" data-region="socal">
@@ -1251,7 +1413,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">RP</span>
     <span class="node-info">
       <span class="node-name">Ricardo Peraza</span>
-      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Los Angeles</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="ricardo valadez martinez" data-dept="shipping" data-region="socal">
@@ -1260,7 +1422,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">RM</span>
     <span class="node-info">
       <span class="node-name">Ricardo Valadez Martinez</span>
-      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Los Angeles</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="jovani zelaya" data-dept="shipping" data-region="socal">
@@ -1269,7 +1431,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JZ</span>
     <span class="node-info">
       <span class="node-name">Jovani Zelaya</span>
-      <span class="node-sub">Shipping <span class="node-loc">Los Angeles</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Los Angeles</span></span>
     </span>
     
   </div></li></ul></li><li class="org-node" data-name="miguel luna" data-dept="shipping" data-region="socal">
@@ -1278,7 +1440,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">ML</span>
     <span class="node-info">
       <span class="node-name">Miguel Luna</span>
-      <span class="node-sub">Shipping <span class="node-loc">San Diego</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">San Diego</span></span>
     </span>
     <span class="node-count">8 direct</span>
   </div><ul class="org-children collapsed"><li class="org-node" data-name="eduardo angulo" data-dept="shipping" data-region="socal">
@@ -1287,7 +1449,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">EA</span>
     <span class="node-info">
       <span class="node-name">Eduardo Angulo</span>
-      <span class="node-sub">Shipping <span class="node-loc">San Diego</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">San Diego</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="gilberto aponte" data-dept="shipping" data-region="socal">
@@ -1314,7 +1476,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JE</span>
     <span class="node-info">
       <span class="node-name">Jennifer Espinoza</span>
-      <span class="node-sub">Shipping <span class="node-loc">San Diego</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">San Diego</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="arturo herrera" data-dept="shipping" data-region="socal">
@@ -1323,7 +1485,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">AH</span>
     <span class="node-info">
       <span class="node-name">Arturo Herrera</span>
-      <span class="node-sub">Shipping <span class="node-loc">San Diego</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">San Diego</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="juan moreno" data-dept="shipping" data-region="socal">
@@ -1332,7 +1494,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">JM</span>
     <span class="node-info">
       <span class="node-name">Juan Moreno</span>
-      <span class="node-sub">Shipping <span class="node-loc">San Diego</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">San Diego</span></span>
     </span>
     
   </div></li><li class="org-node" data-name="netzahualcoyotl rosales shaw" data-dept="shipping" data-region="socal">
@@ -1350,7 +1512,7 @@ li.org-node.hidden{display:none}
     <span class="node-avatar">LV</span>
     <span class="node-info">
       <span class="node-name">Luis Valenzuela</span>
-      <span class="node-sub">Shipping <span class="node-loc">Calexico</span></span>
+      <span class="node-sub">Delivery Driver &amp;middot; Shipping <span class="node-loc">Calexico</span></span>
     </span>
     
   </div></li></ul></li><li class="org-node" data-name="edgar jimenez" data-dept="warehouse" data-region="socal">
@@ -1486,7 +1648,7 @@ li.org-node.hidden{display:none}
   <p class="note">Pulled from the Open Req tabs of the same file. Notes column intentionally left off this page.</p>
   <div class="tw"><table>
     <thead><tr><th>Role</th><th>Region</th><th>Type</th></tr></thead>
-    <tbody><tr><td class="name">Delivery Driver</td><td>SoCal</td><td>Pooling</td></tr><tr><td class="name">AR Clerk</td><td>SoCal</td><td>Backfill</td></tr><tr><td class="name">Controller</td><td>NorCal</td><td>Backfill</td></tr><tr><td class="name">Senior Business Performance Analyst</td><td>NorCal</td><td>New H/C Increase</td></tr><tr><td class="name">Delivery Driver</td><td>NorCal</td><td>Backfill</td></tr></tbody>
+    <tbody><tr><td class="name">Controller</td><td>NorCal</td><td>Backfill</td></tr><tr><td class="name">Senior Business Performance Analyst</td><td>NorCal</td><td>New H/C Increase</td></tr><tr><td class="name">Delivery Driver</td><td>NorCal</td><td>Backfill</td></tr><tr><td class="name">Delivery Driver</td><td>SoCal</td><td>Pooling</td></tr><tr><td class="name">AR Clerk</td><td>SoCal</td><td>Backfill</td></tr></tbody>
   </table></div>
 
 </div>
@@ -1510,7 +1672,6 @@ function expandAll(){
   document.querySelectorAll('.node-toggle:not(.leaf)').forEach(t => t.innerHTML = '&#9662;');
 }
 function collapseAll(){
-  document.querySelectorAll('#org-wrap > ul.org-root > li.org-node > ul.org-children').forEach(u => {});
   document.querySelectorAll('.org-children').forEach(u => u.classList.add('collapsed'));
   document.querySelectorAll('.node-toggle:not(.leaf)').forEach(t => t.innerHTML = '&#9656;');
 }

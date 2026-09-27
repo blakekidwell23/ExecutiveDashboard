@@ -108,7 +108,7 @@ body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:
 .hub-title span{color:#00AEEF}
 .hub-sub{font-family:'DM Mono',monospace;font-size:11.5px;color:#b8cbe8;margin-top:12px;position:relative;max-width:640px;line-height:1.6}
 .hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;align-items:stretch;margin-bottom:20px}
-.hub-grid > .lb-hero{grid-column:1/-1;margin-bottom:0}
+.hub-grid > .lb-hero{margin-bottom:0}
 .hub-grid > .rpt-card{margin-bottom:0;display:flex;flex-direction:column}
 .hub-grid > .rpt-card .rpt-body{flex:1;display:flex;flex-direction:column}
 .hub-grid > .rpt-card .takeaway{margin-top:auto}
@@ -126,14 +126,14 @@ body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:
 .lb-callout-val{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;line-height:1.15}
 .lb-callout-sub{font-size:10.5px;color:#b8cbe8;margin-top:1px}
 .lb-podium{display:grid;grid-template-columns:1fr 1.12fr 1fr;gap:12px;align-items:end;margin-bottom:20px;position:relative}
-.lb-pod-card{border-radius:12px;padding:14px 10px 12px;text-align:center}
+.lb-pod-card{border-radius:12px;padding:12px 6px 10px;text-align:center;min-width:0;overflow:hidden}
 .lb-pod-card.gold{background:linear-gradient(160deg,#ffe08a,#f0a83a);color:#4a2f00;padding-top:20px;transform:translateY(-10px);box-shadow:0 8px 20px rgba(240,168,58,.35)}
 .lb-pod-card.silver{background:linear-gradient(160deg,#eef1f5,#c3ccd8);color:#2a3444;box-shadow:0 6px 16px rgba(0,0,0,.15)}
 .lb-pod-card.bronze{background:linear-gradient(160deg,#e6b483,#c98650);color:#3a1f08;box-shadow:0 6px 16px rgba(0,0,0,.15)}
-.lb-pod-medal{font-size:26px;margin-bottom:2px}
-.lb-pod-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:14.5px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lb-pod-val{font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:800}
-.lb-pod-sub{font-size:10px;opacity:.85;margin-top:2px;font-family:'DM Mono',monospace}
+.lb-pod-medal{font-size:22px;margin-bottom:2px}
+.lb-pod-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:12px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-pod-val{font-family:'Barlow Condensed',sans-serif;font-size:13.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-pod-sub{font-size:9px;opacity:.85;margin-top:2px;font-family:'DM Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lb-list{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:4px 16px;position:relative}
 .lb-row{display:grid;grid-template-columns:22px 168px 1fr 88px 118px;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:12.5px}
 .lb-row:last-child{border-bottom:none}
@@ -146,6 +146,8 @@ body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:
 .lb-amt.neg{color:#ffb4b4;font-weight:600}
 .lb-meta2{font-family:'DM Mono',monospace;font-size:10px;color:#9dc2ec;text-align:right;white-space:nowrap}
 .lb-footnote{font-size:10.5px;color:#9dc2ec;margin-top:12px;line-height:1.6;position:relative}
+.lb-cta{display:inline-flex;align-items:center;gap:6px;background:#00AEEF;color:#0c1b2e;font-size:11.5px;font-weight:700;padding:9px 16px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;margin-top:14px;position:relative;transition:background .15s}
+.lb-cta:hover{background:#5fc9f5}
 .focus-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:12px}
 @media (max-width:700px){.tabnav{padding:0 10px}.tabnav a{padding:14px 12px;font-size:13px}
 .lb-callouts{grid-template-columns:1fr}.lb-podium{grid-template-columns:1fr;gap:8px}.lb-pod-card.gold{transform:none}
@@ -166,7 +168,7 @@ body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:
   </div>
 </div>
 <div class="tabnav">
-  <a href="Rep Performance.html"><span class="tab-ico">&#127942;</span> Rep Performance</a>
+  <a href="Rep Performance.html"><span class="tab-ico">&#127942;</span> Monthly Rankings</a>
   <a href="Call Data.html"><span class="tab-ico">&#9742;&#65039;</span> Call Data</a>
   <a href="Daily Sales.html"><span class="tab-ico">&#128176;</span> Daily Sales</a>
   <a href="Sales by Location.html"><span class="tab-ico">&#128205;</span> Sales by Location</a>
@@ -186,7 +188,7 @@ body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:
   <div class="lb-hero">
     <div class="lb-header">
       <div class="lb-title">&#128293; This Week's <span>Leaderboard</span></div>
-      <div class="lb-meta">SO FAR &middot; Sep 21-24, 4 of 5 workdays &middot; Ranked by $ Sold &middot; Updates every build</div>
+      <div class="lb-meta">SO FAR &middot; Sep 21-24, 4 of 5 workdays</div>
     </div>
     <p class="lb-footnote" style="margin-top:0;margin-bottom:14px">&#9888; <strong>Romero, EliasR</strong> &mdash; 0 calls, net-negative $ across all posted so far days (-$1,033.79 total). See Call Data.html and Daily Sales.html.</p>
     <div class="lb-callouts">
@@ -210,8 +212,8 @@ body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:
     <div class="lb-podium">
     <div class="lb-pod-card silver"><div class="lb-pod-medal">&#129352;</div><div class="lb-pod-name">Arellano, ApolonioA</div><div class="lb-pod-val">$39,001.00</div><div class="lb-pod-sub">221 calls &middot; $176.48/call</div></div><div class="lb-pod-card gold"><div class="lb-pod-medal">&#127942;</div><div class="lb-pod-name">Becerra, IvanB</div><div class="lb-pod-val">$44,596.40</div><div class="lb-pod-sub">479 calls &middot; $93.10/call</div></div><div class="lb-pod-card bronze"><div class="lb-pod-medal">&#129353;</div><div class="lb-pod-name">OLeal, MatthewO</div><div class="lb-pod-val">$38,403.32</div><div class="lb-pod-sub">392 calls &middot; $97.97/call</div></div>
     </div>
-    <div class="lb-list"><div class="lb-row"><div class="lb-rank">4</div><div class="lb-name">Pedraza, LuisP</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:68.0%"></div></div><div class="lb-amt">$30,316.22</div><div class="lb-meta2">232 calls &middot; 130.67/call</div></div><div class="lb-row"><div class="lb-rank">5</div><div class="lb-name">Reyes, OmarR</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:53.6%"></div></div><div class="lb-amt">$23,881.59</div><div class="lb-meta2">341 calls &middot; 70.03/call</div></div><div class="lb-row"><div class="lb-rank">6</div><div class="lb-name">Serrano, ManuelSe</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:53.1%"></div></div><div class="lb-amt">$23,698.50</div><div class="lb-meta2">276 calls &middot; 85.86/call</div></div><div class="lb-row"><div class="lb-rank">7</div><div class="lb-name">Serrano, ArturoS</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:49.0%"></div></div><div class="lb-amt">$21,849.83</div><div class="lb-meta2">228 calls &middot; 95.83/call</div></div><div class="lb-row"><div class="lb-rank">8</div><div class="lb-name">Arteaga, EulicesA</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:45.1%"></div></div><div class="lb-amt">$20,097.46</div><div class="lb-meta2">380 calls &middot; 52.89/call</div></div><div class="lb-row"><div class="lb-rank">9</div><div class="lb-name">Henington, ChristianH</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:40.8%"></div></div><div class="lb-amt">$18,182.21</div><div class="lb-meta2">429 calls &middot; 42.38/call</div></div><div class="lb-row"><div class="lb-rank">10</div><div class="lb-name">Navarro, PaulinaN</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:35.8%"></div></div><div class="lb-amt">$15,964.92</div><div class="lb-meta2">391 calls &middot; 40.83/call</div></div><div class="lb-row"><div class="lb-rank">11</div><div class="lb-name">Zoreque, JoannaZ</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:32.8%"></div></div><div class="lb-amt">$14,607.83</div><div class="lb-meta2">323 calls &middot; 45.23/call</div></div><div class="lb-row"><div class="lb-rank">12</div><div class="lb-name">Sanchez, JacquelineS</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:32.5%"></div></div><div class="lb-amt">$14,501.01</div><div class="lb-meta2">430 calls &middot; 33.72/call</div></div><div class="lb-row"><div class="lb-rank">13</div><div class="lb-name">Contreras, LupitaC</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:23.1%"></div></div><div class="lb-amt">$10,319.27</div><div class="lb-meta2">413 calls &middot; 24.99/call</div></div><div class="lb-row"><div class="lb-rank">14</div><div class="lb-name">Johnson, KeinaJ</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:16.4%"></div></div><div class="lb-amt">$7,295.01</div><div class="lb-meta2">97 calls &middot; 75.21/call</div></div><div class="lb-row"><div class="lb-rank">15</div><div class="lb-name">Puffelis, CynthiaP</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:2.4%"></div></div><div class="lb-amt">$1,061.00</div><div class="lb-meta2">0 calls &middot; N/A</div></div><div class="lb-row"><div class="lb-rank">16</div><div class="lb-name">Rulon, TerenceR</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:0.3%"></div></div><div class="lb-amt">$111.61</div><div class="lb-meta2">0 calls &middot; N/A</div></div><div class="lb-row"><div class="lb-rank">17</div><div class="lb-name">Romero, EliasR</div><div class="lb-bar-wrap"><div class="lb-bar flat" style="width:100%"></div></div><div class="lb-amt neg">-$1,033.79</div><div class="lb-meta2">0 calls &middot; N/A</div></div></div>
-  <p class="lb-footnote">Ranked by so far Sep 21-24 $ sold, 4 of 5 workdays. Bars scaled to the leader (Becerra, IvanB).</p>
+  <p class="lb-footnote">Top 3 of 17 reps, ranked by so far Sep 21-24 $ sold, 4 of 5 workdays.</p>
+  <a class="lb-cta" href="Daily Sales.html">Full Rankings &nbsp;&rsaquo;</a>
   </div>
 <!-- REP PERFORMANCE -->
   <div class="rpt-card">
@@ -219,7 +221,7 @@ body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:
       <div class="rpt-hdr-left">
         <div class="rpt-ico gold">&#127942;</div>
         <div>
-          <div class="rpt-title">Rep Performance</div>
+          <div class="rpt-title">Monthly Rankings</div>
           <div class="rpt-meta">September 2026 &middot; 17 of ~22 Workdays Elapsed (Sep 7 excluded) &middot; IN PROGRESS</div>
         </div>
       </div>
@@ -236,6 +238,10 @@ body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:
   </div>
 
   
+
+
+
+
 <!-- CALL DATA -->
   <div class="rpt-card">
     <div class="rpt-hdr">
@@ -341,6 +347,10 @@ body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:
   </div>
 
 
+
+
+
+
 <!-- ORG CHART -->
   <div class="rpt-card">
     <div class="rpt-hdr">
@@ -362,6 +372,10 @@ body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:
       <div class="takeaway">New this cycle: an interactive, searchable reporting-line tree &mdash; click any name to expand or collapse their reports.</div>
     </div>
   </div>
+
+
+
+
 
   </div>
 </div>

@@ -85,6 +85,8 @@ body{font-family:'Barlow',Arial,Helvetica,sans-serif;background:var(--bg);color:
 .loc-btn.active{background:var(--navy);border-color:var(--navy);color:#fff}
 .loc-btn.disabled-loc{opacity:.55;font-style:italic}
 .tw tr.total-row td{background:#dbe6f6!important;font-weight:700;border-top:2px solid var(--navy2)}
+.tw td.chg-up{color:var(--green);font-weight:600}
+.tw td.chg-dn{color:var(--red);font-weight:600}
 #summary-table-wrap{overflow-x:auto}
 #summary-table{min-width:920px}
 </style>
@@ -201,6 +203,13 @@ function pctClass(cur, prior){
   return (cur >= prior) ? 'green' : 'red';
 }
 
+// Chg YoY cell color: green if up, red if down, neutral if flat (rounds to 0.0%) or not comparable.
+function chgClass(cur, prior){
+  if (cur === null || cur === undefined || prior === null || prior === undefined || prior === 0) return '';
+  const p = Math.round((cur/prior - 1) * 1000) / 10;
+  return p > 0 ? 'chg-up' : (p < 0 ? 'chg-dn' : '');
+}
+
 function granLabel(g){ return g === 'day' ? 'Day' : g === 'week' ? 'Week' : 'Month'; }
 
 function render(){
@@ -275,7 +284,7 @@ function render(){
   tbody.innerHTML = ordered.map(row => {
     const cls = row.loc === 'TOTAL' ? 'total-row' : '';
     const highlight = row.loc === state.loc && row.loc !== 'TOTAL' ? 'style="background:#eef4fb"' : '';
-    const cell = p => `<td class="r">${fmtVal(m, p.ly)}</td><td class="r">${fmtVal(m, p.cur)}</td><td class="r">${fmtPct(p.cur, p.ly)}</td>`;
+    const cell = p => `<td class="r">${fmtVal(m, p.ly)}</td><td class="r">${fmtVal(m, p.cur)}</td><td class="r ${chgClass(p.cur, p.ly)}">${fmtPct(p.cur, p.ly)}</td>`;
     return `<tr class="${cls}" ${highlight}>
       <td class="name">${FRIENDLY[row.loc]}</td>
       ${cell(row.year)}
